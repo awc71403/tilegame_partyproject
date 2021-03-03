@@ -15,7 +15,7 @@ public abstract class Character : MonoBehaviour {
     private bool canMove = true;
     private bool canAttack = true;
 
-    public GameObject occupiedTile;
+    public TileBehavior occupiedTile;
 
     // Sprite Rendering
     private SpriteRenderer myRenderer;
@@ -125,11 +125,11 @@ public abstract class Character : MonoBehaviour {
         transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
     }
 
-    public GameObject GetOccupiedTile() {
+    public TileBehavior GetOccupiedTile() {
         return occupiedTile;
     }
 
-    public void SetOccupiedTile(GameObject tile) {
+    public void SetOccupiedTile(TileBehavior tile) {
         occupiedTile = tile;
     }
     #endregion
