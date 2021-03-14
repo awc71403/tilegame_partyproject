@@ -14,6 +14,8 @@ public abstract class Character : MonoBehaviour {
 
     public TileBehavior occupiedTile;
 
+    public enum Direction {RIGHT, LEFT, UP, DOWN};
+    public Direction myDirection;
     // Sprite Rendering
     private SpriteRenderer myRenderer;
     private Shader shaderGUItext;
@@ -44,6 +46,7 @@ public abstract class Character : MonoBehaviour {
         shaderSpritesDefault = Shader.Find("Sprites/Default");
         audioSource = GetComponent<AudioSource>();
         SetHPFull();
+        myDirection = Character.Direction.RIGHT;
     }
     #endregion
 
@@ -113,9 +116,9 @@ public abstract class Character : MonoBehaviour {
 
         //Create Damage Text
         print("damage text created");
-        damageText = Instantiate(DamageTextPrefab);
+        // damageText = Instantiate(DamageTextPrefab);
         Vector3 textPositionOffset = new Vector3(0, 1.25f, 0);
-        damageText.transform.position = Camera.main.WorldToScreenPoint(transform.position + textPositionOffset);
+        // damageText.transform.position = Camera.main.WorldToScreenPoint(transform.position + textPositionOffset);
         //damageText.GetComponent<DamageTextBehavior>().SetDamage(damage);
 
         // Shaking
@@ -188,4 +191,35 @@ public abstract class Character : MonoBehaviour {
         }
     }
     #endregion
+    
+    #region Attacks
+    public void AttackEnemy(int damage) {
+        Debug.Log("called attack function");
+        Debug.Log(myDirection);
+        Debug.Log(myDirection.Equals(Character.Direction.RIGHT));
+        TileBehavior target;
+        if (myDirection.Equals(Character.Direction.RIGHT)) {
+            Debug.Log("target right");
+            target = occupiedTile.Right;
+        } 
+        else if (myDirection.Equals(Character.Direction.LEFT)) {
+            Debug.Log("target left");
+            target = occupiedTile.Left;
+        }
+        else if (myDirection.Equals(Character.Direction.UP)) {
+            Debug.Log("target up");
+            target = occupiedTile.Up;
+        } else {
+            Debug.Log("target down");
+            target = occupiedTile.Down;
+        }
+        Debug.Log(target.HasUnit());
+        if (target != null && target.HasUnit() && target.GetUnit() != this) {
+            Debug.Log("Attacked");
+            target.GetUnit().HPDamage(damage);
+        }
+        return;
+    }
+    #endregion
 }
+
