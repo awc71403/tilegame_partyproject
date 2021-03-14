@@ -28,6 +28,9 @@ public class PlayerManager : MonoBehaviour
             else if (Input.GetKeyDown(KeyCode.D)) {
                 StartCoroutine(MoveUnitInDirection("right"));
             }
+            else if (Input.GetKeyDown(KeyCode.F)) {
+                myCharacter.AttackEnemy(10);
+            }
         }
     }
 
@@ -45,24 +48,28 @@ public class PlayerManager : MonoBehaviour
             myCharacter.transform.position += new Vector3(0, tileSize);
             if (myCharacter.occupiedTile.Up != null) {
                 myCharacter.occupiedTile = myCharacter.occupiedTile.Up;
+                myCharacter.myDirection = Character.Direction.UP;
             }
         }
         else if (direction.Equals("right")) {
             myCharacter.transform.position += new Vector3(tileSize, 0);
             if (myCharacter.occupiedTile.Right != null) {
                 myCharacter.occupiedTile = myCharacter.occupiedTile.Right;
+                myCharacter.myDirection = Character.Direction.RIGHT;
             }
         }
         else if (direction.Equals("down")) {
             myCharacter.transform.position -= new Vector3(0, tileSize);
             if (myCharacter.occupiedTile.Down != null) {
                 myCharacter.occupiedTile = myCharacter.occupiedTile.Down;
+                myCharacter.myDirection = Character.Direction.DOWN;
             }
         }
         else if (direction.Equals("left")) {
             myCharacter.transform.position -= new Vector3(tileSize, 0);
             if (myCharacter.occupiedTile.Left != null) {
                 myCharacter.occupiedTile = myCharacter.occupiedTile.Left;
+                myCharacter.myDirection = Character.Direction.LEFT;
             }
         }
         myCharacter.RecalculateDepth();

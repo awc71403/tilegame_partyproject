@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     GameObject testCharacter;
 
+    [SerializeField]
+    GameObject testEnemy;
     TileBehavior[,] mapArray;
         float tileSize;
     #endregion
@@ -43,10 +45,11 @@ public class GameManager : MonoBehaviour
     public void Start() {
         // FOR TESTING PURPOSES
         PlaceCharacterOnTile(testCharacter, 0, 1);
+        PlaceCharacterOnTile(testEnemy, 3, 3);
     }
 
     public void Update() {
-        Debug.Log("Update");
+        
     }
     #endregion
 
