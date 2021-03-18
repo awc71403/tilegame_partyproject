@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
+
+    private static PlayerManager m_Singleton;
+
+    public static PlayerManager GetSingleton()
+    {
+        return m_Singleton;
+    }
+
     private Character myCharacter;
 
     private const float stepDuration = 0.1f;
@@ -11,6 +19,13 @@ public class PlayerManager : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
+        if (m_Singleton != null)
+        {
+            DestroyImmediate(gameObject);
+            return;
+        }
+        m_Singleton = this;
+
         myCharacter = GetComponent<Character>();
     }
 
