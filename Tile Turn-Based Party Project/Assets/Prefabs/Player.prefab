@@ -95,7 +95,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd7bde21cea1d62428ac2bd939f7312a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myCharacter: {fileID: 8694263695883867407}
 --- !u!114 &8694263695883867407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,8 +110,9 @@ MonoBehaviour:
   curStatArr: 
   totalHealth: 0
   currentHealth: 0
-  player: 0
+  isPlayer: 0
   occupiedTile: {fileID: 0}
+  myDirection: 0
   DamageTextPrefab: {fileID: 0}
   damageText: {fileID: 0}
   anim: {fileID: 0}

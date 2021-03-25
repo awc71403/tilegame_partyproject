@@ -5,18 +5,39 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     private Character myCharacter;
-
+    public static PlayerManager singleton;
     private const float stepDuration = 0.1f;
 
     // Start is called before the first frame update
     private void Awake()
     {
+        if (singleton != null) {
+            DestroyImmediate(gameObject);
+            return;
+        }
+        singleton = this;
         myCharacter = GetComponent<Character>();
     }
 
     void Update() {
         if (!GameManager.actionInProcess) {
-            if (Input.GetKeyDown(KeyCode.W)) {
+            if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.A)) {
+                myCharacter.myDirection = Character.Direction.LEFT;
+                Debug.Log(myCharacter.myDirection);
+            }
+            else if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.S)) {
+                myCharacter.myDirection = Character.Direction.DOWN;
+                Debug.Log(myCharacter.myDirection);
+            }
+            else if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.D)) {
+                myCharacter.myDirection = Character.Direction.RIGHT;
+                Debug.Log(myCharacter.myDirection);
+            }
+            else if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.W)) {
+                myCharacter.myDirection = Character.Direction.UP;
+                Debug.Log(myCharacter.myDirection);
+            } 
+            else if (Input.GetKeyDown(KeyCode.W)) {
                 StartCoroutine(MoveUnitInDirection("up"));
             }
             else if (Input.GetKeyDown(KeyCode.A)) {
@@ -30,7 +51,7 @@ public class PlayerManager : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.F)) {
                 myCharacter.AttackEnemy(10);
-            }
+            } 
         }
     }
 

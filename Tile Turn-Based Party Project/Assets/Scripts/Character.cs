@@ -195,8 +195,6 @@ public abstract class Character : MonoBehaviour {
     #region Attacks
     public void AttackEnemy(int damage) {
         Debug.Log("called attack function");
-        Debug.Log(myDirection);
-        Debug.Log(myDirection.Equals(Character.Direction.RIGHT));
         TileBehavior target;
         if (myDirection.Equals(Character.Direction.RIGHT)) {
             Debug.Log("target right");
@@ -214,6 +212,7 @@ public abstract class Character : MonoBehaviour {
             target = occupiedTile.Down;
         }
         Debug.Log(target.HasUnit());
+        Debug.Log(target.GetUnit() == this);
         if (target != null && target.HasUnit() && target.GetUnit() != this) {
             Debug.Log("Attacked");
             target.GetUnit().HPDamage(damage);
