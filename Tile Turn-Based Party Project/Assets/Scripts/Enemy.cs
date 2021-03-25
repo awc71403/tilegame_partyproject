@@ -24,7 +24,7 @@ public class Enemy : MonoBehaviour
 
         for(int i = 0; i < numHit; i++)
         {
-            RayCastHit2D
+            Debug.Log(results[i]);
         }
     }
 }
