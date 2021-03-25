@@ -27,6 +27,9 @@ public class GameManager : MonoBehaviour
     GameObject testEnemy;
     TileBehavior[,] mapArray;
         float tileSize;
+
+    [SerializeField]
+    private string testFile;
     #endregion
 
     #region Initialization
@@ -118,7 +121,8 @@ public class GameManager : MonoBehaviour
     }
 
     private string[] ReadLevelText() {
-        TextAsset bindData = Resources.Load("Test") as TextAsset;
+        TextAsset bindData = Resources.Load(testFile) as TextAsset;
+        // We need to have different testing for mac and windows, \r\n is windows specific, so this needs to be \n on mac/linux
         string data = bindData.text.Replace("\r\n", string.Empty);
         return data.Split('-');
     }
