@@ -94,6 +94,7 @@ public class PlayerManager : MonoBehaviour
 
         // Action over!
         GameManager.actionInProcess = false;
+        GameManager.UpdateEnemies();
     }
     #endregion
 }
