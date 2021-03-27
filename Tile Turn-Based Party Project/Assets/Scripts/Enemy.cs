@@ -17,6 +17,11 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
+        DetectPlayer();
+    }
+
+    void DetectPlayer()
+    {
         Vector2 direction = player.transform.position - transform.position;
         List<RaycastHit2D> results = new List<RaycastHit2D>();
         ContactFilter2D contactFilter2D = new ContactFilter2D();
@@ -24,33 +29,25 @@ public class Enemy : MonoBehaviour
         Debug.DrawRay(transform.position, direction.normalized * viewDistance, Color.red);
 
         bool blocked = false;
+        bool playerVisible = false;
 
-        for(int i = 0; i < numHit; i++)
+        for (int i = 0; i < numHit; i++)
         {
             GameObject hitObject = results[i].transform.gameObject;
             if (hitObject.GetComponent<PlayerManager>() != null)
             {
-                if (blocked)
+                if (!blocked)
                 {
-
-                    Debug.Log("Player blocked");
-                }
-                else
-                {
-
-                    Debug.Log("Hit player");
+                    playerVisible = true;
                 }
             }
             else if (hitObject.tag.Equals("Wall"))
             {
                 blocked = true;
-                Debug.Log("Hit somethin else");
             }
         }
-    }
 
-    void DetectPlayer()
-    {
+
 
     }
 }
