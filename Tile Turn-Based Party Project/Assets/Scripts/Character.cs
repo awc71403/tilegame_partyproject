@@ -6,9 +6,20 @@ using UnityEngine.UI;
 public abstract class Character : MonoBehaviour {
 
     public int[] curStatArr;
+    public int[] baseStats;
+    public int[] abilityCooldowns;
+    public int[] currentCooldowns;
+    public int[] abilityDurations;
+    // 0 - attack
+    // 1 - ability damage
+    // 2 - cooldown reduction
+    // 3 - damage reduction - skills mainly
+
     protected string characterName;
     public int totalHealth;
     public int currentHealth;
+    public int level;
+    public int experience;
 
     public bool isPlayer;
 
@@ -32,7 +43,11 @@ public abstract class Character : MonoBehaviour {
     private AudioClip[] stepSounds;
     private AudioSource audioSource;
 
-    public abstract void TakeDamage(int damage, int stat);
+    public abstract void TakeDamage(int damage);
+    public abstract void Ability1();
+    public abstract void Ability2();
+    public abstract void Ability3();
+    public abstract void Ability4();
     public abstract void DisplayStats();
 
     // Movement Bounce Animation
@@ -83,8 +98,24 @@ public abstract class Character : MonoBehaviour {
         get { return curStatArr[0]; }
     }
 
-    public int GetSpeed {
+    public int AbilityDmg {
         get { return curStatArr[1]; }
+    }
+
+    public int CooldownReduction {
+        get { return curStatArr[2]; }
+    }
+
+    public int DamageReduction {
+        get { return curStatArr[3]; }
+    }
+
+    public int Level {
+        get { return level; }
+    }
+
+    public int Experience {
+        get { return experience; }
     }
 
     public void RecalculateDepth() {
@@ -110,7 +141,11 @@ public abstract class Character : MonoBehaviour {
     #endregion
 
     #region Animation
-    IEnumerator HurtAnimation(int damage) {
+    public void StartHurtAnimation() {
+        StartCoroutine("HurtAnimation");
+    }
+
+    IEnumerator HurtAnimation() {
         // Go white
         WhiteSprite();
 
@@ -178,6 +213,17 @@ public abstract class Character : MonoBehaviour {
 
     #region Stats
     public void ResetStats() {
+        foreach (int i in curStatArr) {
+            curStatArr[i] = baseStats[i];
+        }
+        currentHealth = totalHealth;
+    }
+
+    public void ResetStat(int stat) {
+        curStatArr[stat] = baseStats[stat];
+    }
+
+    public void ResetHealth() {
         currentHealth = totalHealth;
     }
 
@@ -190,33 +236,63 @@ public abstract class Character : MonoBehaviour {
             StartCoroutine("DeathAnimation");
         }
     }
+
+    public void updateCooldowns() {
+        if (currentCooldowns == null) {
+            return;
+        }
+        for (int i = 0; i < currentCooldowns.Length; i++) {
+            if (currentCooldowns[i] > 0) currentCooldowns[i] -= 1;
+            if (abilityDurations[i] > 0) abilityDurations[i] -= 1;
+        }
+    }
+
+    public void levelUp(int stat) {
+        ///Temp measure
+        curStatArr[stat] += 1; // This will be a percentage later
+        baseStats[stat] += 1;
+        curStatArr[stat] = baseStats[stat] > curStatArr[stat] ? baseStats[stat] : curStatArr[stat];
+    }
     #endregion
-    
+
     #region Attacks
-    public void AttackEnemy(int damage) {
-        Debug.Log("called attack function");
+    public TileBehavior GetTarget() {
         TileBehavior target;
         if (myDirection.Equals(Character.Direction.RIGHT)) {
-            Debug.Log("target right");
             target = occupiedTile.Right;
-        } 
-        else if (myDirection.Equals(Character.Direction.LEFT)) {
-            Debug.Log("target left");
-            target = occupiedTile.Left;
         }
         else if (myDirection.Equals(Character.Direction.UP)) {
-            Debug.Log("target up");
+            target = occupiedTile.Left;
+        }
+        else if (myDirection.Equals(Character.Direction.LEFT)) {
             target = occupiedTile.Up;
-        } else {
-            Debug.Log("target down");
+        }
+        else {
             target = occupiedTile.Down;
         }
+            return target;
+        }
+
+    public bool validTarget(TileBehavior tile) {
+        Debug.Log("target exists : " + tile.HasUnit());
+        Character target = tile.GetUnit();
+        return tile != null && target != null && target != this;
+    }
+
+    public void AttackEnemy() {
+        GameManager.actionInProcess = true;
+        int damage = curStatArr[0];
+        Debug.Log("called attack function");
+        Debug.Log(myDirection);
+        Debug.Log(myDirection.Equals(Character.Direction.RIGHT));
+        TileBehavior target = GetTarget();
         Debug.Log(target.HasUnit());
-        Debug.Log(target.GetUnit() == this);
         if (target != null && target.HasUnit() && target.GetUnit() != this) {
             Debug.Log("Attacked");
             target.GetUnit().HPDamage(damage);
         }
+        updateCooldowns();
+        GameManager.actionInProcess = false;
         return;
     }
     #endregion
