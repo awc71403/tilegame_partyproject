@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public abstract class Character : MonoBehaviour {
 
     public int[] curStatArr;
+    public int[] baseStats;
     public int[] abilityCooldowns;
     public int[] currentCooldowns;
     public int[] abilityDurations;
@@ -213,6 +214,19 @@ public abstract class Character : MonoBehaviour {
 
     #region Stats
     public void ResetStats() {
+        foreach (int i in curStatArr) {
+            curStatArr[i] = baseStats[i];
+        }
+        currentHealth = totalHealth;
+    }
+
+    public void ResetStat(int stat)
+    {
+        curStatArr[stat] = baseStats[stat];
+    }
+
+    public void ResetHealth()
+    {
         currentHealth = totalHealth;
     }
 
@@ -234,37 +248,39 @@ public abstract class Character : MonoBehaviour {
         }
         for (int i = 0; i < currentCooldowns.Length; i++)
         {
-            if (currentCooldowns[i] > 0)
-            {
-                currentCooldowns[i] -= 1;
-            }
-            if (abilityDurations[i] > 0)
-            {
-                abilityDurations[i] -= 1;
-            }
+            if (currentCooldowns[i] > 0) currentCooldowns[i] -= 1;
+            if (abilityDurations[i] > 0) abilityDurations[i] -= 1;
         }
-        return;
+    }
+
+    public void levelUp(int stat)
+    {
+        ///Temp measure
+        curStatArr[stat] += 1; // This will be a percentage later
+        baseStats[stat] += 1;
+        curStatArr[stat] = baseStats[stat] > curStatArr[stat] ? baseStats[stat] : curStatArr[stat];
     }
     #endregion
 
     #region Attacks
-    public TileBehavior[] GetTargets(int[] targetRange)
-    {
-        TileBehavior[] targets;
-        if (myDirection.Equals(Character.Direction.RIGHT))
-        {
-        }
-        else if (myDirection.Equals(Character.Direction.LEFT))
-        {
-        }
-        else if (myDirection.Equals(Character.Direction.UP))
-        {
-        }
-        else
-        {
-        }
-        return null;
-    }
+    //public TileBehavior[] GetTargets(int[] targetRange)
+    //{
+    //    TileBehavior[] targets;
+    //    if (myDirection.Equals(Character.Direction.RIGHT))
+    //    {
+
+    //    }
+    //    else if (myDirection.Equals(Character.Direction.UP))
+    //    {
+    //    }
+    //    else if (myDirection.Equals(Character.Direction.LEFT))
+    //    {
+    //    }
+    //    else
+    //    {
+    //    }
+    //    return null;
+    //}
 
     public TileBehavior GetTarget()
     {
@@ -273,11 +289,11 @@ public abstract class Character : MonoBehaviour {
         {
             target = occupiedTile.Right;
         }
-        else if (myDirection.Equals(Character.Direction.LEFT))
+        else if (myDirection.Equals(Character.Direction.UP))
         {
             target = occupiedTile.Left;
         }
-        else if (myDirection.Equals(Character.Direction.UP))
+        else if (myDirection.Equals(Character.Direction.LEFT))
         {
             target = occupiedTile.Up;
         }

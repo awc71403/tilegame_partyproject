@@ -5,7 +5,7 @@ using UnityEngine;
 public class Monk : Character
 {
 
-    private int[] baseStats = { 5, 5, 5, 0}; // Attack, AP, CD, Damage Reduction
+    private int[] baseClassStats = { 3, 5, 5, 0}; // Attack, AP, CD, Damage Reduction
     private int[] abilityCDs = { 2, 2, 2, 2 };
     private int[] currentCDs = { 0, 0, 0, 0 };
     private int[] abilityDur = { 0, 0, 0, 0 }; // Only for Ability 2, but may be used more in future
@@ -13,7 +13,8 @@ public class Monk : Character
     void Awake()
     {
         totalHealth = currentHealth = 100;
-        curStatArr = baseStats;
+        curStatArr = baseClassStats;
+        baseStats = baseClassStats;
         characterName = "monk";
         abilityCooldowns = abilityCDs;
         currentCooldowns = currentCDs;
@@ -98,6 +99,7 @@ public class Monk : Character
             return;
         }
         //find enemies in area
+        //TileBehavior[] targetTiles = GetTargets(new int[] { 1, 1, 1, 0 }); // left, up, right, down in direction facing
         //foreach (TileBehavior tile in targetTiles)
         //{
         //    Character target = tile.GetUnit();
