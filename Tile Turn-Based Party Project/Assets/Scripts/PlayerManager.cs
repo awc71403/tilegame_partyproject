@@ -8,6 +8,10 @@ public class PlayerManager : MonoBehaviour
     public static PlayerManager singleton;
     private const float stepDuration = 0.1f;
 
+    private string FLOOR = "floor";
+    private string WALL = "wall";
+
+
     // Start is called before the first frame update
     private void Awake()
     {
@@ -79,29 +83,40 @@ public class PlayerManager : MonoBehaviour
         //Take that step!
         if (direction.Equals("up")) {
             myCharacter.transform.position += new Vector3(0, tileSize);
-            if (myCharacter.occupiedTile.Up != null) {
-                myCharacter.occupiedTile = myCharacter.occupiedTile.Up;
+            TileBehavior upTile = myCharacter.occupiedTile.Up;
+            if (upTile != null && upTile.tileType != WALL && !upTile.HasUnit()) {
+                myCharacter.occupiedTile.ClearUnit();
+                myCharacter.occupiedTile = upTile;
                 myCharacter.myDirection = Character.Direction.UP;
             }
         }
         else if (direction.Equals("right")) {
             myCharacter.transform.position += new Vector3(tileSize, 0);
-            if (myCharacter.occupiedTile.Right != null) {
-                myCharacter.occupiedTile = myCharacter.occupiedTile.Right;
+            TileBehavior rightTile = myCharacter.occupiedTile.Right;
+            Debug.Log("TEST");
+            Debug.Log(rightTile.tileType);
+            if (rightTile != null && rightTile.tileType != WALL && !rightTile.HasUnit()) {
+                myCharacter.occupiedTile.ClearUnit();
+                myCharacter.occupiedTile = rightTile;
                 myCharacter.myDirection = Character.Direction.RIGHT;
             }
         }
         else if (direction.Equals("down")) {
-            myCharacter.transform.position -= new Vector3(0, tileSize);
-            if (myCharacter.occupiedTile.Down != null) {
-                myCharacter.occupiedTile = myCharacter.occupiedTile.Down;
+            myCharacter.transform.position += new Vector3(0, -tileSize);
+            TileBehavior downTile = myCharacter.occupiedTile.Down;
+            Debug.Log(downTile.tileType);
+            if (downTile != null && downTile.tileType != WALL && !downTile.HasUnit()) {
+                myCharacter.occupiedTile.ClearUnit();
+                myCharacter.occupiedTile = downTile;
                 myCharacter.myDirection = Character.Direction.DOWN;
             }
         }
         else if (direction.Equals("left")) {
-            myCharacter.transform.position -= new Vector3(tileSize, 0);
-            if (myCharacter.occupiedTile.Left != null) {
-                myCharacter.occupiedTile = myCharacter.occupiedTile.Left;
+            myCharacter.transform.position += new Vector3(-tileSize, 0);
+            TileBehavior leftTile = myCharacter.occupiedTile.Left;
+            if (leftTile != null && leftTile.tileType != WALL && !leftTile.HasUnit()) {
+                myCharacter.occupiedTile.ClearUnit();
+                myCharacter.occupiedTile = leftTile;
                 myCharacter.myDirection = Character.Direction.LEFT;
             }
         }
