@@ -25,9 +25,6 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     GameObject testEnemy;
-
-    [SerializeField]
-    GameObject testItem;
     TileBehavior[,] mapArray;
         float tileSize;
 
@@ -52,7 +49,6 @@ public class GameManager : MonoBehaviour
         // FOR TESTING PURPOSES
         PlaceCharacterOnTile(testCharacter, 0, 1);
         PlaceCharacterOnTile(testEnemy, 3, 3);
-        PlaceCharacterOnTile(testItem, 2, 3);
     }
 
     public void Update() {
