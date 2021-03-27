@@ -5,7 +5,7 @@ using UnityEngine;
 public class Monk : Character
 {
 
-    private int[] baseStats = { 5, 5, 5, 0}; // Attack, AP, CD, Damage Reduction
+    private int[] baseClassStats = { 3, 5, 5, 0}; // Attack, AP, CD, Damage Reduction
     private int[] abilityCDs = { 2, 2, 2, 2 };
     private int[] currentCDs = { 0, 0, 0, 0 };
     private int[] abilityDur = { 0, 0, 0, 0 }; // Only for Ability 2, but may be used more in future
@@ -13,7 +13,8 @@ public class Monk : Character
     void Awake()
     {
         totalHealth = currentHealth = 100;
-        curStatArr = baseStats;
+        curStatArr = baseClassStats;
+        baseStats = baseClassStats;
         characterName = "monk";
         abilityCooldowns = abilityCDs;
         currentCooldowns = currentCDs;
@@ -47,47 +48,58 @@ public class Monk : Character
     public override void Ability1()
     {
         //get target
+        GameManager.actionInProcess = true;
+        Debug.Log("Ability1");
+        Debug.Log("Cooldown : " + currentCooldowns[0]);
         if (currentCooldowns[0] > 0)
         {
+            GameManager.actionInProcess = false;
             return;
         }
         TileBehavior targetTile = GetTarget();
-        //damage calc
-        Character target = targetTile.GetUnit();
-        //reduce health
-        if (targetTile != null && target != null && target != this)
+        if (validTarget(targetTile))
         {
-            target.HPDamage(curStatArr[1]);
+            targetTile.GetUnit().HPDamage(curStatArr[1]);
         }
         //activate cooldown
+        updateCooldowns();
         currentCooldowns[0] += abilityCooldowns[0];
+        Debug.Log("Cooldown After: " + currentCooldowns[0]);
 
-        //NO ANIMATIONS
+        GameManager.actionInProcess = false;
     }
 
     //Armor Dillo
     public override void Ability2()
     {
-        //damage mitigation
+        GameManager.actionInProcess = true;
+        Debug.Log("Ability2");
+        Debug.Log("Cooldown : " + currentCooldowns[1]);
         if (currentCooldowns[1] > 0)
         {
+            GameManager.actionInProcess = false;
             return;
         }
         curStatArr[3] = 20;
         abilityDurations[1] += 3;
+        updateCooldowns();
         currentCooldowns[1] += abilityCooldowns[1];
-        //damage reduction 
+        Debug.Log("Cooldown After: " + currentCooldowns[1]);
+        GameManager.actionInProcess = false;
     }
 
     //Dragon Kick
     public override void Ability3()
     {
-        //find targets in range
+        GameManager.actionInProcess = true;
+        Debug.Log("Ability3");
+        Debug.Log("Cooldown : " + currentCooldowns[2]);
         if (currentCooldowns[2] > 0) {
+            GameManager.actionInProcess = false;
             return;
         }
-        TileBehavior targetTile = GetTarget();
         //find enemies in area
+        //TileBehavior[] targetTiles = GetTargets(new int[] { 1, 1, 1, 0 }); // left, up, right, down in direction facing
         //foreach (TileBehavior tile in targetTiles)
         //{
         //    Character target = tile.GetUnit();
@@ -96,35 +108,40 @@ public class Monk : Character
         //        target.HPDamage(curStatArr[1]);
         //    }
         //}
-        Character target = targetTile.GetUnit();
-
-        if (targetTile != null && target != null && target != this)
+        TileBehavior targetTile = GetTarget();
+        if (validTarget(targetTile))
         {
-            target.HPDamage(curStatArr[1]);
+            targetTile.GetUnit().HPDamage(curStatArr[1]);
         }
+        updateCooldowns();
         currentCooldowns[2] += abilityCooldowns[2];
+        Debug.Log("Cooldown After: " + currentCooldowns[2]);
+        GameManager.actionInProcess = false;
     }
 
     //Head Smash
     public override void Ability4()
     {
-        //get target
-        TileBehavior targetTile = GetTarget();
+        GameManager.actionInProcess = true;
+        Debug.Log("Ability4");
+        Debug.Log("Cooldown : " + currentCooldowns[3]);
         if (currentCooldowns[3] > 0)
         {
+            GameManager.actionInProcess = false;
             return;
         }
-        //damage calc
-        Character target = targetTile.GetUnit();
-        //reduce health
-        if (targetTile != null && target != null && target != this)
+
+        TileBehavior targetTile = GetTarget();
+        if (validTarget(targetTile))
         {
-            target.HPDamage(curStatArr[1]);
-            currentHealth -= (curStatArr[1] / 5); // Recoil
+            targetTile.GetUnit().HPDamage(curStatArr[1]);
+            TakeDamage(curStatArr[1] / 5);
+            Debug.Log("Recoil: " + curStatArr[1] / 5);
         }
-        //activate cooldown
+        updateCooldowns();
         currentCooldowns[3] += abilityCooldowns[3];
-        // NO ANIMATIONS
+        Debug.Log("Cooldown After: " + currentCooldowns[3]);
+        GameManager.actionInProcess = false;
     }
     #endregion
 }
