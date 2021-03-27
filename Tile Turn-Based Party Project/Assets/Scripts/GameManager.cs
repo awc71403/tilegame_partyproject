@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour
         // FOR TESTING PURPOSES
         PlaceCharacterOnTile(testCharacter, 0, 1);
         PlaceCharacterOnTile(testEnemy, 3, 3);
+        PlaceCharacterOnTile(testEnemy, 2, 3);
     }
 
     public void Update() {
