@@ -88,6 +88,7 @@ public class PlayerManager : MonoBehaviour
                 myCharacter.myDirection = Character.Direction.LEFT;
             }
         }
+        myCharacter.updateCooldowns();
         myCharacter.RecalculateDepth();
         myCharacter.StartBounceAnimation();
         yield return new WaitForSeconds(stepDuration);

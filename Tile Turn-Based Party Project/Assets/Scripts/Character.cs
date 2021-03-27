@@ -117,7 +117,6 @@ public abstract class Character : MonoBehaviour {
         get { return experience; }
     }
 
-
     public void RecalculateDepth() {
         transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
     }
@@ -226,8 +225,28 @@ public abstract class Character : MonoBehaviour {
             StartCoroutine("DeathAnimation");
         }
     }
+
+    public void updateCooldowns()
+    {
+        if (currentCooldowns == null)
+        {
+            return;
+        }
+        for (int i = 0; i < currentCooldowns.Length; i++)
+        {
+            if (currentCooldowns[i] > 0)
+            {
+                currentCooldowns[i] -= 1;
+            }
+            if (abilityDurations[i] > 0)
+            {
+                abilityDurations[i] -= 1;
+            }
+        }
+        return;
+    }
     #endregion
-    
+
     #region Attacks
     public TileBehavior[] GetTargets(int[] targetRange)
     {
@@ -269,7 +288,15 @@ public abstract class Character : MonoBehaviour {
         return target;
     }
 
+    public bool validTarget(TileBehavior tile)
+    {
+        Debug.Log("target exists : " + tile.HasUnit());
+        Character target = tile.GetUnit();
+        return tile != null && target != null && target != this;
+    }
+
     public void AttackEnemy() {
+        GameManager.actionInProcess = true;
         int damage = curStatArr[0];
         Debug.Log("called attack function");
         Debug.Log(myDirection);
@@ -280,6 +307,8 @@ public abstract class Character : MonoBehaviour {
             Debug.Log("Attacked");
             target.GetUnit().HPDamage(damage);
         }
+        updateCooldowns();
+        GameManager.actionInProcess = false;
         return;
     }
     #endregion
