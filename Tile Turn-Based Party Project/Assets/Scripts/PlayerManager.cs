@@ -29,7 +29,23 @@ public class PlayerManager : MonoBehaviour
                 StartCoroutine(MoveUnitInDirection("right"));
             }
             else if (Input.GetKeyDown(KeyCode.F)) {
-                myCharacter.AttackEnemy(10);
+                myCharacter.AttackEnemy();
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                myCharacter.Ability1();
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                myCharacter.Ability2();
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                myCharacter.Ability3();
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                myCharacter.Ability4();
             }
         }
     }

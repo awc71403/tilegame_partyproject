@@ -6,9 +6,19 @@ using UnityEngine.UI;
 public abstract class Character : MonoBehaviour {
 
     public int[] curStatArr;
+    public int[] abilityCooldowns;
+    public int[] currentCooldowns;
+    public int[] abilityDurations;
+    // 0 - attack
+    // 1 - ability damage
+    // 2 - cooldown reduction
+    // 3 - damage reduction - skills mainly
+
     protected string characterName;
     public int totalHealth;
     public int currentHealth;
+    public int level;
+    public int experience;
 
     public bool isPlayer;
 
@@ -32,8 +42,12 @@ public abstract class Character : MonoBehaviour {
     private AudioClip[] stepSounds;
     private AudioSource audioSource;
 
-    public abstract void TakeDamage(int damage, int stat);
+    public abstract void TakeDamage(int damage);
     public abstract void DisplayStats();
+    public abstract void Ability1();
+    public abstract void Ability2();
+    public abstract void Ability3();
+    public abstract void Ability4();
 
     // Movement Bounce Animation
     float totalStretch = 0.3f;
@@ -83,9 +97,26 @@ public abstract class Character : MonoBehaviour {
         get { return curStatArr[0]; }
     }
 
-    public int GetSpeed {
+    public int AbilityDmg {
         get { return curStatArr[1]; }
     }
+
+    public int CooldownReduction {
+        get { return curStatArr[2]; }
+    }
+
+    public int DamageReduction {
+        get { return curStatArr[3]; }
+    }
+
+    public int Level {
+        get { return level; }
+    }
+
+    public int Experience {
+        get { return experience; }
+    }
+
 
     public void RecalculateDepth() {
         transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
@@ -110,7 +141,12 @@ public abstract class Character : MonoBehaviour {
     #endregion
 
     #region Animation
-    IEnumerator HurtAnimation(int damage) {
+    public void StartHurtAnimation()
+    {
+        StartCoroutine("HurtAnimation");
+    }
+
+    IEnumerator HurtAnimation() {
         // Go white
         WhiteSprite();
 
@@ -193,26 +229,52 @@ public abstract class Character : MonoBehaviour {
     #endregion
     
     #region Attacks
-    public void AttackEnemy(int damage) {
+    public TileBehavior[] GetTargets(int[] targetRange)
+    {
+        TileBehavior[] targets;
+        if (myDirection.Equals(Character.Direction.RIGHT))
+        {
+        }
+        else if (myDirection.Equals(Character.Direction.LEFT))
+        {
+        }
+        else if (myDirection.Equals(Character.Direction.UP))
+        {
+        }
+        else
+        {
+        }
+        return null;
+    }
+
+    public TileBehavior GetTarget()
+    {
+        TileBehavior target;
+        if (myDirection.Equals(Character.Direction.RIGHT))
+        {
+            target = occupiedTile.Right;
+        }
+        else if (myDirection.Equals(Character.Direction.LEFT))
+        {
+            target = occupiedTile.Left;
+        }
+        else if (myDirection.Equals(Character.Direction.UP))
+        {
+            target = occupiedTile.Up;
+        }
+        else
+        {
+            target = occupiedTile.Down;
+        }
+        return target;
+    }
+
+    public void AttackEnemy() {
+        int damage = curStatArr[0];
         Debug.Log("called attack function");
         Debug.Log(myDirection);
         Debug.Log(myDirection.Equals(Character.Direction.RIGHT));
-        TileBehavior target;
-        if (myDirection.Equals(Character.Direction.RIGHT)) {
-            Debug.Log("target right");
-            target = occupiedTile.Right;
-        } 
-        else if (myDirection.Equals(Character.Direction.LEFT)) {
-            Debug.Log("target left");
-            target = occupiedTile.Left;
-        }
-        else if (myDirection.Equals(Character.Direction.UP)) {
-            Debug.Log("target up");
-            target = occupiedTile.Up;
-        } else {
-            Debug.Log("target down");
-            target = occupiedTile.Down;
-        }
+        TileBehavior target = GetTarget();
         Debug.Log(target.HasUnit());
         if (target != null && target.HasUnit() && target.GetUnit() != this) {
             Debug.Log("Attacked");

@@ -8,7 +8,8 @@ public class TestClass : Character
     private int[] Stats = { 5, 5, 2, 4 };
 
 
-    void Awake() {
+    void Awake()
+    {
         totalHealth = 35;
         currentHealth = totalHealth;
         curStatArr = Stats;
@@ -16,16 +17,24 @@ public class TestClass : Character
     }
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
 
     }
 
-    public override void TakeDamage(int damage, int stat) {
+    public override void TakeDamage(int damage)
+    {
         print(curStatArr.Length);
-        curStatArr[stat] -= damage;
+        currentHealth -= damage;
     }
 
-    public override void DisplayStats() {
+    public override void DisplayStats()
+    {
         //open menu for character, display stats, etc.
     }
+
+    public override void Ability1() { return; }
+    public override void Ability2() { return; }
+    public override void Ability3() { return; }
+    public override void Ability4() { return; }
 }
