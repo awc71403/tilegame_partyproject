@@ -22,13 +22,30 @@ public class Enemy : MonoBehaviour
         ContactFilter2D contactFilter2D = new ContactFilter2D();
         int numHit = Physics2D.Raycast(transform.position, direction, contactFilter2D.NoFilter(), results, viewDistance);
         Debug.DrawRay(transform.position, direction.normalized * viewDistance, Color.red);
+
+        bool blocked = false;
+
         for(int i = 0; i < numHit; i++)
         {
-            if (results[i].transform.gameObject.GetComponent<PlayerManager>() != null)
+            GameObject hitObject = results[i].transform.gameObject;
+            if (hitObject.GetComponent<PlayerManager>() != null)
             {
-                Debug.Log("Hit player");
+                if (blocked)
+                {
+
+                    Debug.Log("Player blocked");
+                }
+                else
+                {
+
+                    Debug.Log("Hit player");
+                }
             }
-            
+            else if (hitObject.tag.Equals("Wall"))
+            {
+                blocked = true;
+                Debug.Log("Hit somethin else");
+            }
         }
     }
 
