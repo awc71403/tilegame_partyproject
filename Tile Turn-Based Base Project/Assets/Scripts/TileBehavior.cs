@@ -44,9 +44,9 @@ public abstract class TileBehavior : MonoBehaviour {
 
     #region Initialization
     void Awake() {
-        tileHighlighter.transform.position = transform.position;
-        tileHighlighterAnimator = tileHighlighter.GetComponent<Animator>();
-        setHighlightOpacity(playerOpacity);
+        //tileHighlighter.transform.position = transform.position;
+       // tileHighlighterAnimator = tileHighlighter.GetComponent<Animator>();
+        //setHighlightOpacity(playerOpacity);
     }
     #endregion
 

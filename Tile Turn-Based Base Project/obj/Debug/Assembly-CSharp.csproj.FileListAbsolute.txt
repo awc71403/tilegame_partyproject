@@ -1,0 +1,2 @@
+C:\Users\kathl\OneDrive\Documents\GitHub\tilegame\Tile Turn-Based Base Project\obj\Debug\Assembly-CSharp.csprojAssemblyReference.cache
+C:\Users\kathl\OneDrive\Documents\GitHub\tilegame\Tile Turn-Based Base Project\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
