@@ -18,8 +18,9 @@ public abstract class Character : MonoBehaviour {
     protected string characterName;
     public int totalHealth;
     public int currentHealth;
-    public int level;
-    public int experience;
+    public int level = 1;
+    public int experience = 0;
+    public int value = 0; // exp value on death
 
     public bool isPlayer;
 
@@ -227,13 +228,16 @@ public abstract class Character : MonoBehaviour {
         currentHealth = totalHealth;
     }
 
-    public void HPDamage(int damage) {
+    public bool HPDamage(int damage) { // Returns True on Kill / False otherwise
         currentHealth -= damage;
         if (currentHealth > 0) {
             StartCoroutine("HurtAnimation", damage);
+            return false;
         }
         else {
             StartCoroutine("DeathAnimation");
+            occupiedTile.ClearUnit();
+            return true;
         }
     }
 
@@ -289,7 +293,12 @@ public abstract class Character : MonoBehaviour {
         Debug.Log(target.HasUnit());
         if (target != null && target.HasUnit() && target.GetUnit() != this) {
             Debug.Log("Attacked");
-            target.GetUnit().HPDamage(damage);
+            Character enemy = target.GetUnit();
+            if (enemy.HPDamage(curStatArr[1]))
+            {
+                experience += enemy.value;
+                Debug.Log("experience : " + (experience));
+            }
         }
         updateCooldowns();
         GameManager.actionInProcess = false;

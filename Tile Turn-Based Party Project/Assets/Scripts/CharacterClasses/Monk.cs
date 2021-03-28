@@ -19,6 +19,7 @@ public class Monk : Character
         abilityCooldowns = abilityCDs;
         currentCooldowns = currentCDs;
         abilityDurations = abilityDur;
+        value = 0;
     }
 
     void Start()
@@ -59,7 +60,12 @@ public class Monk : Character
         TileBehavior targetTile = GetTarget();
         if (validTarget(targetTile))
         {
-            targetTile.GetUnit().HPDamage(curStatArr[1]);
+            Character enemy = targetTile.GetUnit();
+            if (enemy.HPDamage(curStatArr[1]))
+            {
+                experience += enemy.value;
+                Debug.Log("experience : " + (experience));
+            }
         }
         //activate cooldown
         updateCooldowns();
@@ -111,7 +117,12 @@ public class Monk : Character
         TileBehavior targetTile = GetTarget();
         if (validTarget(targetTile))
         {
-            targetTile.GetUnit().HPDamage(curStatArr[1]);
+            Character enemy = targetTile.GetUnit();
+            if (enemy.HPDamage(curStatArr[1]))
+            {
+                experience += enemy.value;
+                Debug.Log("experience : " + (experience));
+            }
         }
         updateCooldowns();
         currentCooldowns[2] += abilityCooldowns[2];
@@ -134,7 +145,12 @@ public class Monk : Character
         TileBehavior targetTile = GetTarget();
         if (validTarget(targetTile))
         {
-            targetTile.GetUnit().HPDamage(curStatArr[1]);
+            Character enemy = targetTile.GetUnit();
+            if (enemy.HPDamage(curStatArr[1]))
+            {
+                experience += enemy.value;
+                Debug.Log("experience : " + (experience));
+            }
             TakeDamage(curStatArr[1] / 5);
             Debug.Log("Recoil: " + curStatArr[1] / 5);
         }
