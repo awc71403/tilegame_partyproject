@@ -233,6 +233,7 @@ public abstract class Character : MonoBehaviour {
             StartCoroutine("HurtAnimation", damage);
         }
         else {
+            occupiedTile.ClearUnit();
             StartCoroutine("DeathAnimation");
         }
     }

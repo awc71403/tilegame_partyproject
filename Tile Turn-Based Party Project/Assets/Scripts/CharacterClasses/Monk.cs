@@ -98,20 +98,15 @@ public class Monk : Character
             GameManager.actionInProcess = false;
             return;
         }
-        //find enemies in area
-        //TileBehavior[] targetTiles = GetTargets(new int[] { 1, 1, 1, 0 }); // left, up, right, down in direction facing
-        //foreach (TileBehavior tile in targetTiles)
-        //{
-        //    Character target = tile.GetUnit();
-        //    if (tile != null && target != null && target != this)
-        //    {
-        //        target.HPDamage(curStatArr[1]);
-        //    }
-        //}
-        TileBehavior targetTile = GetTarget();
-        if (validTarget(targetTile))
+
+        TileBehavior target = GetTarget();
+        TileBehavior[] targets = new TileBehavior[] { target, target.Left, target.Right };
+        foreach (TileBehavior targetTile in targets)
         {
-            targetTile.GetUnit().HPDamage(curStatArr[1]);
+            if (validTarget(targetTile))
+            {
+                targetTile.GetUnit().HPDamage(curStatArr[1]);
+            }
         }
         updateCooldowns();
         currentCooldowns[2] += abilityCooldowns[2];
