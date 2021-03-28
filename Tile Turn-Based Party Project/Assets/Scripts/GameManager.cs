@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour
         // FOR TESTING PURPOSES
         PlaceCharacterOnTile(testCharacter, 0, 1);
         PlaceCharacterOnTile(testEnemy, 3, 3);
+        PlaceCharacterOnTile(testEnemy, 2, 3);
     }
 
     public void Update() {
@@ -123,7 +124,7 @@ public class GameManager : MonoBehaviour
     private string[] ReadLevelText() {
         TextAsset bindData = Resources.Load(testFile) as TextAsset;
         // We need to have different testing for mac and windows, \r\n is windows specific, so this needs to be \n on mac/linux
-        string data = bindData.text.Replace("\r\n", string.Empty);
+        string data = bindData.text.Replace("\n", string.Empty);
         return data.Split('-');
     }
 
