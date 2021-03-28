@@ -59,7 +59,12 @@ public class Monk : Character
         TileBehavior targetTile = GetTarget();
         if (validTarget(targetTile))
         {
-            targetTile.GetUnit().HPDamage(curStatArr[1]);
+            Character enemy = targetTile.GetUnit();
+            if (enemy.HPDamage(curStatArr[1]))
+            {
+                experience += enemy.value;
+                Debug.Log("experience : " + (experience));
+            }
         }
         //activate cooldown
         updateCooldowns();
@@ -98,14 +103,24 @@ public class Monk : Character
             GameManager.actionInProcess = false;
             return;
         }
-
-        TileBehavior target = GetTarget();
-        TileBehavior[] targets = new TileBehavior[] { target, target.Left, target.Right };
-        foreach (TileBehavior targetTile in targets)
+        //find enemies in area
+        //TileBehavior[] targetTiles = GetTargets(new int[] { 1, 1, 1, 0 }); // left, up, right, down in direction facing
+        //foreach (TileBehavior tile in targetTiles)
+        //{
+        //    Character target = tile.GetUnit();
+        //    if (tile != null && target != null && target != this)
+        //    {
+        //        target.HPDamage(curStatArr[1]);
+        //    }
+        //}
+        TileBehavior targetTile = GetTarget();
+        if (validTarget(targetTile))
         {
-            if (validTarget(targetTile))
+            Character enemy = targetTile.GetUnit();
+            if (enemy.HPDamage(curStatArr[1]))
             {
-                targetTile.GetUnit().HPDamage(curStatArr[1]);
+                experience += enemy.value;
+                Debug.Log("experience : " + (experience));
             }
         }
         updateCooldowns();
@@ -129,7 +144,12 @@ public class Monk : Character
         TileBehavior targetTile = GetTarget();
         if (validTarget(targetTile))
         {
-            targetTile.GetUnit().HPDamage(curStatArr[1]);
+            Character enemy = targetTile.GetUnit();
+            if (enemy.HPDamage(curStatArr[1]))
+            {
+                experience += enemy.value;
+                Debug.Log("experience : " + (experience));
+            }
             TakeDamage(curStatArr[1] / 5);
             Debug.Log("Recoil: " + curStatArr[1] / 5);
         }
