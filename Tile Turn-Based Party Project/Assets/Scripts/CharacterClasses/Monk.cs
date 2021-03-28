@@ -19,7 +19,6 @@ public class Monk : Character
         abilityCooldowns = abilityCDs;
         currentCooldowns = currentCDs;
         abilityDurations = abilityDur;
-        value = 0;
     }
 
     void Start()
