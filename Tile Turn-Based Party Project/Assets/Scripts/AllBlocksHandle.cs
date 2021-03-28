@@ -19,6 +19,8 @@ public class AllBlocksHandle : MonoBehaviour
 
     public int RoomSize;
 
+    public GameObject PlayerPrefab;
+
     public GameObject[] Enemies;
     public GameObject[] Items;
 
@@ -37,7 +39,7 @@ public class AllBlocksHandle : MonoBehaviour
     {
         enemiesToPlace = Random.Range(MinEnemies, MaxEnemies);
         itemsToPlace = Random.Range(MinItems, MaxItems);
-        Invoke("CreateEnemies", 2f);
+        Invoke("Create", 2f);
    
     }
 
@@ -47,17 +49,30 @@ public class AllBlocksHandle : MonoBehaviour
         
     }
 
-    void CreateEnemies()
+    void Create()
     {
         GameObject[] Tiles = GameObject.FindGameObjectsWithTag("FloorTile");
+
+        GameObject Tle = Tiles[Random.Range(0, Tiles.Length)];
+        Collider2D CheckBlock = Physics2D.OverlapCircle(Tle.transform.position, 0.1f, ActorLayer);
+        if (CheckBlock) {
+            //can't place here
+            Debug.Log("Other Character Already Placed");
+
+        }
+        else {
+            //place enemy
+            GameObject Player = Instantiate(PlayerPrefab, Tle.transform.position, Quaternion.identity);
+            Tle.GetComponent<TileBehavior>().PlaceUnit(Player.GetComponent<Character>());
+        }
 
         for (int i = 0; i < enemiesToPlace; i++)
         {
             //get random tile
-            GameObject Tle = Tiles[Random.Range(0, Tiles.Length)];
+            Tle = Tiles[Random.Range(0, Tiles.Length)];
 
             //check if tile has no other player/enemy
-            Collider2D CheckBlock = Physics2D.OverlapCircle(Tle.transform.position, 0.1f, ActorLayer);
+            CheckBlock = Physics2D.OverlapCircle(Tle.transform.position, 0.1f, ActorLayer);
 
             if (CheckBlock)
             {
@@ -70,7 +85,7 @@ public class AllBlocksHandle : MonoBehaviour
                 //place enemy
                 int randenemy = Random.Range(0, Enemies.Length);
                 GameObject Enemy = Instantiate(Enemies[randenemy], Tle.transform.position, Quaternion.identity);
-
+                Tle.GetComponent<TileBehavior>().PlaceUnit(Enemy.GetComponent<Character>());
                 Debug.Log("Enemy Placed");
             }
         }
@@ -78,10 +93,10 @@ public class AllBlocksHandle : MonoBehaviour
         for (int i = 0; i < itemsToPlace; i++)
         {
             //get random tile
-            GameObject Tle = Tiles[Random.Range(0, Tiles.Length)];
+            Tle = Tiles[Random.Range(0, Tiles.Length)];
 
             //check if tile has no other player/enemy
-            Collider2D CheckBlock = Physics2D.OverlapCircle(Tle.transform.position, 0.1f, ActorLayer);
+            CheckBlock = Physics2D.OverlapCircle(Tle.transform.position, 0.1f, ActorLayer);
 
             if (CheckBlock)
             {

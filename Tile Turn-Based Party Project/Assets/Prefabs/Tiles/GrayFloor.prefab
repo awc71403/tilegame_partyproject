@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8419108629745016370}
   - component: {fileID: 8419108629745016368}
   - component: {fileID: -8299182611309603347}
+  - component: {fileID: 2610233743515279432}
   m_Layer: 0
   m_Name: GrayFloor
   m_TagString: FloorTile
@@ -120,7 +121,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13ff87d1ebe8b8643a698141224ab94f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementCost: 1
   xPosition: 0
   yPosition: 0
   tileType: 
@@ -131,3 +131,21 @@ MonoBehaviour:
   tileHighlighter: {fileID: 0}
   playerOpacity: 0
   enemyOpacity: 0
+--- !u!114 &2610233743515279432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8419108629745016369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a696f4e6e88d2ce49904f58f096502c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FloorTiles: []
+  TwoSidedFloor: []
+  TwoSidedFloorCorner: []
+  LayersToCheck:
+    serializedVersion: 2
+    m_Bits: 0

@@ -30,6 +30,7 @@ public abstract class TileBehavior : MonoBehaviour {
         //tileHighlighterAnimator = tileHighlighter.GetComponent<Animator>();
         //setHighlightOpacity(playerOpacity);
     }
+
     #endregion
 
     #region Opacity
