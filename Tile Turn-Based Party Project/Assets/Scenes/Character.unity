@@ -147,7 +147,7 @@ PrefabInstance:
         type: 3}
       propertyPath: testCharacter
       value: 
-      objectReference: {fileID: 7303250411730654310, guid: 949ef5abf49b98a448423d0e4fa2ca12,
+      objectReference: {fileID: 2844339817677914700, guid: 0213a74c1ecec4593acdc394f41b8f34,
         type: 3}
     - target: {fileID: 4996835170940464041, guid: 8af7bc10483e94246b6f2656d5ea20cc,
         type: 3}
