@@ -13,6 +13,7 @@ public class TestClass : Character
         totalHealth = 35;
         currentHealth = totalHealth;
         curStatArr = Stats;
+        value = 100;
         name = "Test";
     }
 

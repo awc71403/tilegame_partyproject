@@ -57,6 +57,11 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
+    public static void UpdateEnemies()
+    {
+
+    }
+
     #region Set Up
     public void CreateTiles() {
 
