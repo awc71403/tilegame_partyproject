@@ -54,6 +54,8 @@ public abstract class Character : MonoBehaviour {
     // Movement Bounce Animation
     float totalStretch = 0.3f;
     float totalSquish = 0.3f;
+    
+
 
     #region Initialization
     void Start() {
