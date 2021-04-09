@@ -21,12 +21,14 @@ public abstract class Character : MonoBehaviour {
     public int level = 1;
     public int experience = 0;
     public int value = 0; // exp value on death
+    public int money; // money that the player or enemy has
+    public int drop;
 
     public bool isPlayer;
 
     public TileBehavior occupiedTile;
 
-    public enum Direction {RIGHT, LEFT, UP, DOWN};
+    public enum Direction {RIGHT, LEFT, UP, DOWN, UPRIGHT, UPLEFT, DOWNRIGHT, DOWNLEFT};
     public Direction myDirection;
     // Sprite Rendering
     private SpriteRenderer myRenderer;
@@ -65,6 +67,8 @@ public abstract class Character : MonoBehaviour {
         audioSource = GetComponent<AudioSource>();
         SetHPFull();
         myDirection = Character.Direction.RIGHT;
+        money = 0;
+        drop = Random.Range(1, 10);
     }
     #endregion
 
@@ -128,6 +132,10 @@ public abstract class Character : MonoBehaviour {
     public TileBehavior OccupiedTile {
         get { return occupiedTile; }
         set { occupiedTile = value; }
+    }
+
+    public int Money {
+        get { return money;}
     }
     #endregion
 
@@ -212,6 +220,10 @@ public abstract class Character : MonoBehaviour {
         //audioSource.clip = stepSounds[stepNum];
         //audioSource.Play();
     }
+
+    public void setFlip(bool direction) {
+        myRenderer.flipX = direction;
+    }
     #endregion
 
     #region Stats
@@ -269,13 +281,28 @@ public abstract class Character : MonoBehaviour {
             target = occupiedTile.Right;
         }
         else if (myDirection.Equals(Character.Direction.UP)) {
-            target = occupiedTile.Left;
-        }
-        else if (myDirection.Equals(Character.Direction.LEFT)) {
             target = occupiedTile.Up;
         }
-        else {
+        else if (myDirection.Equals(Character.Direction.LEFT)) {
+            target = occupiedTile.Left;
+        }
+        else if (myDirection.Equals(Character.Direction.DOWN)) {
             target = occupiedTile.Down;
+        }
+        else if (myDirection.Equals(Character.Direction.UPRIGHT)) {
+            target = occupiedTile.UpRight;
+        }
+        else if (myDirection.Equals(Character.Direction.UPLEFT)) {
+            target = occupiedTile.UpLeft;
+        }
+        else if (myDirection.Equals(Character.Direction.DOWNRIGHT)) {
+            target = occupiedTile.DownRight;
+        }
+        else if (myDirection.Equals(Character.Direction.DOWNLEFT)) {
+            target = occupiedTile.DownLeft;
+        }
+        else {
+            target = null;
         }
             return target;
         }
@@ -291,7 +318,6 @@ public abstract class Character : MonoBehaviour {
         int damage = curStatArr[0];
         Debug.Log("called attack function");
         Debug.Log(myDirection);
-        Debug.Log(myDirection.Equals(Character.Direction.RIGHT));
         TileBehavior target = GetTarget();
         Debug.Log(target.HasUnit());
         if (target != null && target.HasUnit() && target.GetUnit() != this) {
@@ -301,6 +327,9 @@ public abstract class Character : MonoBehaviour {
             {
                 experience += enemy.value;
                 Debug.Log("experience : " + (experience));
+                Debug.Log(enemy.money);
+                money += enemy.Drop();
+                Debug.Log("money : " + money);
             }
         }
         updateCooldowns();
@@ -308,5 +337,13 @@ public abstract class Character : MonoBehaviour {
         return;
     }
     #endregion
+
+    int Drop() {
+        int chance = Random.Range(1, 4);
+        if (chance == 1) {
+            return drop;
+        }
+        return 0;
+    }
 }
 

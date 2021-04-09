@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -34,19 +35,42 @@ public class PlayerManager : MonoBehaviour
 
     void Update() {
         if (!GameManager.actionInProcess) {
-            if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.A)) {
+            if (myCharacter.currentHealth <= 0) {
+                SceneManager.LoadScene(sceneName:"Camera-Following-Player");
+            }
+            if (Input.GetKey(KeyCode.LeftShift)) {
+                if (Input.GetKey(KeyCode.W) && Input.GetKeyDown(KeyCode.A)) {
+                    Debug.Log("upleft");
+                    StartCoroutine(MoveUnitInDirection("upleft"));
+                }
+                if (Input.GetKey(KeyCode.W) && Input.GetKeyDown(KeyCode.D)) {
+                    Debug.Log("upright");
+                    StartCoroutine(MoveUnitInDirection("upright"));
+                }
+                if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A)) {
+                    Debug.Log("downleft");
+                    StartCoroutine(MoveUnitInDirection("downleft"));
+                }
+                if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D)) {
+                    Debug.Log("downright");
+                    StartCoroutine(MoveUnitInDirection("downright"));
+                    }
+                }
+            else if (Input.GetKey(KeyCode.LeftArrow)) {
                 myCharacter.myDirection = Character.Direction.LEFT;
                 Debug.Log(myCharacter.myDirection);
+                myCharacter.setFlip(true);
             }
-            else if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.S)) {
+            else if (Input.GetKey(KeyCode.DownArrow)) {
                 myCharacter.myDirection = Character.Direction.DOWN;
                 Debug.Log(myCharacter.myDirection);
             }
-            else if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.D)) {
+            else if (Input.GetKey(KeyCode.RightArrow)) {
                 myCharacter.myDirection = Character.Direction.RIGHT;
                 Debug.Log(myCharacter.myDirection);
+                myCharacter.setFlip(false);
             }
-            else if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.W)) {
+            else if (Input.GetKey(KeyCode.UpArrow)) {
                 myCharacter.myDirection = Character.Direction.UP;
                 Debug.Log(myCharacter.myDirection);
             }
@@ -96,6 +120,7 @@ public class PlayerManager : MonoBehaviour
             if (upTile != null && upTile.tileType != WALL && !upTile.HasUnit()) {
                 myCharacter.occupiedTile.ClearUnit();
                 myCharacter.occupiedTile = upTile;
+                myCharacter.occupiedTile.Effect();
                 myCharacter.myDirection = Character.Direction.UP;
             }
         }
@@ -106,6 +131,8 @@ public class PlayerManager : MonoBehaviour
                 myCharacter.occupiedTile.ClearUnit();
                 myCharacter.occupiedTile = rightTile;
                 myCharacter.myDirection = Character.Direction.RIGHT;
+                myCharacter.occupiedTile.Effect();
+                myCharacter.setFlip(false);
             }
         }
         else if (direction.Equals("down")) {
@@ -114,6 +141,7 @@ public class PlayerManager : MonoBehaviour
             if (downTile != null && downTile.tileType != WALL && !downTile.HasUnit()) {
                 myCharacter.occupiedTile.ClearUnit();
                 myCharacter.occupiedTile = downTile;
+                myCharacter.occupiedTile.Effect();                
                 myCharacter.myDirection = Character.Direction.DOWN;
             }
         }
@@ -124,8 +152,54 @@ public class PlayerManager : MonoBehaviour
                 myCharacter.occupiedTile.ClearUnit();
                 myCharacter.occupiedTile = leftTile;
                 myCharacter.myDirection = Character.Direction.LEFT;
+                myCharacter.occupiedTile.Effect();
+                myCharacter.setFlip(true);
             }
         }
+        else if (direction.Equals("upright")) {
+            myCharacter.transform.position += new Vector3(-tileSize, 0);
+            TileBehavior upright = myCharacter.occupiedTile.UpRight;
+            if (upright != null && upright.tileType != WALL && !upright.HasUnit()) {
+                myCharacter.occupiedTile.ClearUnit();
+                myCharacter.occupiedTile = upright;
+                myCharacter.myDirection = Character.Direction.UPRIGHT;
+                myCharacter.occupiedTile.Effect();
+                myCharacter.setFlip(false);
+            }
+        }
+        else if (direction.Equals("upleft")) {
+            myCharacter.transform.position += new Vector3(-tileSize, 0);
+            TileBehavior upLeft = myCharacter.occupiedTile.UpLeft;
+            if (upLeft != null && upLeft.tileType != WALL && !upLeft.HasUnit()) {
+                myCharacter.occupiedTile.ClearUnit();
+                myCharacter.occupiedTile = upLeft;
+                myCharacter.myDirection = Character.Direction.UPLEFT;
+                myCharacter.occupiedTile.Effect();
+                myCharacter.setFlip(true);
+            }
+        }
+        else if (direction.Equals("downright")) {
+            myCharacter.transform.position += new Vector3(-tileSize, 0);
+            TileBehavior downRight = myCharacter.occupiedTile.DownRight;
+            if (downRight != null && downRight.tileType != WALL && !downRight.HasUnit()) {
+                myCharacter.occupiedTile.ClearUnit();
+                myCharacter.occupiedTile = downRight;
+                myCharacter.myDirection = Character.Direction.DOWNRIGHT;
+                myCharacter.occupiedTile.Effect();
+                myCharacter.setFlip(false);
+            }
+        }
+        else if (direction.Equals("downleft")) {
+            myCharacter.transform.position += new Vector3(-tileSize, 0);
+            TileBehavior downLeft = myCharacter.occupiedTile.DownLeft;
+            if (downLeft != null && downLeft.tileType != WALL && !downLeft.HasUnit()) {
+                myCharacter.occupiedTile.ClearUnit();
+                myCharacter.occupiedTile = downLeft;
+                myCharacter.myDirection = Character.Direction.DOWNLEFT;
+                myCharacter.occupiedTile.Effect();
+                myCharacter.setFlip(true);
+            }
+        }        
         myCharacter.updateCooldowns();
         myCharacter.RecalculateDepth();
         myCharacter.StartBounceAnimation();

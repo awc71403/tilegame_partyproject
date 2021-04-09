@@ -15,4 +15,9 @@ public class TestTile : TileBehavior
     {
         
     }
+
+    public override void Effect() 
+    {
+        return;
+    }
 }

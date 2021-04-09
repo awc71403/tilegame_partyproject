@@ -16,6 +16,10 @@ public abstract class TileBehavior : MonoBehaviour {
     public TileBehavior Right;
     public TileBehavior Up;
     public TileBehavior Down;
+    public TileBehavior UpRight;
+    public TileBehavior UpLeft;
+    public TileBehavior DownRight;
+    public TileBehavior DownLeft;
 
     [SerializeField]
     GameObject tileHighlighter;
@@ -29,6 +33,7 @@ public abstract class TileBehavior : MonoBehaviour {
         //tileHighlighter.transform.position = transform.position;
         //tileHighlighterAnimator = tileHighlighter.GetComponent<Animator>();
         //setHighlightOpacity(playerOpacity);
+        
     }
 
     #endregion
@@ -72,4 +77,5 @@ public abstract class TileBehavior : MonoBehaviour {
     }
     #endregion
 
+    public abstract void Effect();
 }
