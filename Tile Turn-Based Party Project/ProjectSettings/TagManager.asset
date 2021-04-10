@@ -8,6 +8,8 @@ TagManager:
   - FloorTile
   - TwoSidedFloor
   - TwoSidedFloorCorner
+  - Wall
+  - Enemy
   layers:
   - Default
   - TransparentFX

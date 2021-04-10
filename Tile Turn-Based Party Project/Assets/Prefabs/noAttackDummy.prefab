@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -6627191708661728708}
   m_Layer: 0
   m_Name: noAttackDummy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -96,8 +96,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curStatArr: 05000000050000000200000004000000
+  baseStats: 
+  abilityCooldowns: 
+  currentCooldowns: 
+  abilityDurations: 
   totalHealth: 35
   currentHealth: 35
+  level: 1
+  experience: 0
+  value: 0
   isPlayer: 0
   occupiedTile: {fileID: 0}
   myDirection: 0
