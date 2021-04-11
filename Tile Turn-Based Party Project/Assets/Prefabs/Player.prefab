@@ -118,7 +118,7 @@ MonoBehaviour:
   level: 1
   experience: 0
   value: 0
-  isPlayer: 0
+  isPlayer: 1
   occupiedTile: {fileID: 0}
   myDirection: 0
   DamageTextPrefab: {fileID: 0}
