@@ -817,8 +817,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c5d7878b6b956c4c8494beaca8cb594, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player_data:
-    profile: 
   m_attackButton: {fileID: 0}
   tilePrefabs:
   - {fileID: 401562437044840792, guid: 7b99f2e9499b1824193d3060cab7e360, type: 3}

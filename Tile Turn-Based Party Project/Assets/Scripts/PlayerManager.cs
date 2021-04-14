@@ -189,5 +189,10 @@ public class PlayerManager : MonoBehaviour
         GameManager.actionInProcess = false;
         GameManager.UpdateEnemies();
     }
+
+    public void StartMoveDuringAttackAnimation()
+    {
+        StartCoroutine(MoveUnitInDirection(myCharacter.GetDirectionString()));
     }
+}
     #endregion

@@ -98,10 +98,10 @@ public class Cat : Character
         }
 
         TileBehavior targetTile = GetTarget();
-        if (!HitEnemy(targetTile, curStatArr[1] + 2) && !targetTile.HasUnit() && targetTile.tileType != "wall")
+        if (targetTile != null && !HitEnemy(targetTile, curStatArr[1] + 2) && !targetTile.HasUnit() && targetTile.tileType != "wall")
         {
-            occupiedTile = targetTile;
-            StartMoveDuringAttackAnimation();
+            Debug.Log("about to attack move");
+            GetComponent<PlayerManager>().StartMoveDuringAttackAnimation();
             targetTile = GetTarget();
             HitEnemy(targetTile, curStatArr[1]);
         }
@@ -125,7 +125,7 @@ public class Cat : Character
         }
 
         TileBehavior targetTile = GetTarget();
-        while (!HitEnemy(targetTile, curStatArr[1]-1) && targetTile.tileType != "wall")
+        while (targetTile != null && !HitEnemy(targetTile, curStatArr[1]-1) && targetTile.tileType != "wall")
         {
             targetTile = GetTarget(targetTile);
         }
