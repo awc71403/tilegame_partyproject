@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Monk : Character
+public class Cat : Character
 {
 
-    private int[] baseClassStats = { 3, 5, 5, 0}; // Attack, AP, CD, Damage Reduction
-    private int[] abilityCDs = { 2, 2, 2, 2 };
+    private int[] baseClassStats = { 5, 5, 5, 0}; // Attack, AP, CD, Damage Reduction
+    private int[] abilityCDs = { 2, 2, 4, 2 };
     private int[] currentCDs = { 0, 0, 0, 0 };
     private int[] abilityDur = { 0, 0, 0, 0 }; // Only for Ability 2, but may be used more in future
 
@@ -16,7 +16,7 @@ public class Monk : Character
         totalHealth = currentHealth = 100;
         curStatArr = baseClassStats;
         baseStats = baseClassStats;
-        characterName = "monk";
+        characterName = "cat";
         abilityCooldowns = abilityCDs;
         currentCooldowns = currentCDs;
         abilityDurations = abilityDur;
@@ -45,7 +45,7 @@ public class Monk : Character
     }
 
     #region Abilities
-    //Mega Punch
+    //Claw Strike
     public override void Ability1()
     {
         //get target
@@ -58,8 +58,7 @@ public class Monk : Character
             return;
         }
         TileBehavior targetTile = GetTarget();
-        HitEnemy(targetTile, curStatArr[1]);
-
+        HitEnemy(targetTile, curStatArr[1] + 2);
         //activate cooldown
         updateCooldowns();
         currentCooldowns[0] += abilityCooldowns[0];
@@ -68,7 +67,7 @@ public class Monk : Character
         GameManager.actionInProcess = false;
     }
 
-    //Armor Dillo
+    //Cat Cry NOT FINISHED
     public override void Ability2()
     {
         GameManager.actionInProcess = true;
@@ -79,8 +78,8 @@ public class Monk : Character
             GameManager.actionInProcess = false;
             return;
         }
-        curStatArr[3] = 20;
         abilityDurations[1] += 3;
+        //Need to add health regen
         updateCooldowns();
         currentCooldowns[1] += abilityCooldowns[1];
         Debug.Log("Cooldown After: " + currentCooldowns[1]);
@@ -97,13 +96,16 @@ public class Monk : Character
             GameManager.actionInProcess = false;
             return;
         }
-        //Need to fix
+
         TileBehavior targetTile = GetTarget();
-        TileBehavior LeftTile = targetTile.Left;
-        TileBehavior RightTile = targetTile.Right;
-        HitEnemy(targetTile, curStatArr[1]);
-        HitEnemy(LeftTile, curStatArr[1]);
-        HitEnemy(RightTile, curStatArr[1]);
+        if (targetTile != null && !HitEnemy(targetTile, curStatArr[1] + 2) && !targetTile.HasUnit() && targetTile.tileType != "wall")
+        {
+            Debug.Log("about to attack move");
+            GetComponent<PlayerManager>().StartMoveDuringAttackAnimation();
+            targetTile = GetTarget();
+            HitEnemy(targetTile, curStatArr[1]);
+        }
+       
         updateCooldowns();
         currentCooldowns[2] += abilityCooldowns[2];
         Debug.Log("Cooldown After: " + currentCooldowns[2]);
@@ -123,10 +125,9 @@ public class Monk : Character
         }
 
         TileBehavior targetTile = GetTarget();
-        if (HitEnemy(targetTile, curStatArr[1] + 5))
+        while (targetTile != null && !HitEnemy(targetTile, curStatArr[1]-1) && targetTile.tileType != "wall")
         {
-            TakeDamage(curStatArr[1] / 5);
-            Debug.Log("Recoil: " + curStatArr[1] / 5);
+            targetTile = GetTarget(targetTile);
         }
         updateCooldowns();
         currentCooldowns[3] += abilityCooldowns[3];
