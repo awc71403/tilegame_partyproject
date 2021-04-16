@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -33,6 +34,9 @@ public class GameManager : MonoBehaviour
         float tileSize;
 
     [SerializeField]
+    private string profile;
+
+    [SerializeField]
     private string testFile;
     #endregion
 
@@ -44,7 +48,6 @@ public class GameManager : MonoBehaviour
             return;
         }
         m_Singleton = this;
-
         tileSize = tilePrefabs[0].GetComponent<SpriteRenderer>().sprite.bounds.size.x;
         CreateTiles();
     }
@@ -139,11 +142,12 @@ public class GameManager : MonoBehaviour
         return data.Split('-');
     }
 
-    void PlaceCharacterOnTile(GameObject unit, int x, int y) {
+    Character PlaceCharacterOnTile(GameObject unit, int x, int y) {
         // Instantiate an instance of the unit and place it on the given tile.
         Character newUnit = Instantiate(unit).GetComponent<Character>();
         newUnit.SetHPFull();
         mapArray[x, y].transform.GetComponent<TileBehavior>().PlaceUnit(newUnit);
+        return newUnit;
     }
     #endregion
 

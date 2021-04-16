@@ -15,7 +15,7 @@ public abstract class Character : MonoBehaviour {
     // 2 - cooldown reduction
     // 3 - damage reduction - skills mainly
 
-    protected string characterName;
+    public string characterName;
     public int totalHealth;
     public int currentHealth;
     public int level = 1;
@@ -23,6 +23,8 @@ public abstract class Character : MonoBehaviour {
     public int value = 0; // exp value on death
 
     public bool isPlayer;
+    public bool isCharacter;
+    public int charValue;
 
     public TileBehavior occupiedTile;
 
@@ -32,6 +34,7 @@ public abstract class Character : MonoBehaviour {
     private SpriteRenderer myRenderer;
     private Shader shaderGUItext;
     private Shader shaderSpritesDefault;
+    public PlayerManager playerManager;
 
     [SerializeField]
     private Text DamageTextPrefab;
@@ -65,6 +68,7 @@ public abstract class Character : MonoBehaviour {
         audioSource = GetComponent<AudioSource>();
         SetHPFull();
         myDirection = Character.Direction.RIGHT;
+        playerManager = GetComponent<PlayerManager>();
     }
     #endregion
 
@@ -119,6 +123,26 @@ public abstract class Character : MonoBehaviour {
 
     public int Experience {
         get { return experience; }
+    }
+
+    public string GetDirectionString()
+    {
+        if (myDirection == Direction.DOWN)
+        {
+            return "down";
+        }
+        else if (myDirection == Direction.LEFT)
+        {
+            return "left";
+        }
+        else if (myDirection == Direction.UP)
+        {
+            return "up";
+        }
+        else 
+        {
+            return "right";
+        }
     }
 
     public void RecalculateDepth() {
@@ -212,6 +236,7 @@ public abstract class Character : MonoBehaviour {
         //audioSource.clip = stepSounds[stepNum];
         //audioSource.Play();
     }
+
     #endregion
 
     #region Stats
@@ -244,6 +269,24 @@ public abstract class Character : MonoBehaviour {
         }
     }
 
+    public bool HitEnemy(TileBehavior tile, int dmg)
+    {
+        Debug.Log("attempted hit");
+        Debug.Log("Tile coordinates : " + tile.xPosition + " " + tile.yPosition);
+        if (validTarget(tile))
+        {
+            Debug.Log("target hit");
+            Character enemy = tile.GetUnit();
+            if (enemy.HPDamage(dmg))
+            {
+                experience += enemy.value;
+                Debug.Log("experience : " + (experience));
+            }
+            return true;
+        }
+        return false;
+    }
+
     public void updateCooldowns() {
         if (currentCooldowns == null) {
             return;
@@ -269,21 +312,47 @@ public abstract class Character : MonoBehaviour {
             target = occupiedTile.Right;
         }
         else if (myDirection.Equals(Character.Direction.UP)) {
-            target = occupiedTile.Left;
+            target = occupiedTile.Up;
         }
         else if (myDirection.Equals(Character.Direction.LEFT)) {
-            target = occupiedTile.Up;
+            target = occupiedTile.Left;
         }
         else {
             target = occupiedTile.Down;
         }
-            return target;
+        return target;
+    }
+
+    public TileBehavior GetTarget(TileBehavior tile)
+    {
+        TileBehavior target;
+        if (myDirection.Equals(Character.Direction.RIGHT))
+        {
+            target = tile.Right;
         }
+        else if (myDirection.Equals(Character.Direction.UP))
+        {
+            target = tile.Up;
+        }
+        else if (myDirection.Equals(Character.Direction.LEFT))
+        {
+            target = tile.Left;
+        }
+        else
+        {
+            target = tile.Down;
+        }
+        return target;
+    }
 
     public bool validTarget(TileBehavior tile) {
+        if (tile == null)
+        {
+            return false;
+        }
         Debug.Log("target exists : " + tile.HasUnit());
         Character target = tile.GetUnit();
-        return tile != null && target != null && target != this;
+        return target != null && target != this;
     }
 
     public void AttackEnemy() {
@@ -306,6 +375,18 @@ public abstract class Character : MonoBehaviour {
         updateCooldowns();
         GameManager.actionInProcess = false;
         return;
+    }
+    #endregion
+
+    #region otherActions
+    public Character saveCharacter()
+    {
+        TileBehavior target = GetTarget();
+        if (validTarget(target) && target.GetUnit().isCharacter)
+        {
+            return target.GetUnit();
+        }
+        return null;
     }
     #endregion
 }
