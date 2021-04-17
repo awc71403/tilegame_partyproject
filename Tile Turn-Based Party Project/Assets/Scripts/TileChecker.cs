@@ -48,7 +48,66 @@ public class TileChecker : MonoBehaviour
                     }
                 }
             }
-        }
+            
+            // assign the diagonals
+            // up left
+            if (tile.Left != null) {
+                if (tile.Left.Up != null) {
+                    tile.UpLeft = tile.Left.Up;
+                    tile.UpLeft.DownRight = tile;
+                }
+            }
+            else if (tile.Up != null) {
+                if (tile.Up.Left != null) {
+                    tile.UpLeft = tile.Up.Left;
+                    tile.UpLeft.DownRight = tile;
+                }
+            }
+
+            // up right
+            if (tile.Right != null) {
+                if (tile.Right.Up != null) {
+                    tile.UpRight = tile.Right.Up;
+                    tile.UpRight.DownLeft = tile;
+                }
+            }
+
+            else if (tile.Up != null) {
+                if (tile.Up.Right != null) {
+                    tile.UpRight = tile.Up.Right;
+                    tile.UpRight.DownLeft = tile;
+                }
+            }
+
+            // down left
+            if (tile.Left != null) {
+                if (tile.Left.Down != null) {
+                    tile.DownLeft = tile.Left.Down;
+                    tile.DownLeft.UpRight = tile;
+                }
+            }
+            else if (tile.Down != null) {
+                if (tile.Down.Left != null) {
+                    tile.DownLeft = tile.Down.Left;
+                    tile.DownLeft.UpRight = tile;
+                }
+            }
+            
+            // down right
+            if (tile.Right != null) {
+                if (tile.Right.Down != null) {
+                    tile.DownRight = tile.Right.Down;
+                    tile.DownRight.UpLeft = tile;
+                }
+            }
+            else if (tile.Down != null) {
+                if (tile.Down.Right != null) {
+                    tile.DownRight = tile.Down.Right;
+                    tile.DownRight.UpLeft = tile;
+                }
+            }
+
+        } 
     }
 
     void CheckTile()

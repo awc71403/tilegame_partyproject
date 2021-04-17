@@ -20,6 +20,7 @@ public class AllBlocksHandle : MonoBehaviour
     public int RoomSize;
 
     public GameObject PlayerPrefab;
+    public GameObject DirectionUIPrefab;
 
     public GameObject[] Enemies;
     public GameObject[] Items;

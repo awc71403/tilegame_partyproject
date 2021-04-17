@@ -29,6 +29,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     GameObject testItem;
 
+    [SerializeField]
+    public GameObject shop; 
+
     TileBehavior[,] mapArray;
         float tileSize;
 
@@ -145,10 +148,12 @@ public class GameManager : MonoBehaviour
         newUnit.SetHPFull();
         mapArray[x, y].transform.GetComponent<TileBehavior>().PlaceUnit(newUnit);
     }
+
     #endregion
 
     #region UI
     public void ShowCharacterUI(Character selectedUnit) {
+
     }
 
     public void ClearUI() {
