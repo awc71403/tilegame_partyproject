@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -77,11 +78,7 @@ public abstract class TileBehavior : MonoBehaviour {
     // Recursive helper function to calculate the steps to take to get from tile A to tile B
     public static List<string> CalculateMovement(List<string> movement, TileBehavior currentTile, TileBehavior goalTile, float tileSize, float moveEnergy)
     {
-        // If you're there, return the movement path.
-        if (currentTile.Equals(goalTile))
-        {
-            return movement;
-        }
+       
 
         // If you're out of energy, it's an invalid path.
         if (moveEnergy < 0)
@@ -93,6 +90,13 @@ public abstract class TileBehavior : MonoBehaviour {
 
         // Check for all adjacent tiles:
         TileBehavior[] neighbors = { currentTile.Left, currentTile.Up, currentTile.Right, currentTile.Down};
+
+        // If you're there, return the movement path.
+        if (neighbors.Contains(goalTile))
+        {
+            return movement;
+        }
+
         foreach (TileBehavior neighbor in neighbors)
         {
           
@@ -100,7 +104,7 @@ public abstract class TileBehavior : MonoBehaviour {
             if (neighbor != null && neighbor.tileType != "wall")
             {
                 Character otherTileUnit = neighbor.myUnit;
-                if (otherTileUnit == null || otherTileUnit.isPlayer)
+                if (otherTileUnit == null)
                 {
                     List<string> newMovement = new List<string>(movement.ToArray());
                     if (neighbor.Equals(currentTile.Right))

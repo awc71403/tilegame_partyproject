@@ -146,5 +146,10 @@ public class PlayerManager : MonoBehaviour
         return myCharacter.occupiedTile;
     }
 
+
+    public Character GetCharacter()
+    {
+        return myCharacter;
+    }
     #endregion
 }

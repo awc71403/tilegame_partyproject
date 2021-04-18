@@ -22,7 +22,6 @@ public class BasicEnemyAI : MonoBehaviour
 
     private void Awake()
     {
-
         myCharacter = GetComponent<Character>();
     }
 
@@ -67,13 +66,23 @@ public class BasicEnemyAI : MonoBehaviour
         if(DetectPlayer())
         {
             float tileSize = GetComponent<SpriteRenderer>().sprite.bounds.size.x;
+            
             //Calculate path to player's tile from this tile
             List<string> steps = TileBehavior.CalculateMovement(new List<string>(), myCharacter.occupiedTile, PlayerManager.singleton.GetTile(), tileSize, viewDistance);
+            
             
             //If there exists a path, take the first step towards it
             if (steps != null)
             {
-                StartCoroutine(MoveInDirection(steps[0]));
+                //If player is adjacent
+                if (steps.Count <= 0)
+                {
+                    myCharacter.Ability1();
+                }
+                else
+                {
+                    StartCoroutine(MoveInDirection(steps[0]));
+                }
             }
         }
     }

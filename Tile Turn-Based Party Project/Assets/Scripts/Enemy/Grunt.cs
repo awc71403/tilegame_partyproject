@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class Grunt : Character
 {
+
+    public int MeleeDamage = 3;
     public override void Ability1()
     {
-        throw new System.NotImplementedException();
+        PlayerManager.singleton.GetCharacter().TakeDamage(MeleeDamage);
     }
 
     public override void Ability2()
     {
+
         throw new System.NotImplementedException();
     }
 
