@@ -15,7 +15,7 @@ public abstract class Character : MonoBehaviour {
     // 2 - cooldown reduction
     // 3 - damage reduction - skills mainly
 
-    protected string characterName;
+    public string characterName;
     public int totalHealth;
     public int currentHealth;
     public int level = 1;
@@ -24,6 +24,8 @@ public abstract class Character : MonoBehaviour {
     public int money; // money that the player has
 
     public bool isPlayer;
+    public bool isCharacter;
+    public int charValue;
 
     public TileBehavior occupiedTile;
 
@@ -33,6 +35,7 @@ public abstract class Character : MonoBehaviour {
     private SpriteRenderer myRenderer;
     private Shader shaderGUItext;
     private Shader shaderSpritesDefault;
+    public PlayerManager playerManager;
 
     [SerializeField]
     private Text DamageTextPrefab;
@@ -67,9 +70,9 @@ public abstract class Character : MonoBehaviour {
         SetHPFull();
         myDirection = Character.Direction.RIGHT;
         money = 0;
+        playerManager = GetComponent<PlayerManager>();
     }
     #endregion
-
     #region Getter and Setter
     public string Name {
         get { return characterName; }
@@ -121,6 +124,26 @@ public abstract class Character : MonoBehaviour {
 
     public int Experience {
         get { return experience; }
+    }
+
+    public string GetDirectionString()
+    {
+        if (myDirection == Direction.DOWN)
+        {
+            return "down";
+        }
+        else if (myDirection == Direction.LEFT)
+        {
+            return "left";
+        }
+        else if (myDirection == Direction.UP)
+        {
+            return "up";
+        }
+        else 
+        {
+            return "right";
+        }
     }
 
     public void RecalculateDepth() {
@@ -220,7 +243,7 @@ public abstract class Character : MonoBehaviour {
     }
 
     public void setFlip(bool direction) {
-        myRenderer.flipX = direction;
+        gameObject.GetComponent<SpriteRenderer>().flipX = direction;
     }
     #endregion
 
@@ -252,6 +275,24 @@ public abstract class Character : MonoBehaviour {
             occupiedTile.ClearUnit();
             return true;
         }
+    }
+
+    public bool HitEnemy(TileBehavior tile, int dmg)
+    {
+        Debug.Log("attempted hit");
+        Debug.Log("Tile coordinates : " + tile.xPosition + " " + tile.yPosition);
+        if (validTarget(tile))
+        {
+            Debug.Log("target hit");
+            Character enemy = tile.GetUnit();
+            if (enemy.HPDamage(dmg))
+            {
+                experience += enemy.value;
+                Debug.Log("experience : " + (experience));
+            }
+            return true;
+        }
+        return false;
     }
 
     public void updateCooldowns() {
@@ -304,11 +345,38 @@ public abstract class Character : MonoBehaviour {
         }
             return target;
         }
+    
+    public TileBehavior GetTarget(TileBehavior tile)
+    {
+        TileBehavior target;
+        if (myDirection.Equals(Character.Direction.RIGHT))
+        {
+            target = tile.Right;
+        }
+        else if (myDirection.Equals(Character.Direction.UP))
+        {
+            target = tile.Up;
+        }
+        else if (myDirection.Equals(Character.Direction.LEFT))
+        {
+            target = tile.Left;
+        }
+        else
+        {
+            target = tile.Down;
+        }
+        return target;
+    }
+
 
     public bool validTarget(TileBehavior tile) {
+        if (tile == null)
+        {
+            return false;
+        }
         Debug.Log("target exists : " + tile.HasUnit());
         Character target = tile.GetUnit();
-        return tile != null && target != null && target != this;
+        return target != null && target != this;
     }
 
     public void AttackEnemy() {
@@ -332,5 +400,15 @@ public abstract class Character : MonoBehaviour {
     }
     #endregion
 
-}
-
+    #region otherActions
+    public Character saveCharacter()
+    {
+        TileBehavior target = GetTarget();
+        if (validTarget(target) && target.GetUnit().isCharacter)
+        {
+            return target.GetUnit();
+        }
+        return null;
+    }
+    #endregion
+} 

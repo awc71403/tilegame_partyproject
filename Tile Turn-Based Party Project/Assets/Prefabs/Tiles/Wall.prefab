@@ -120,10 +120,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13ff87d1ebe8b8643a698141224ab94f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementCost: 1
   xPosition: 0
   yPosition: 0
-  tileType: 
+  tileType: wall
   Left: {fileID: 0}
   Right: {fileID: 0}
   Up: {fileID: 0}

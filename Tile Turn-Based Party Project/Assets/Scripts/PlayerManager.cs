@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -16,6 +17,9 @@ public class PlayerManager : MonoBehaviour
     private Character myCharacter;
     public DirectionUI directionUI;
     public bool inShop;
+    private PlayerData saved_data;
+
+    private string profile = "tester";
 
     private string FLOOR = "floor";
     private string WALL = "wall";
@@ -30,11 +34,44 @@ public class PlayerManager : MonoBehaviour
             DestroyImmediate(gameObject);
             return;
         }
-        singleton = this;
 
+        DontDestroyOnLoad(gameObject);
+        singleton = this;
+        inShop = false; 
         myCharacter = GetComponent<Character>();
         directionUI = GetComponentInChildren<DirectionUI>();
-        inShop = false;
+        if (PlayerPrefs.HasKey(profile))
+        {
+            Debug.Log("getting save");
+            saved_data = JsonUtility.FromJson<PlayerData>(PlayerPrefs.GetString(profile));
+            if (saved_data != null && saved_data.HasCharacter(myCharacter))
+            {
+                Debug.Log("There is a save file with the selected character on it");
+                CharacterData saved = saved_data.GetCharacterData(myCharacter);
+                Debug.Log("everything is restored");
+                myCharacter.curStatArr = saved.curStatArr;
+                myCharacter.baseStats = saved.baseStats;
+                myCharacter.currentCooldowns = saved.currentCooldowns;
+                myCharacter.abilityCooldowns = saved.abilityCooldowns;
+                myCharacter.abilityDurations = saved.abilityDurations;
+                myCharacter.level = saved.level;
+                myCharacter.totalHealth = saved.totalHealth;
+                myCharacter.currentHealth = saved.currentHealth;
+                myCharacter.experience = saved.experience;
+            }
+            else
+            { // save new character to game
+                Debug.Log("saving newly initiated character");
+                saved_data.saveGame(myCharacter);
+            }
+        }
+        else
+        {
+            Debug.Log("creating new save state");
+            saved_data = new PlayerData(profile, myCharacter);
+        }
+
+        Debug.Log(JsonUtility.ToJson(saved_data));
     }
 
     void Update() {
@@ -47,7 +84,7 @@ public class PlayerManager : MonoBehaviour
             
             if (inShop) {
                 // no input works if you are in shop    
-
+                return;
             }
             
             else if (Input.GetKey(KeyCode.LeftShift)) {
@@ -117,11 +154,28 @@ public class PlayerManager : MonoBehaviour
             else if (Input.GetKeyDown(KeyCode.Alpha4)) {
                 myCharacter.Ability4();
             }
+            else if (Input.GetKeyDown(KeyCode.G)) // Save Character
+            {
+                Character new_char = myCharacter.saveCharacter();
+                saved_data.saveGame(new_char);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha0)) 
+            {
+                if (saved_data != null)
+                {
+                    saved_data.saveGame(myCharacter);
+                } else
+                {
+                    Debug.Log("savedata should exist...");
+                }
+                //Check if profile exists
+                
+            }
         }
     }
 
     #region Movement
-    IEnumerator MoveUnitInDirection(string direction) {
+    public IEnumerator MoveUnitInDirection(string direction) {
         // Action in process!
         GameManager.actionInProcess = true;
 
@@ -234,5 +288,10 @@ public class PlayerManager : MonoBehaviour
         GameManager.actionInProcess = false;
         GameManager.UpdateEnemies();
     }
-    #endregion
+
+    public void StartMoveDuringAttackAnimation()
+    {
+        StartCoroutine(MoveUnitInDirection(myCharacter.GetDirectionString()));
+    }
 }
+    #endregion

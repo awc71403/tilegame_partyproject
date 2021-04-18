@@ -1,51 +1,52 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro; 
 using UnityEngine.UI;
 
 public class ShopButton : MonoBehaviour
 {
     public Character player;
     public Item item; 
-    public GameObject button;
-    public Text itemName;
-    public Text priceLabel;
+    public TextMeshProUGUI itemName;
+    public TextMeshProUGUI priceLabel;
     public Image img; 
-    // will have an item eventually
+    public int price; 
 
-    void Start() {
+    void Awake() {
         player = PlayerManager.singleton.gameObject.GetComponent<Character>();
     }
 
         // set the item text label, img, and itemName. 
-    public void SetItem(Item i) {
+    public void SetItem(Item i) 
+    {
         this.item = i;
-        // this.itemName = i.name;
-        // this.priceLabel = i.price;
+        this.itemName.SetText(i.name);
+        this.priceLabel.SetText(i.price.ToString());
         // this.img = i.image;
-        // price = item.price;
+        if (player.money - item.price <= 0) 
+        {
+            DisableButton(); 
+        }
 
     }
-    public void Purchase() {
-
-        /** if (player.money - item.price >= 0) {
-            player.money = player.money - item.price;
-
-            
-            // add the item of the button to the inventory
+    public void Purchase() 
+    {
+        player = PlayerManager.singleton.gameObject.GetComponent<Character>();
+        if (player.money - price >= 0) {
+            player.money = player.money - price;
+            DisableButton();
+            Debug.Log("bought");
         }
-        */
+        // add the item of the button to the inventory
+
+        ShopManager.GetSingleton().CheckButtons();
     }
 
-    public void SetActivity() {
-        if (player != null) {
-            Debug.Log("player is null");
-            /** 
-            if (player.money - price <= 0) {
-            button.SetActive(false);
-            }
-        }
-        */
-        }
+    public void DisableButton() 
+    {
+        gameObject.GetComponent<Button>().interactable = false; 
     }
+
+
 } 

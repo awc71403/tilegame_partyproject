@@ -9,6 +9,10 @@ public class Item : MonoBehaviour
     public int manaPoints;
     private Character myItem;
     public TileBehavior occupiedTile;
+    public int price; 
+    public string name; 
+    // TODO need a reference to the sprite here
+
     void Awake()
     {
         myItem = GetComponent<Character>();
