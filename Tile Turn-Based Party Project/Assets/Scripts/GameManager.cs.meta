@@ -3,7 +3,12 @@ guid: 7c5d7878b6b956c4c8494beaca8cb594
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - m_attackButton: {instanceID: 0}
+  - testCharacter: {instanceID: 0}
+  - testEnemy: {instanceID: 0}
+  - testItem: {instanceID: 0}
+  - shop: {fileID: 3626132159514245218, guid: 754c91c0381b187419f075a554a4b504, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
