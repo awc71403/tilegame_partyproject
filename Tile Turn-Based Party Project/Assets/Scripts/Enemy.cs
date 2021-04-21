@@ -46,8 +46,5 @@ public class Enemy : MonoBehaviour
                 blocked = true;
             }
         }
-
-
-
     }
 }

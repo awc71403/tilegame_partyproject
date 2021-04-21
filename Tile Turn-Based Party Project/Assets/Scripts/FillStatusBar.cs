@@ -18,10 +18,8 @@ public class FillStatusBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        player = PlayerManager.singleton.gameObject.GetComponent<Character>();
         float fillValue = (float) player.currentHealth / player.totalHealth;
-
-
         slider.value = fillValue;
         if (fillValue <= 0) {
             fillImage.enabled = false;
