@@ -176,18 +176,12 @@ MonoBehaviour:
   - {fileID: 3689990538495695190, guid: cfc771265bd67394fba0e9c22d94bd9c, type: 3}
   - {fileID: 3689990538495695190, guid: 92d0b0a4564877f4eb75b354c07fada1, type: 3}
   FloorTileBlocks:
-  - {fileID: 7293470314682524224, guid: 8ff6c65abbdd35f4288109819487ba21, type: 3}
-  - {fileID: 8419108629745016369, guid: fe6f5446943590b43a73f3b6d9d807fc, type: 3}
+  - {fileID: 5339182682365044604, guid: fbd671d0ac41af140bff73c1e3b1a77b, type: 3}
   WallTileBlocks:
-  - {fileID: 1759427329251576200, guid: 9781fe92fe72afd4a8470381cc57d92d, type: 3}
-  - {fileID: 6059426047567185793, guid: aa7efb0d0e3e34e4d89bc7f98426eb77, type: 3}
-  - {fileID: 4617126329905974118, guid: c1363b2b26cb69f40bc2218f97153e9c, type: 3}
-  - {fileID: 8305311378604692854, guid: 2bbe76a531a7efa46b70b0fa7fe751bd, type: 3}
-  - {fileID: 7684600339350417970, guid: 7bd53ea8d7f1c224394566d1a3705e2b, type: 3}
-  - {fileID: 7852685062769365541, guid: ad3f3f6f7e402844381a6fc8ea9644fa, type: 3}
-  - {fileID: 9187181256362661838, guid: e07f6ce8ffaa9394a9da02cb0d0f7d4a, type: 3}
-  - {fileID: 3111405940045582591, guid: 4c0edc94025046249934fa23f4983a1f, type: 3}
-  - {fileID: 551057032532739392, guid: 72530c3dadaf82545a875d16c18ee5b2, type: 3}
+  - {fileID: 9212386162501517989, guid: f40951afe8911384c8f21373f3eaae0a, type: 3}
+  - {fileID: 3891676968177124537, guid: 67c1d1369b8372940a3107200e9ae500, type: 3}
+  - {fileID: 417769747018407759, guid: 1b5f9bfe5d3153f408d62d6c80e1a03d, type: 3}
+  - {fileID: 6676252902503643530, guid: c99df6c259c015b4f9330cfc644e7d4c, type: 3}
   RoomSize: 35
   PlayerPrefab: {fileID: 8051671738830806328, guid: 1880f36cdf5656149ae7579788cb8bfa,
     type: 3}

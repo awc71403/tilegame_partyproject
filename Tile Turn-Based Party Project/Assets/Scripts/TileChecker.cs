@@ -19,30 +19,38 @@ public class TileChecker : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Invoke("Adjacency", 0.5f);
-        //Invoke("CheckTile", 0.5f);
+        Invoke("CheckTile", 0.5f);
     }
 
-    void Adjacency() {
+    void Adjacency()
+    {
         TileBehavior tile = GetComponent<TileBehavior>();
-        if (tile) {
+        if (tile)
+        {
             Vector2[] directions = { Vector2.right, Vector2.left, Vector2.up, Vector2.down };
 
-            foreach (Vector2 direction in directions) {
+            foreach (Vector2 direction in directions)
+            {
                 RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 1.0f);
-                if (hit.collider != null) {
+                if (hit.collider != null)
+                {
                     TileBehavior otherTile = hit.transform.GetComponent<TileBehavior>();
-                    if (otherTile) {
-                        if (direction == Vector2.left) {
+                    if (otherTile)
+                    {
+                        if (direction == Vector2.left)
+                        {
                             tile.Left = otherTile;
                         }
-                        else if (direction == Vector2.right) {
+                        else if (direction == Vector2.right)
+                        {
                             tile.Right = otherTile;
                         }
-                        else if (direction == Vector2.up) {
+                        else if (direction == Vector2.up)
+                        {
                             tile.Up = otherTile;
                         }
-                        else {
+                        else
+                        {
                             tile.Down = otherTile;
                         }
                     }
@@ -50,6 +58,7 @@ public class TileChecker : MonoBehaviour
             }
         }
     }
+
 
     void CheckTile()
     {
