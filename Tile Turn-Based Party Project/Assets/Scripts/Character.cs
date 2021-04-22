@@ -73,6 +73,7 @@ public abstract class Character : MonoBehaviour {
         playerManager = GetComponent<PlayerManager>();
     }
     #endregion
+
     #region Getter and Setter
     public string Name {
         get { return characterName; }
@@ -147,7 +148,7 @@ public abstract class Character : MonoBehaviour {
     }
 
     public void RecalculateDepth() {
-        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
+        transform.position = new Vector3(transform.position.x, transform.position.y, 10);
     }
 
     public TileBehavior OccupiedTile {
