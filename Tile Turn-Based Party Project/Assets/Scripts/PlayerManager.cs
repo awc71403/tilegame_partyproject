@@ -44,11 +44,13 @@ public class PlayerManager : MonoBehaviour
         {
             Debug.Log("getting save");
             saved_data = JsonUtility.FromJson<PlayerData>(PlayerPrefs.GetString(profile));
-            if (saved_data != null && saved_data.HasCharacter(myCharacter))
+            if (saved_data != null && saved_data.HasCharacter(myCharacter) && saved_data.GetCharacterData(myCharacter) != null)
             {
                 Debug.Log("There is a save file with the selected character on it");
                 CharacterData saved = saved_data.GetCharacterData(myCharacter);
                 Debug.Log("everything is restored");
+                Debug.Log(myCharacter);
+                Debug.Log(saved);
                 myCharacter.curStatArr = saved.curStatArr;
                 myCharacter.baseStats = saved.baseStats;
                 myCharacter.currentCooldowns = saved.currentCooldowns;

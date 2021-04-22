@@ -70,8 +70,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1563144509
-  m_SortingLayer: 3
-  m_SortingOrder: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
@@ -228,14 +228,19 @@ MonoBehaviour:
   abilityCooldowns: 
   currentCooldowns: 
   abilityDurations: 
+  characterName: 
   totalHealth: 10
   currentHealth: 10
   level: 1
   experience: 0
   value: 0
+  money: 0
   isPlayer: 0
+  isCharacter: 0
+  charValue: 0
   occupiedTile: {fileID: 0}
   myDirection: 0
+  playerManager: {fileID: 0}
   DamageTextPrefab: {fileID: 0}
   damageText: {fileID: 0}
   anim: {fileID: 0}
