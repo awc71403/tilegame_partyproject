@@ -8,7 +8,12 @@ TagManager:
   - FloorTile
   - TwoSidedFloor
   - TwoSidedFloorCorner
+<<<<<<< HEAD
   - Shop
+=======
+  - Wall
+  - Enemy
+>>>>>>> f28c774fa7218a08db623a2e47694d6ef82e204c
   layers:
   - Default
   - TransparentFX

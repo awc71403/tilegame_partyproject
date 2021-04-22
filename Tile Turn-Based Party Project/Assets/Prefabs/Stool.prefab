@@ -222,7 +222,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xPosition: 0
   yPosition: 0
-  tileType: 
+  tileType: wall
   Left: {fileID: 0}
   Right: {fileID: 0}
   Up: {fileID: 0}
