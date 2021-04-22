@@ -10,13 +10,13 @@ GameObject:
   m_Component:
   - component: {fileID: 3308487433505380360}
   - component: {fileID: 6344551368146053726}
-  - component: {fileID: 2874020410702089838}
   - component: {fileID: 1287164497137106059}
   - component: {fileID: 7501490186687642439}
   - component: {fileID: -6627191708661728708}
+  - component: {fileID: 4927993161343611325}
   m_Layer: 0
   m_Name: noAttackDummy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -83,28 +83,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2874020410702089838
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8498874838894418}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 809ba754f47889141b751867206f7ecb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  curStatArr: 05000000050000000200000004000000
-  totalHealth: 35
-  currentHealth: 35
-  isPlayer: 0
-  occupiedTile: {fileID: 0}
-  myDirection: 0
-  DamageTextPrefab: {fileID: 0}
-  damageText: {fileID: 0}
-  anim: {fileID: 0}
-  stepSounds: []
 --- !u!95 &1287164497137106059
 Animator:
   serializedVersion: 3
@@ -233,3 +211,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   viewDistance: 4
+--- !u!114 &4927993161343611325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8498874838894418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b5ab23140f488743a4b03ebfd24cb38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curStatArr: 
+  baseStats: 
+  abilityCooldowns: 
+  currentCooldowns: 
+  abilityDurations: 
+  totalHealth: 10
+  currentHealth: 10
+  level: 1
+  experience: 0
+  value: 0
+  isPlayer: 0
+  occupiedTile: {fileID: 0}
+  myDirection: 0
+  DamageTextPrefab: {fileID: 0}
+  damageText: {fileID: 0}
+  anim: {fileID: 0}
+  stepSounds: []
+  MeleeDamage: 3

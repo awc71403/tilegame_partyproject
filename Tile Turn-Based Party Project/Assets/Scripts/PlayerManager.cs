@@ -285,8 +285,23 @@ public class PlayerManager : MonoBehaviour
         myCharacter.occupiedTile.PlaceUnit(myCharacter);
 
         // Action over!
-        GameManager.actionInProcess = false;
+
         GameManager.UpdateEnemies();
+        GameManager.actionInProcess = false;
+    }
+    #endregion
+
+    #region Variable Functions
+
+    public TileBehavior GetTile()
+    {
+        return myCharacter.occupiedTile;
+    }
+
+
+    public Character GetCharacter()
+    {
+        return myCharacter;
     }
 
     public void StartMoveDuringAttackAnimation()
