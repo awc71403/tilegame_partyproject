@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraManager : MonoBehaviour
 {
     [Header("Target")]
-	public Transform player;
+	public PlayerManager player;
 
 	[Header("Camera Follow Settings")]
 	[Range(0f, 30f)]
@@ -13,7 +13,9 @@ public class CameraManager : MonoBehaviour
 	[Range(0f, 10f)]
 	public float smoothTime;
 
-	[Header("Camera Conditions (Do not modify these fields through Editor)")]
+    private Transform charTransform;
+
+    [Header("Camera Conditions (Do not modify these fields through Editor)")]
 	public Vector2 currentSpeed;
 
 	public void Start() {
@@ -28,8 +30,11 @@ public class CameraManager : MonoBehaviour
 	 * automatically called by the engine.
 	 */
 	private void Update() {
-		player = PlayerManager.singleton.gameObject.transform;
-		Vector2 currentPosition = Vector2.SmoothDamp(transform.position, player.position, ref currentSpeed, smoothTime, maxFollowSpeed); // Follow the player.
-		transform.position = new Vector3(currentPosition.x, currentPosition.y, transform.position.z); // We should not modify the z axis of the camera.
+        player = PlayerManager.singleton;
+        if (player) {
+            charTransform = player.gameObject.transform;
+            Vector2 currentPosition = Vector2.SmoothDamp(transform.position, charTransform.position, ref currentSpeed, smoothTime, maxFollowSpeed); // Follow the player.
+            transform.position = new Vector3(currentPosition.x, currentPosition.y, transform.position.z); // We should not modify the z axis of the camera.
+        }
 	}
 }
