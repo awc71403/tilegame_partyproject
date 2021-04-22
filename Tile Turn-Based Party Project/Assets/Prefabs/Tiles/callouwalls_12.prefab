@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 8267407726209208426}
   - component: {fileID: -5336149792747843821}
   - component: {fileID: -2714172030653833932}
-  - component: {fileID: 6632030542424430794}
   m_Layer: 0
   m_Name: callouwalls_12
   m_TagString: FloorTile
@@ -135,40 +134,3 @@ MonoBehaviour:
   tileHighlighter: {fileID: 0}
   playerOpacity: 0
   enemyOpacity: 0
---- !u!114 &6632030542424430794
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5339182682365044604}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a696f4e6e88d2ce49904f58f096502c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FloorTiles: []
-  TwoSidedFloor: []
-  TwoSidedFloorCorner: []
-  TopWall:
-  - {fileID: 9212386162501517989, guid: f40951afe8911384c8f21373f3eaae0a, type: 3}
-  - {fileID: 3891676968177124537, guid: 67c1d1369b8372940a3107200e9ae500, type: 3}
-  - {fileID: 417769747018407759, guid: 1b5f9bfe5d3153f408d62d6c80e1a03d, type: 3}
-  - {fileID: 6676252902503643530, guid: c99df6c259c015b4f9330cfc644e7d4c, type: 3}
-  LeftWall: {fileID: 1595495361011769832, guid: 90c23fc6ca40ac1439048161212b4ebd,
-    type: 3}
-  RightWall: {fileID: 6777929659672644856, guid: a5d4b8b78ad3de14f9601fcb8426e184,
-    type: 3}
-  LowerWall: {fileID: 5848668845552588219, guid: f36548b4b0a01664c9dea7b9f3aec71e,
-    type: 3}
-  DoubleLeftRightWall: {fileID: 7811905894357124003, guid: b8abf6026fe1497469f6d9b36f401729,
-    type: 3}
-  LeftUpRightSidedWall: {fileID: 7524474238757142458, guid: a244bdbdb6e72fb428c4e4e5e05ecc54,
-    type: 3}
-  UpRightWallCorner: {fileID: 7854633622278977096, guid: a76f4e0054b9c2347a831e96c57b4cc4,
-    type: 3}
-  UpLeftWallCorner: {fileID: 6126375014589094695, guid: 75d3f52d7207adb42b656df9553c65df,
-    type: 3}
-  LayersToCheck:
-    serializedVersion: 2
-    m_Bits: 4294967295
