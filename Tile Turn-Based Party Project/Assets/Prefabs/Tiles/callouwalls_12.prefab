@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 187110153556813887}
   - component: {fileID: 8267407726209208426}
   - component: {fileID: -5336149792747843821}
+  - component: {fileID: 1437886660434893070}
   m_Layer: 0
   m_Name: callouwalls_12
   m_TagString: FloorTile
@@ -107,3 +108,29 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.64, y: 0.64}
   m_EdgeRadius: 0
+--- !u!114 &1437886660434893070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5339182682365044604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13ff87d1ebe8b8643a698141224ab94f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  xPosition: 0
+  yPosition: 0
+  tileType: 
+  Left: {fileID: 0}
+  Right: {fileID: 0}
+  Up: {fileID: 0}
+  Down: {fileID: 0}
+  UpRight: {fileID: 0}
+  UpLeft: {fileID: 0}
+  DownRight: {fileID: 0}
+  DownLeft: {fileID: 0}
+  tileHighlighter: {fileID: 0}
+  playerOpacity: 0
+  enemyOpacity: 0
