@@ -15,23 +15,27 @@ public abstract class Character : MonoBehaviour {
     // 2 - cooldown reduction
     // 3 - damage reduction - skills mainly
 
-    protected string characterName;
+    public string characterName;
     public int totalHealth;
     public int currentHealth;
     public int level = 1;
     public int experience = 0;
     public int value = 0; // exp value on death
+    public int money; // money that the player has
 
     public bool isPlayer;
+    public bool isCharacter;
+    public int charValue;
 
     public TileBehavior occupiedTile;
 
-    public enum Direction {RIGHT, LEFT, UP, DOWN};
+    public enum Direction {RIGHT, LEFT, UP, DOWN, UPRIGHT, UPLEFT, DOWNRIGHT, DOWNLEFT};
     public Direction myDirection;
     // Sprite Rendering
     private SpriteRenderer myRenderer;
     private Shader shaderGUItext;
     private Shader shaderSpritesDefault;
+    public PlayerManager playerManager;
 
     [SerializeField]
     private Text DamageTextPrefab;
@@ -54,6 +58,8 @@ public abstract class Character : MonoBehaviour {
     // Movement Bounce Animation
     float totalStretch = 0.3f;
     float totalSquish = 0.3f;
+    
+
 
     #region Initialization
     void Start() {
@@ -63,9 +69,10 @@ public abstract class Character : MonoBehaviour {
         audioSource = GetComponent<AudioSource>();
         SetHPFull();
         myDirection = Character.Direction.RIGHT;
+        money = 0;
+        playerManager = GetComponent<PlayerManager>();
     }
     #endregion
-
     #region Getter and Setter
     public string Name {
         get { return characterName; }
@@ -119,6 +126,26 @@ public abstract class Character : MonoBehaviour {
         get { return experience; }
     }
 
+    public string GetDirectionString()
+    {
+        if (myDirection == Direction.DOWN)
+        {
+            return "down";
+        }
+        else if (myDirection == Direction.LEFT)
+        {
+            return "left";
+        }
+        else if (myDirection == Direction.UP)
+        {
+            return "up";
+        }
+        else 
+        {
+            return "right";
+        }
+    }
+
     public void RecalculateDepth() {
         transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
     }
@@ -126,6 +153,10 @@ public abstract class Character : MonoBehaviour {
     public TileBehavior OccupiedTile {
         get { return occupiedTile; }
         set { occupiedTile = value; }
+    }
+
+    public int Money {
+        get { return money;}
     }
     #endregion
 
@@ -210,6 +241,10 @@ public abstract class Character : MonoBehaviour {
         //audioSource.clip = stepSounds[stepNum];
         //audioSource.Play();
     }
+
+    public void setFlip(bool direction) {
+        gameObject.GetComponent<SpriteRenderer>().flipX = direction;
+    }
     #endregion
 
     #region Stats
@@ -242,6 +277,24 @@ public abstract class Character : MonoBehaviour {
         }
     }
 
+    public bool HitEnemy(TileBehavior tile, int dmg)
+    {
+        Debug.Log("attempted hit");
+        Debug.Log("Tile coordinates : " + tile.xPosition + " " + tile.yPosition);
+        if (validTarget(tile))
+        {
+            Debug.Log("target hit");
+            Character enemy = tile.GetUnit();
+            if (enemy.HPDamage(dmg))
+            {
+                experience += enemy.value;
+                Debug.Log("experience : " + (experience));
+            }
+            return true;
+        }
+        return false;
+    }
+
     public void updateCooldowns() {
         if (currentCooldowns == null) {
             return;
@@ -267,21 +320,63 @@ public abstract class Character : MonoBehaviour {
             target = occupiedTile.Right;
         }
         else if (myDirection.Equals(Character.Direction.UP)) {
-            target = occupiedTile.Left;
-        }
-        else if (myDirection.Equals(Character.Direction.LEFT)) {
             target = occupiedTile.Up;
         }
-        else {
+        else if (myDirection.Equals(Character.Direction.LEFT)) {
+            target = occupiedTile.Left;
+        }
+        else if (myDirection.Equals(Character.Direction.DOWN)) {
             target = occupiedTile.Down;
+        }
+        else if (myDirection.Equals(Character.Direction.UPRIGHT)) {
+            target = occupiedTile.UpRight;
+        }
+        else if (myDirection.Equals(Character.Direction.UPLEFT)) {
+            target = occupiedTile.UpLeft;
+        }
+        else if (myDirection.Equals(Character.Direction.DOWNRIGHT)) {
+            target = occupiedTile.DownRight;
+        }
+        else if (myDirection.Equals(Character.Direction.DOWNLEFT)) {
+            target = occupiedTile.DownLeft;
+        }
+        else {
+            target = null;
         }
             return target;
         }
+    
+    public TileBehavior GetTarget(TileBehavior tile)
+    {
+        TileBehavior target;
+        if (myDirection.Equals(Character.Direction.RIGHT))
+        {
+            target = tile.Right;
+        }
+        else if (myDirection.Equals(Character.Direction.UP))
+        {
+            target = tile.Up;
+        }
+        else if (myDirection.Equals(Character.Direction.LEFT))
+        {
+            target = tile.Left;
+        }
+        else
+        {
+            target = tile.Down;
+        }
+        return target;
+    }
+
 
     public bool validTarget(TileBehavior tile) {
+        if (tile == null)
+        {
+            return false;
+        }
         Debug.Log("target exists : " + tile.HasUnit());
         Character target = tile.GetUnit();
-        return tile != null && target != null && target != this;
+        return target != null && target != this;
     }
 
     public void AttackEnemy() {
@@ -289,9 +384,7 @@ public abstract class Character : MonoBehaviour {
         int damage = curStatArr[0];
         Debug.Log("called attack function");
         Debug.Log(myDirection);
-        Debug.Log(myDirection.Equals(Character.Direction.RIGHT));
         TileBehavior target = GetTarget();
-        Debug.Log(target.HasUnit());
         if (target != null && target.HasUnit() && target.GetUnit() != this) {
             Debug.Log("Attacked");
             Character enemy = target.GetUnit();
@@ -306,5 +399,16 @@ public abstract class Character : MonoBehaviour {
         return;
     }
     #endregion
-}
 
+    #region otherActions
+    public Character saveCharacter()
+    {
+        TileBehavior target = GetTarget();
+        if (validTarget(target) && target.GetUnit().isCharacter)
+        {
+            return target.GetUnit();
+        }
+        return null;
+    }
+    #endregion
+} 

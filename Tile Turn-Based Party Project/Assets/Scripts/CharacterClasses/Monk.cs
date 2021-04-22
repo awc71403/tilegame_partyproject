@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Monk : Character
 {
 
@@ -57,15 +58,8 @@ public class Monk : Character
             return;
         }
         TileBehavior targetTile = GetTarget();
-        if (validTarget(targetTile))
-        {
-            Character enemy = targetTile.GetUnit();
-            if (enemy.HPDamage(curStatArr[1]))
-            {
-                experience += enemy.value;
-                Debug.Log("experience : " + (experience));
-            }
-        }
+        HitEnemy(targetTile, curStatArr[1]);
+
         //activate cooldown
         updateCooldowns();
         currentCooldowns[0] += abilityCooldowns[0];
@@ -103,26 +97,13 @@ public class Monk : Character
             GameManager.actionInProcess = false;
             return;
         }
-        //find enemies in area
-        //TileBehavior[] targetTiles = GetTargets(new int[] { 1, 1, 1, 0 }); // left, up, right, down in direction facing
-        //foreach (TileBehavior tile in targetTiles)
-        //{
-        //    Character target = tile.GetUnit();
-        //    if (tile != null && target != null && target != this)
-        //    {
-        //        target.HPDamage(curStatArr[1]);
-        //    }
-        //}
+        //Need to fix
         TileBehavior targetTile = GetTarget();
-        if (validTarget(targetTile))
-        {
-            Character enemy = targetTile.GetUnit();
-            if (enemy.HPDamage(curStatArr[1]))
-            {
-                experience += enemy.value;
-                Debug.Log("experience : " + (experience));
-            }
-        }
+        TileBehavior LeftTile = targetTile.Left;
+        TileBehavior RightTile = targetTile.Right;
+        HitEnemy(targetTile, curStatArr[1]);
+        HitEnemy(LeftTile, curStatArr[1]);
+        HitEnemy(RightTile, curStatArr[1]);
         updateCooldowns();
         currentCooldowns[2] += abilityCooldowns[2];
         Debug.Log("Cooldown After: " + currentCooldowns[2]);
@@ -142,14 +123,8 @@ public class Monk : Character
         }
 
         TileBehavior targetTile = GetTarget();
-        if (validTarget(targetTile))
+        if (HitEnemy(targetTile, curStatArr[1] + 5))
         {
-            Character enemy = targetTile.GetUnit();
-            if (enemy.HPDamage(curStatArr[1]))
-            {
-                experience += enemy.value;
-                Debug.Log("experience : " + (experience));
-            }
             TakeDamage(curStatArr[1] / 5);
             Debug.Log("Recoil: " + curStatArr[1] / 5);
         }

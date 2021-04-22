@@ -43,5 +43,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c5d7878b6b956c4c8494beaca8cb594, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_attackButton: {fileID: 0}
   tilePrefabs:
   - {fileID: 0}
+  testCharacter: {fileID: 0}
+  testEnemy: {fileID: 0}
+  testItem: {fileID: 0}
+  shop: {fileID: 3626132159514245218, guid: 754c91c0381b187419f075a554a4b504, type: 3}
+  testFile: 
