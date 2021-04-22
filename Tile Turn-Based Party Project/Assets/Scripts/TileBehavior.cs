@@ -17,6 +17,10 @@ public abstract class TileBehavior : MonoBehaviour {
     public TileBehavior Right;
     public TileBehavior Up;
     public TileBehavior Down;
+    public TileBehavior UpRight;
+    public TileBehavior UpLeft;
+    public TileBehavior DownRight;
+    public TileBehavior DownLeft;
 
     [SerializeField]
     GameObject tileHighlighter;
@@ -150,4 +154,6 @@ public abstract class TileBehavior : MonoBehaviour {
         return null;
     }
     #endregion
+
+    public abstract void Effect();
 }
