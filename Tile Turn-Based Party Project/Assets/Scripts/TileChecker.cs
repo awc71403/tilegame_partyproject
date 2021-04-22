@@ -37,8 +37,6 @@ public class TileChecker : MonoBehaviour
     {
         TileBehavior tile = GetComponent<TileBehavior>();
 
-        Debug.LogAssertion(tile != null);
-
 
         if (tile)
         {
@@ -71,6 +69,7 @@ public class TileChecker : MonoBehaviour
                     }
                 }
             }
+
 
             // assign the diagonals
             // up left
@@ -153,35 +152,43 @@ public class TileChecker : MonoBehaviour
                 int number = Random.Range(0, TopWall.Length);
                 Instantiate(TopWall[number], transform.position + new Vector3(0, 1), Quaternion.identity);
 
-            } else if (tile.Down == null && tile.Down.Down == null && tile.Down.Left == null & tile.Down.Right == null) // lower wall
+            }
+            else if (tile.Down == null && tile.Down.Down == null && tile.Down.Left == null && tile.Down.Right == null) // lower wall
             {
                 Instantiate(LowerWall, transform.position + new Vector3(0, -1), Quaternion.identity);
 
-            } else if (tile.Right.Right != null) // double side wall
+            }
+            else if (tile.Right.Right != null) // double side wall
             {
                 Instantiate(DoubleLeftRightWall, transform.position + new Vector3(1, 0), Quaternion.identity);
 
-            } else if (tile.Left.Left != null) // double side wall
+            }
+            else if (tile.Left.Left != null) // double side wall
             {
                 Instantiate(DoubleLeftRightWall, transform.position + new Vector3(-1, 0), Quaternion.identity);
 
-            } else if (tile.Down == null && tile.DownLeft != null && tile.DownRight != null) // triple side wall left up right
+            }
+            else if (tile.Down == null && tile.DownLeft != null && tile.DownRight != null) // triple side wall left up right
             {
                 Instantiate(LeftUpRightSidedWall, transform.position + new Vector3(0, -1), Quaternion.identity);
 
-            } else if (tile.DownRight != null && tile.Right != null && tile.Down == null) // upper right corner 
+            }
+            else if (tile.DownRight != null && tile.Right != null && tile.Down == null) // upper right corner 
             {
                 Instantiate(UpRightWallCorner, transform.position + new Vector3(0, -1), Quaternion.identity);
 
-            } else if (tile.DownLeft != null && tile.Left != null && tile.Down == null) // upper left corner
+            }
+            else if (tile.DownLeft != null && tile.Left != null && tile.Down == null) // upper left corner
             {
                 Instantiate(UpLeftWallCorner, transform.position + new Vector3(0, -1), Quaternion.identity);
 
-            } else if (tile.Left == null) // left wall 
+            }
+            else if (tile.Left == null) // left wall 
             {
                 Instantiate(LeftWall, transform.position + new Vector3(-1, 0), Quaternion.identity);
 
-            } else if (tile.Right == null) // right wall
+            }
+            else if (tile.Right == null) // right wall
             {
                 Instantiate(RightWall, transform.position + new Vector3(1, 0), Quaternion.identity);
             }
@@ -190,7 +197,7 @@ public class TileChecker : MonoBehaviour
     }
 
 
- 
+
 
 
 
