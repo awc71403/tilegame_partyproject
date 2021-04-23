@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     private GameObject[] tilePrefabs;
 
     [SerializeField]
-    GameObject testCharacter;
+    private GameObject[] playerPrefabs;
 
     [SerializeField]
     GameObject testEnemy;
@@ -54,7 +54,9 @@ public class GameManager : MonoBehaviour
 
     public void Start() {
         // FOR TESTING PURPOSES
-        PlaceCharacterOnTile(testCharacter, 0, 1);
+        profile = PlayerPrefs.GetString("profile");
+        int c = PlayerPrefs.GetInt("character");
+        PlaceCharacterOnTile(playerPrefabs[c], 0, 1);
         PlaceCharacterOnTile(testEnemy, 3, 3);
         PlaceCharacterOnTile(testEnemy, 2, 3);
         PlaceCharacterOnTile(testItem, 3, 4);
