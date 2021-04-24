@@ -821,9 +821,11 @@ MonoBehaviour:
   tilePrefabs:
   - {fileID: 401562437044840792, guid: 7b99f2e9499b1824193d3060cab7e360, type: 3}
   - {fileID: 8672402448490208525, guid: d51bd042fbf1c48f79590954125cbd59, type: 3}
-  testCharacter: {fileID: 8051671738830806328, guid: 1880f36cdf5656149ae7579788cb8bfa,
-    type: 3}
+  playerPrefabs:
+  - {fileID: 8051671738830806328, guid: 1880f36cdf5656149ae7579788cb8bfa, type: 3}
+  - {fileID: 3556310784686042647, guid: 71e67241ec3a048aca0efe46e9c73ec0, type: 3}
   testEnemy: {fileID: 8498874838894418, guid: 97117bfa778593f4990f1e76e8c3b7b5, type: 3}
+  testItem: {fileID: 0}
   profile: 
   testFile: Test
 --- !u!1 &2143491152
