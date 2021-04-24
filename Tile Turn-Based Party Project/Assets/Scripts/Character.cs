@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,7 +22,6 @@ public abstract class Character : MonoBehaviour {
     public int level = 1;
     public int experience = 0;
     public int value = 0; // exp value on death
-    public int money; // money that the player has
 
     public bool isPlayer;
     public bool isCharacter;
@@ -29,7 +29,7 @@ public abstract class Character : MonoBehaviour {
 
     public TileBehavior occupiedTile;
 
-    public enum Direction {RIGHT, LEFT, UP, DOWN, UPRIGHT, UPLEFT, DOWNRIGHT, DOWNLEFT};
+    public enum Direction {RIGHT, LEFT, UP, DOWN};
     public Direction myDirection;
     // Sprite Rendering
     private SpriteRenderer myRenderer;
@@ -62,17 +62,17 @@ public abstract class Character : MonoBehaviour {
 
 
     #region Initialization
-    void Start() {
+    public void Start() {
         myRenderer = gameObject.GetComponent<SpriteRenderer>();
         shaderGUItext = Shader.Find("GUI/Text Shader");
         shaderSpritesDefault = Shader.Find("Sprites/Default");
         audioSource = GetComponent<AudioSource>();
         SetHPFull();
         myDirection = Character.Direction.RIGHT;
-        money = 0;
         playerManager = GetComponent<PlayerManager>();
     }
     #endregion
+
     #region Getter and Setter
     public string Name {
         get { return characterName; }
@@ -118,6 +118,10 @@ public abstract class Character : MonoBehaviour {
         get { return curStatArr[3]; }
     }
 
+    public int[] GetCurrentCD {
+        get { return currentCooldowns; }
+    }
+
     public int Level {
         get { return level; }
     }
@@ -153,10 +157,6 @@ public abstract class Character : MonoBehaviour {
     public TileBehavior OccupiedTile {
         get { return occupiedTile; }
         set { occupiedTile = value; }
-    }
-
-    public int Money {
-        get { return money;}
     }
     #endregion
 
@@ -203,6 +203,11 @@ public abstract class Character : MonoBehaviour {
         NormalSprite();
     }
 
+    public void setFlip(bool direction)
+    {
+        gameObject.GetComponent<SpriteRenderer>().flipX = direction;
+    }
+
     IEnumerator DeathAnimation() {
         // loop over 0.5 second backwards
         print("death time");
@@ -242,9 +247,7 @@ public abstract class Character : MonoBehaviour {
         //audioSource.Play();
     }
 
-    public void setFlip(bool direction) {
-        gameObject.GetComponent<SpriteRenderer>().flipX = direction;
-    }
+
     #endregion
 
     #region Stats
@@ -303,6 +306,7 @@ public abstract class Character : MonoBehaviour {
             if (currentCooldowns[i] > 0) currentCooldowns[i] -= 1;
             if (abilityDurations[i] > 0) abilityDurations[i] -= 1;
         }
+        UIManager.singleton.UpdateCD();
     }
 
     public void levelUp(int stat) {
@@ -325,27 +329,12 @@ public abstract class Character : MonoBehaviour {
         else if (myDirection.Equals(Character.Direction.LEFT)) {
             target = occupiedTile.Left;
         }
-        else if (myDirection.Equals(Character.Direction.DOWN)) {
+        else {
             target = occupiedTile.Down;
         }
-        else if (myDirection.Equals(Character.Direction.UPRIGHT)) {
-            target = occupiedTile.UpRight;
-        }
-        else if (myDirection.Equals(Character.Direction.UPLEFT)) {
-            target = occupiedTile.UpLeft;
-        }
-        else if (myDirection.Equals(Character.Direction.DOWNRIGHT)) {
-            target = occupiedTile.DownRight;
-        }
-        else if (myDirection.Equals(Character.Direction.DOWNLEFT)) {
-            target = occupiedTile.DownLeft;
-        }
-        else {
-            target = null;
-        }
-            return target;
-        }
-    
+        return target;
+    }
+
     public TileBehavior GetTarget(TileBehavior tile)
     {
         TileBehavior target;
@@ -368,7 +357,6 @@ public abstract class Character : MonoBehaviour {
         return target;
     }
 
-
     public bool validTarget(TileBehavior tile) {
         if (tile == null)
         {
@@ -384,7 +372,9 @@ public abstract class Character : MonoBehaviour {
         int damage = curStatArr[0];
         Debug.Log("called attack function");
         Debug.Log(myDirection);
+        Debug.Log(myDirection.Equals(Character.Direction.RIGHT));
         TileBehavior target = GetTarget();
+        Debug.Log(target.HasUnit());
         if (target != null && target.HasUnit() && target.GetUnit() != this) {
             Debug.Log("Attacked");
             Character enemy = target.GetUnit();
@@ -411,4 +401,5 @@ public abstract class Character : MonoBehaviour {
         return null;
     }
     #endregion
-} 
+}
+

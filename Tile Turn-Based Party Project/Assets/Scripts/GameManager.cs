@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     public static int currentPlayer = 1;
     public static bool actionInProcess;
 
+    public static int difficulty;
+
     [SerializeField]
     private Button m_attackButton;
 
@@ -22,7 +24,7 @@ public class GameManager : MonoBehaviour
     private GameObject[] tilePrefabs;
 
     [SerializeField]
-    GameObject testCharacter;
+    private GameObject[] playerPrefabs;
 
     [SerializeField]
     GameObject testEnemy;
@@ -41,6 +43,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private string testFile;
+
+    private static int turn = 0;
     #endregion
 
     #region Initialization
@@ -57,7 +61,9 @@ public class GameManager : MonoBehaviour
 
     public void Start() {
         // FOR TESTING PURPOSES
-        PlaceCharacterOnTile(testCharacter, 0, 1);
+        profile = PlayerPrefs.GetString("profile");
+        int c = PlayerPrefs.GetInt("character");
+        PlaceCharacterOnTile(playerPrefabs[c], 0, 1);
         PlaceCharacterOnTile(testEnemy, 3, 3);
         PlaceCharacterOnTile(testEnemy, 2, 3);
         PlaceCharacterOnTile(testItem, 3, 4);
@@ -76,6 +82,8 @@ public class GameManager : MonoBehaviour
         {
             enemies[i].GetComponent<BasicEnemyAI>().Turn();
         }
+        turn++;
+        difficulty = (turn / 50) + 1;
     }
 
     #region Set Up

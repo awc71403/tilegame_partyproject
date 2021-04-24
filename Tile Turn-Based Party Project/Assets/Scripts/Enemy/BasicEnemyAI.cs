@@ -63,14 +63,14 @@ public class BasicEnemyAI : MonoBehaviour
     public void Turn()
     {
         //See if player is in line of sight
-        if(DetectPlayer())
+        if (DetectPlayer())
         {
             float tileSize = GetComponent<SpriteRenderer>().sprite.bounds.size.x;
-            
+
             //Calculate path to player's tile from this tile
             List<string> steps = TileBehavior.CalculateMovement(new List<string>(), myCharacter.occupiedTile, PlayerManager.singleton.GetTile(), tileSize, viewDistance);
-            
-            
+
+
             //If there exists a path, take the first step towards it
             if (steps != null)
             {
@@ -82,6 +82,54 @@ public class BasicEnemyAI : MonoBehaviour
                 else
                 {
                     StartCoroutine(MoveInDirection(steps[0]));
+                }
+            }
+        }
+        else {
+            List<string> directions = new List<string>();
+            directions.Add("up");
+            directions.Add("down");
+            directions.Add("left");
+            directions.Add("right");
+            while (directions.Count > 0) {
+                int rand = Random.Range(0, directions.Count);
+                string picked = directions[rand];
+                directions.RemoveAt(rand);
+                if (picked == "up")
+                {
+                    TileBehavior upTile = myCharacter.occupiedTile.Up;
+                    if (upTile != null && upTile.tileType != WALL && !upTile.HasUnit())
+                    {
+                        StartCoroutine(MoveInDirection(picked));
+                        break;
+                    }
+                }
+                else if (picked == "left")
+                {
+                    TileBehavior leftTile = myCharacter.occupiedTile.Left;
+                    if (leftTile != null && leftTile.tileType != WALL && !leftTile.HasUnit())
+                    {
+                        StartCoroutine(MoveInDirection(picked));
+                        break;
+                    }
+                }
+                else if (picked == "down")
+                {
+                    TileBehavior downTile = myCharacter.occupiedTile.Down;
+                    if (downTile != null && downTile.tileType != WALL && !downTile.HasUnit())
+                    {
+                        StartCoroutine(MoveInDirection(picked));
+                        break;
+                    }
+                }
+                else if (picked == "right")
+                {
+                    TileBehavior rightTile = myCharacter.occupiedTile.Right;
+                    if (rightTile != null && rightTile.tileType != WALL && !rightTile.HasUnit())
+                    {
+                        StartCoroutine(MoveInDirection(picked));
+                        break;
+                    }
                 }
             }
         }

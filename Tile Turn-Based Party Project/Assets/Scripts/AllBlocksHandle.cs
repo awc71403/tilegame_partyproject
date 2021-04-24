@@ -18,7 +18,7 @@ public class AllBlocksHandle : MonoBehaviour
     public GameObject[] WallTileBlocks;
 
     public int RoomSize;
-
+ 
     public GameObject PlayerPrefab;
     public GameObject[] Enemies;
     public GameObject[] Items;

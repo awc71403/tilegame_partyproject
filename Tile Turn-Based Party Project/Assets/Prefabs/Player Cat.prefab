@@ -23,6 +23,7 @@ MonoBehaviour:
   level: 1
   experience: 0
   value: 0
+  money: 0
   isPlayer: 0
   isCharacter: 0
   charValue: 0
@@ -104,7 +105,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 715645273976197306, guid: 064194efac18807428214c87bb650f30,
+      objectReference: {fileID: 21300000, guid: 661366c8c58a9a44b8ff929db0622548,
         type: 3}
     - target: {fileID: 557175162552941605, guid: 1880f36cdf5656149ae7579788cb8bfa,
         type: 3}
