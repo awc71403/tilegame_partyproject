@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 5819816430716786479}
   - component: {fileID: -2238816548932096713}
   - component: {fileID: 534227757619401860}
-  - component: {fileID: 7789614648510791509}
-  - component: {fileID: -4742346277762203456}
+  - component: {fileID: 3501625800020205269}
+  - component: {fileID: 1049320730169700750}
   m_Layer: 0
   m_Name: EnemyKiwi
   m_TagString: Enemy
@@ -198,7 +198,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &7789614648510791509
+--- !u!114 &3501625800020205269
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -215,7 +215,7 @@ MonoBehaviour:
   abilityCooldowns: 
   currentCooldowns: 
   abilityDurations: 
-  characterName: 
+  characterName: Kiwi
   totalHealth: 0
   currentHealth: 0
   level: 1
@@ -233,7 +233,7 @@ MonoBehaviour:
   anim: {fileID: 0}
   stepSounds: []
   MeleeDamage: 3
---- !u!114 &-4742346277762203456
+--- !u!114 &1049320730169700750
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

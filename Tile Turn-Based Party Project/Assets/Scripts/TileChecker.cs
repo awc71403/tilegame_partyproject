@@ -73,7 +73,7 @@ public class TileChecker : MonoBehaviour
 
             // assign the diagonals
             // up left
-            if (tile.Left != null)
+            /*if (tile.Left != null)
             {
                 if (tile.Left.Up != null)
                 {
@@ -143,7 +143,7 @@ public class TileChecker : MonoBehaviour
                     tile.DownRight = tile.Down.Right;
                     tile.DownRight.UpLeft = tile;
                 }
-            }
+            }*/
 
 
             // create walls 

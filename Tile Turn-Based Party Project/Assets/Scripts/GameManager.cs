@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     public static int currentPlayer = 1;
     public static bool actionInProcess;
 
+    public static int difficulty;
+
     [SerializeField]
     private Button m_attackButton;
 
@@ -41,6 +43,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private string testFile;
+
+    private static int turn = 0;
     #endregion
 
     #region Initialization
@@ -76,6 +80,8 @@ public class GameManager : MonoBehaviour
         {
             enemies[i].GetComponent<BasicEnemyAI>().Turn();
         }
+        turn++;
+        difficulty = (turn / 50) + 1;
     }
 
     #region Set Up

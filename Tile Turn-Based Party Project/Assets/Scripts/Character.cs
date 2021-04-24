@@ -62,7 +62,7 @@ public abstract class Character : MonoBehaviour {
 
 
     #region Initialization
-    void Start() {
+    public void Start() {
         myRenderer = gameObject.GetComponent<SpriteRenderer>();
         shaderGUItext = Shader.Find("GUI/Text Shader");
         shaderSpritesDefault = Shader.Find("Sprites/Default");
@@ -119,6 +119,11 @@ public abstract class Character : MonoBehaviour {
         get { return curStatArr[3]; }
     }
 
+    public int[] GetCurrentCD
+    {
+        get { return currentCooldowns; }
+    }
+
     public int Level {
         get { return level; }
     }
@@ -163,6 +168,8 @@ public abstract class Character : MonoBehaviour {
 
     #region Sprite
     void WhiteSprite() {
+        Debug.Log(myRenderer);
+        Debug.Log(shaderGUItext);
         myRenderer.material.shader = shaderGUItext;
         myRenderer.color = Color.white;
     }
@@ -304,6 +311,7 @@ public abstract class Character : MonoBehaviour {
             if (currentCooldowns[i] > 0) currentCooldowns[i] -= 1;
             if (abilityDurations[i] > 0) abilityDurations[i] -= 1;
         }
+        UIManager.singleton.UpdateCD();
     }
 
     public void levelUp(int stat) {

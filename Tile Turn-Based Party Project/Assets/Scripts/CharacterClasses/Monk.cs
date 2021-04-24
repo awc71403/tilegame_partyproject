@@ -24,7 +24,7 @@ public class Monk : Character
 
     void Start()
     {
-        
+        base.Start();
     }
 
     // Update is called once per frame

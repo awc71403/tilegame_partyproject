@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class Grunt : Character
 {
+    public int myHealth = 3;
+    public int myValue = 3;
+    public int myDamage = 3;
 
-    public int MeleeDamage = 3;
     public override void Ability1()
     {
-        PlayerManager.singleton.GetCharacter().TakeDamage(MeleeDamage);
+        PlayerManager.singleton.GetCharacter().TakeDamage((int)(myDamage + myDamage * (GameManager.difficulty - 1) * 1.5));
     }
 
     public override void Ability2()
@@ -37,10 +39,16 @@ public class Grunt : Character
         throw new System.NotImplementedException();
     }
 
+    void Awake()
+    {
+        totalHealth = (int)(myHealth + myHealth * (GameManager.difficulty - 1) * 1.5);
+        value = (int)(myValue + myValue * (GameManager.difficulty - 1) * 1.5);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        base.Start();
     }
 
     // Update is called once per frame

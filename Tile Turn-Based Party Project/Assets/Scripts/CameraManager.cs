@@ -19,8 +19,8 @@ public class CameraManager : MonoBehaviour
 	public Vector2 currentSpeed;
 
 	public void Start() {
-		maxFollowSpeed = 4.00f;
-		smoothTime = 0.95f;
+		maxFollowSpeed = 20.00f;
+		smoothTime = 0.1f;
 	}
 	/**
 	 * Update() function will be called (automatically) by Unity engine every frame. Normally, you should
