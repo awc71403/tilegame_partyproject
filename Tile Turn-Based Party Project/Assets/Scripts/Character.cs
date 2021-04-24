@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -61,7 +62,7 @@ public abstract class Character : MonoBehaviour {
 
 
     #region Initialization
-    void Start() {
+    public void Start() {
         myRenderer = gameObject.GetComponent<SpriteRenderer>();
         shaderGUItext = Shader.Find("GUI/Text Shader");
         shaderSpritesDefault = Shader.Find("Sprites/Default");
@@ -115,6 +116,10 @@ public abstract class Character : MonoBehaviour {
 
     public int DamageReduction {
         get { return curStatArr[3]; }
+    }
+
+    public int[] GetCurrentCD {
+        get { return currentCooldowns; }
     }
 
     public int Level {
@@ -196,6 +201,11 @@ public abstract class Character : MonoBehaviour {
 
         // Go normal
         NormalSprite();
+    }
+
+    public void setFlip(bool direction)
+    {
+        gameObject.GetComponent<SpriteRenderer>().flipX = direction;
     }
 
     IEnumerator DeathAnimation() {
@@ -296,6 +306,7 @@ public abstract class Character : MonoBehaviour {
             if (currentCooldowns[i] > 0) currentCooldowns[i] -= 1;
             if (abilityDurations[i] > 0) abilityDurations[i] -= 1;
         }
+        UIManager.singleton.UpdateCD();
     }
 
     public void levelUp(int stat) {
