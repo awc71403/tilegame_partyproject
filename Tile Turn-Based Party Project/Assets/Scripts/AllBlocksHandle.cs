@@ -19,7 +19,7 @@ public class AllBlocksHandle : MonoBehaviour
 
     public int RoomSize;
 
-    public GameObject PlayerPrefab;
+    public GameObject[] PlayerPrefabs;
 
     public GameObject[] Enemies;
     public GameObject[] Items;
@@ -62,7 +62,8 @@ public class AllBlocksHandle : MonoBehaviour
         }
         else {
             //place enemy
-            GameObject Player = Instantiate(PlayerPrefab, Tle.transform.position, Quaternion.identity);
+            int c = PlayerPrefs.GetInt("character", 0);
+            GameObject Player = Instantiate(PlayerPrefabs[c], Tle.transform.position, Quaternion.identity);
             Tle.GetComponent<TileBehavior>().PlaceUnit(Player.GetComponent<Character>());
         }
 
