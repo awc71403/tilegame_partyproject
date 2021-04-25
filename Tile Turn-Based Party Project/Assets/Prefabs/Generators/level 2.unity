@@ -202,8 +202,8 @@ MonoBehaviour:
   Enemies:
   - {fileID: 7303250411730654310, guid: 282be179dac5ce34299e9ad25bcd31a3, type: 3}
   Items: []
-  MaxEnemies: 30
-  MinEnemies: 15
+  MaxEnemies: 3
+  MinEnemies: 2
   MaxItems: 0
   MinItems: 0
   ActorLayer:

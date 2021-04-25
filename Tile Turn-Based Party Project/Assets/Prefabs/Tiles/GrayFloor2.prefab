@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7293470314682524228}
   - component: {fileID: 7293470314682524227}
   - component: {fileID: 7293470314682524225}
+  - component: {fileID: 8902141961258108320}
   - component: {fileID: -5341894459573024327}
   m_Layer: 0
   m_Name: GrayFloor2
@@ -108,6 +109,28 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &8902141961258108320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7293470314682524224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13ff87d1ebe8b8643a698141224ab94f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  xPosition: 0
+  yPosition: 0
+  tileType: 
+  Left: {fileID: 0}
+  Right: {fileID: 0}
+  Up: {fileID: 0}
+  Down: {fileID: 0}
+  tileHighlighter: {fileID: 0}
+  playerOpacity: 0
+  enemyOpacity: 0
 --- !u!114 &-5341894459573024327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,16 +143,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a696f4e6e88d2ce49904f58f096502c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FloorTiles:
-  - {fileID: 3152849667121099969, guid: 1c100bd7f8439d14386154eece45a252, type: 3}
-  - {fileID: -1457953062893685813, guid: 1c100bd7f8439d14386154eece45a252, type: 3}
-  - {fileID: 8370984008679260455, guid: 1c100bd7f8439d14386154eece45a252, type: 3}
-  - {fileID: 5021938969169387378, guid: 1c100bd7f8439d14386154eece45a252, type: 3}
-  - {fileID: -1846698064982505447, guid: 1c100bd7f8439d14386154eece45a252, type: 3}
-  - {fileID: 5522300988963829963, guid: 1c100bd7f8439d14386154eece45a252, type: 3}
-  - {fileID: 1587833152493117506, guid: 1c100bd7f8439d14386154eece45a252, type: 3}
+  FloorTiles: []
   TwoSidedFloor: []
   TwoSidedFloorCorner: []
   LayersToCheck:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 0

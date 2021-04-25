@@ -8,9 +8,6 @@ public class TileChecker : MonoBehaviour
     public Sprite[] TwoSidedFloor;
     public Sprite[] TwoSidedFloorCorner;
 
-
-    public GameObject GrayFloor; 
-
     public GameObject[] TopWall; 
     public GameObject LeftWall;
     public GameObject RightWall;
@@ -29,31 +26,11 @@ public class TileChecker : MonoBehaviour
     private bool isL;
     private bool isR;
 
-    private bool isDoubleR;
-    private bool isDoubleL;
-    private bool isDoubleT;
-    private bool isDoubleB;
-
-    private bool isUL;
-    private bool isUR;
- 
-    private bool isBL;
-    private bool isBR;
-
-    private bool TopTileExists;
- 
-
-
 
     // Start is called before the first frame update
     void Start()
     {
-        Invoke("CheckTile", 0.5f);
         Invoke("Adjacency", 0.5f);
-        Invoke("CreateWalls", 0.6f);
-        
-        
-
     }
 
     void Adjacency()
@@ -169,14 +146,56 @@ public class TileChecker : MonoBehaviour
             }*/
 
 
-        
+            // create walls 
+            if (tile.Up == null) // upper wall
+            {
+                int number = Random.Range(0, TopWall.Length);
+                Instantiate(TopWall[number], transform.position + new Vector3(0, 1), Quaternion.identity);
 
+            }
+            else if (tile.Down == null && tile.Down.Down == null && tile.Down.Left == null && tile.Down.Right == null) // lower wall
+            {
+                Instantiate(LowerWall, transform.position + new Vector3(0, -1), Quaternion.identity);
 
+            }
+            else if (tile.Right.Right != null) // double side wall
+            {
+                Instantiate(DoubleLeftRightWall, transform.position + new Vector3(1, 0), Quaternion.identity);
 
+            }
+            else if (tile.Left.Left != null) // double side wall
+            {
+                Instantiate(DoubleLeftRightWall, transform.position + new Vector3(-1, 0), Quaternion.identity);
 
+            }
+            else if (tile.Down == null && tile.DownLeft != null && tile.DownRight != null) // triple side wall left up right
+            {
+                Instantiate(LeftUpRightSidedWall, transform.position + new Vector3(0, -1), Quaternion.identity);
+
+            }
+            else if (tile.DownRight != null && tile.Right != null && tile.Down == null) // upper right corner 
+            {
+                Instantiate(UpRightWallCorner, transform.position + new Vector3(0, -1), Quaternion.identity);
+
+            }
+            else if (tile.DownLeft != null && tile.Left != null && tile.Down == null) // upper left corner
+            {
+                Instantiate(UpLeftWallCorner, transform.position + new Vector3(0, -1), Quaternion.identity);
+
+            }
+            else if (tile.Left == null) // left wall 
+            {
+                Instantiate(LeftWall, transform.position + new Vector3(-1, 0), Quaternion.identity);
+
+            }
+            else if (tile.Right == null) // right wall
+            {
+                Instantiate(RightWall, transform.position + new Vector3(1, 0), Quaternion.identity);
+            }
 
         }
     }
+
 
 
 
@@ -228,103 +247,46 @@ public class TileChecker : MonoBehaviour
             isR = false;
         }
 
-        bool HitRightRight = Physics2D.OverlapCircle((Vector2)transform.position + new Vector2(2, 0), 0.1f, LayersToCheck);
-        if (HitRight)
-        {
-            isDoubleR = true;
+        
 
-        }
-        else
-        {
-            isDoubleR = false;
-        }
+        SpriteRenderer FloorSpriteRenderer = GetComponent<SpriteRenderer>();
+        FloorSpriteRenderer.sprite = FloorTiles[Random.Range(0, FloorTiles.Length)];
 
-        bool HitLeftLeft = Physics2D.OverlapCircle((Vector2)transform.position + new Vector2(-2, 0), 0.1f, LayersToCheck);
-        if (HitLeftLeft)
+        
+        if (isR && !isL && isT && isB) // left wall
         {
-            isDoubleL = true;
-
-        }
-        else
-        {
-            isDoubleL = false;
+            FloorSpriteRenderer.sprite = TwoSidedFloor[0]; 
         }
 
-        bool HitTopTop = Physics2D.OverlapCircle((Vector2)transform.position + new Vector2(0, 2), 0.1f, LayersToCheck);
-        if (HitTopTop)
+        else if (!isR && isL && isT && isB) // right wall
         {
-            isDoubleT = true;
-
+            FloorSpriteRenderer.sprite = TwoSidedFloor[1];
         }
-        else
+        else if (isR && isL && !isT && isB) // top wall
         {
-            isDoubleT = false;
+            FloorSpriteRenderer.sprite = TwoSidedFloor[2];
         }
 
-        bool HitBotBot = Physics2D.OverlapCircle((Vector2)transform.position + new Vector2(0, -2), 0.1f, LayersToCheck);
-        if (HitTopTop)
+        else if (isR && isL && isT && !isB) // bottom wall
         {
-            isDoubleB = true;
-
+            FloorSpriteRenderer.sprite = TwoSidedFloor[3];
         }
-        else
+        else if (isR && !isL && isT && !isB) //lower left
         {
-            isDoubleB = false;
+            FloorSpriteRenderer.sprite = TwoSidedFloorCorner[0];
         }
-
-        bool HitUpLeft = Physics2D.OverlapCircle((Vector2)transform.position + new Vector2(-1, 1), 0.1f, LayersToCheck);
-        if (HitUpLeft)
+        else if (isR && !isL && !isT && isB) //upper left
         {
-            isUL = true;
-
+            FloorSpriteRenderer.sprite = TwoSidedFloorCorner[1];
         }
-        else
+        else if (!isR && isL && !isT && isB) //upper right 
         {
-            isUL = false;
+            FloorSpriteRenderer.sprite = TwoSidedFloorCorner[2];
         }
-
-
-        bool HitUpRight = Physics2D.OverlapCircle((Vector2)transform.position + new Vector2(1, 1), 0.1f, LayersToCheck);
-        if (HitUpRight)
+        else if(!isR && isL && isT && !isB) //lower right 
         {
-            isUR = true;
-
+            FloorSpriteRenderer.sprite = TwoSidedFloorCorner[3];
         }
-        else
-        {
-            isUR = false;
-        }
-
-        bool HitBotRight = Physics2D.OverlapCircle((Vector2)transform.position + new Vector2(1, -1), 0.1f, LayersToCheck);
-        if (HitBotRight)
-        {
-            isBR = true;
-
-        }
-        else
-        {
-            isBR = false;
-        }
-
-        bool HitBotLeft = Physics2D.OverlapCircle((Vector2)transform.position + new Vector2(-1, -1), 0.1f, LayersToCheck);
-        if (HitBotLeft)
-        {
-            isBL = true;
-
-        }
-        else
-        {
-            isBL = false;
-        }
-
-
-
-
-
-        //SpriteRenderer FloorSpriteRenderer = GetComponent<SpriteRenderer>();
-        //FloorSpriteRenderer.sprite = FloorTiles[Random.Range(0, FloorTiles.Length)];
-
-
 
 
 
@@ -332,149 +294,6 @@ public class TileChecker : MonoBehaviour
 
 
     }
-
-
-    void CreateWalls()
-    {
-        // create walls 
-
-        if (isT == false) // upper wall
-        {
-            int number = Random.Range(0, TopWall.Length);
-            Instantiate(TopWall[number], transform.position + new Vector3(0, 1), Quaternion.identity);
-            TopTileExists = true;
-            //if (isB == false || isDoubleB == true)
-            //{
-                //return;
-            //}
-        }
-
-        if (isB == false)
-        {
-            int number = Random.Range(0, TopWall.Length);
-            Instantiate(TopWall[number], transform.position + new Vector3(0, -1), Quaternion.identity);
-        }
-
-        if (isR == false)
-        {
-            int number = Random.Range(0, TopWall.Length);
-            Instantiate(TopWall[number], transform.position + new Vector3(1, 0), Quaternion.identity);
-        }
-
-        if (isL == false)
-        {
-            int number = Random.Range(0, TopWall.Length);
-            Instantiate(TopWall[number], transform.position + new Vector3(-1, 0), Quaternion.identity);
-        }
-
-
-
-        TileBehavior tile = GetComponent<TileBehavior>(); 
-
-
-        if (isUL == false)
-        {
-            int number = Random.Range(0, TopWall.Length);
-            Instantiate(TopWall[number], transform.position + new Vector3(-1, 1), Quaternion.identity);
-        }
-
-        if (isUR == false)
-        {
-            int number = Random.Range(0, TopWall.Length);
-            Instantiate(TopWall[number], transform.position + new Vector3(1, 1), Quaternion.identity);
-        }
-
-        if (isBL == false)
-        {
-            int number = Random.Range(0, TopWall.Length);
-            Instantiate(TopWall[number], transform.position + new Vector3(-1, -1), Quaternion.identity);
-        }
-
-        if (isBR == false)
-        {
-            int number = Random.Range(0, TopWall.Length);
-            Instantiate(TopWall[number], transform.position + new Vector3(1, -1), Quaternion.identity);
-        }
-
-    }
-
-
-    void CreateWalls2() {
-        if (isB == false && isDoubleB == false && isBL == false && isBR == false) // lower wall
-        {
-            Instantiate(LowerWall, transform.position + new Vector3(0, -1), Quaternion.identity);
-
-        }
-        else if (isR == false && isDoubleR == true && isBR == false && isUR == false) // double side wall
-        {
-            if (!TopTileExists)
-            {
-                Instantiate(DoubleLeftRightWall, transform.position + new Vector3(1, 0), Quaternion.identity);
-            }
-
-        }
-        else if (isL == false && isDoubleL == true && isBL == false && isUL == false) // double side wall
-        {
-            if (!TopTileExists)
-            {
-                Instantiate(DoubleLeftRightWall, transform.position + new Vector3(-1, 0), Quaternion.identity);
-            }
-        }
-        else if (isB == false && isBL == true && isBR == true) // triple side wall left up right
-        {
-            Instantiate(LeftUpRightSidedWall, transform.position + new Vector3(0, -1), Quaternion.identity);
-
-        }
-    }
-
-    public void CreateWalls3()
-    {
-
-        if (isBR == true && isR == true && isB == false) // upper right corner 
-        {
-            
-        Instantiate(UpRightWallCorner, transform.position + new Vector3(0, -1), Quaternion.identity);
-                      
-        }
-        else if (isBL == true && isL == true && isB == false) // upper left corner
-        {
-            
-               
-        Instantiate(UpLeftWallCorner, transform.position + new Vector3(0, -1), Quaternion.identity);
-                
-            
-            
-        }
-        else if (isL == false && isBL == false && isUL == false) // left wall 
-        {
-            if (!TopTileExists)
-            {
-                Instantiate(LeftWall, transform.position + new Vector3(-1, 0), Quaternion.identity);
-            }
-        }
-        else if (isR == false && isBR == false && isUR == false && isDoubleR  == false) // right wall
-        {
-            if (!TopTileExists)
-            {
-                Instantiate(RightWall, transform.position + new Vector3(1, 0), Quaternion.identity);
-            }
-        }
-
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // Update is called once per frame
     void Update()

@@ -196,14 +196,14 @@ MonoBehaviour:
   - {fileID: 3891676968177124537, guid: 67c1d1369b8372940a3107200e9ae500, type: 3}
   - {fileID: 417769747018407759, guid: 1b5f9bfe5d3153f408d62d6c80e1a03d, type: 3}
   - {fileID: 6676252902503643530, guid: c99df6c259c015b4f9330cfc644e7d4c, type: 3}
-  RoomSize: 40
+  RoomSize: 35
   PlayerPrefab: {fileID: 8051671738830806328, guid: 1880f36cdf5656149ae7579788cb8bfa,
     type: 3}
   Enemies:
   - {fileID: 7303250411730654310, guid: 282be179dac5ce34299e9ad25bcd31a3, type: 3}
   Items: []
-  MaxEnemies: 40
-  MinEnemies: 20
+  MaxEnemies: 3
+  MinEnemies: 2
   MaxItems: 0
   MinItems: 0
   ActorLayer:
