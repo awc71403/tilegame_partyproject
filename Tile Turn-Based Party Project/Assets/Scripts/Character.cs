@@ -400,6 +400,23 @@ public abstract class Character : MonoBehaviour {
         }
         return null;
     }
+
+    public void MakeStepSound()
+    {
+        //Play a random step sound from the given sounds
+        int step = UnityEngine.Random.Range(0, stepSounds.Length);
+
+        audioSource.pitch = UnityEngine.Random.Range(0.8f, 1.1f);
+        audioSource.volume = UnityEngine.Random.Range(0.8f, 1);
+        audioSource.PlayOneShot(stepSounds[step]);
+    }
+
+    public void MakeAbilitySound(AudioClip sound)
+    {
+        audioSource.pitch = 1;
+        audioSource.volume = 1;
+        audioSource.PlayOneShot(sound);
+    }
     #endregion
 }
 

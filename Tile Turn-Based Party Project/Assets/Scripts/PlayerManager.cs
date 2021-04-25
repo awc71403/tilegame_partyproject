@@ -305,6 +305,7 @@ public class PlayerManager : MonoBehaviour
         myCharacter.StartBounceAnimation();
         yield return new WaitForSeconds(stepDuration);
         myCharacter.occupiedTile.PlaceUnit(myCharacter);
+        myCharacter.MakeStepSound();
 
         // Action over!
 

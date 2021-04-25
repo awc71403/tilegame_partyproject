@@ -273,7 +273,15 @@ MonoBehaviour:
   DamageTextPrefab: {fileID: 0}
   damageText: {fileID: 0}
   anim: {fileID: 0}
-  stepSounds: []
+  stepSounds:
+  - {fileID: 8300000, guid: 9f60269095fec4f39addf6b2b987021a, type: 3}
+  - {fileID: 8300000, guid: f0a2743a7337f46abb84b6c1d217d839, type: 3}
+  - {fileID: 8300000, guid: 6f26abe88be39479d9ddb4df7631170e, type: 3}
+  abilitySounds:
+  - {fileID: 8300000, guid: dc9ec74eaac9d408ab8e073d51af2d91, type: 3}
+  - {fileID: 8300000, guid: f0a2743a7337f46abb84b6c1d217d839, type: 3}
+  - {fileID: 8300000, guid: dc9ec74eaac9d408ab8e073d51af2d91, type: 3}
+  - {fileID: 8300000, guid: dc9ec74eaac9d408ab8e073d51af2d91, type: 3}
 --- !u!1001 &4262787805950075008
 PrefabInstance:
   m_ObjectHideFlags: 0

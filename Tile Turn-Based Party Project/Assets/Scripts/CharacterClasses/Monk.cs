@@ -6,6 +6,9 @@ using UnityEngine;
 public class Monk : Character
 {
 
+    [SerializeField]
+    private AudioClip[] abilitySounds; //index of abilitysounds corresponds to abililty # that makes the sound - 1
+
     private int[] baseClassStats = { 3, 5, 5, 0}; // Attack, AP, CD, Damage Reduction
     private int[] abilityCDs = { 2, 2, 2, 2 };
     private int[] currentCDs = { 0, 0, 0, 0 };
@@ -60,6 +63,9 @@ public class Monk : Character
         TileBehavior targetTile = GetTarget();
         HitEnemy(targetTile, curStatArr[1]);
 
+        //Make sound
+        MakeAbilitySound(abilitySounds[0]);
+
         //activate cooldown
         updateCooldowns();
         currentCooldowns[0] += abilityCooldowns[0];
@@ -81,6 +87,11 @@ public class Monk : Character
         }
         curStatArr[3] = 20;
         abilityDurations[1] += 3;
+
+        //Make sound
+        MakeAbilitySound(abilitySounds[1]);
+
+
         updateCooldowns();
         currentCooldowns[1] += abilityCooldowns[1];
         Debug.Log("Cooldown After: " + currentCooldowns[1]);
@@ -104,6 +115,10 @@ public class Monk : Character
         HitEnemy(targetTile, curStatArr[1]);
         HitEnemy(LeftTile, curStatArr[1]);
         HitEnemy(RightTile, curStatArr[1]);
+
+        //Make sound
+        MakeAbilitySound(abilitySounds[2]);
+
         updateCooldowns();
         currentCooldowns[2] += abilityCooldowns[2];
         Debug.Log("Cooldown After: " + currentCooldowns[2]);
@@ -128,6 +143,10 @@ public class Monk : Character
             TakeDamage(curStatArr[1] / 5);
             Debug.Log("Recoil: " + curStatArr[1] / 5);
         }
+
+        //Make sound
+        MakeAbilitySound(abilitySounds[3]);
+
         updateCooldowns();
         currentCooldowns[3] += abilityCooldowns[3];
         Debug.Log("Cooldown After: " + currentCooldowns[3]);
