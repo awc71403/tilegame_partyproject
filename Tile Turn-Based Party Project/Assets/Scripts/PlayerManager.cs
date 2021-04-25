@@ -34,6 +34,7 @@ public class PlayerManager : MonoBehaviour
         singleton = this;
 
         myCharacter = GetComponent<Character>();
+        profile = PlayerPrefs.GetString("profile", "tester");
         if (PlayerPrefs.HasKey(profile))
         {
             Debug.Log("getting save");

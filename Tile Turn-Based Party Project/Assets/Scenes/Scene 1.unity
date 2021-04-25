@@ -189,8 +189,9 @@ MonoBehaviour:
   - {fileID: 3111405940045582591, guid: 4c0edc94025046249934fa23f4983a1f, type: 3}
   - {fileID: 551057032532739392, guid: 72530c3dadaf82545a875d16c18ee5b2, type: 3}
   RoomSize: 35
-  PlayerPrefab: {fileID: 8051671738830806328, guid: 1880f36cdf5656149ae7579788cb8bfa,
-    type: 3}
+  PlayerPrefabs:
+  - {fileID: 0}
+  - {fileID: 0}
   Enemies:
   - {fileID: 7303250411730654310, guid: 282be179dac5ce34299e9ad25bcd31a3, type: 3}
   Items: []
