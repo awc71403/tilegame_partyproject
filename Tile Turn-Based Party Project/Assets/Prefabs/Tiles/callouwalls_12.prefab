@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8267407726209208426}
   - component: {fileID: -5336149792747843821}
   - component: {fileID: -2714172030653833932}
-  - component: {fileID: 6632030542424430794}
+  - component: {fileID: -7278971359705128008}
   m_Layer: 0
   m_Name: callouwalls_12
   m_TagString: FloorTile
@@ -135,7 +135,7 @@ MonoBehaviour:
   tileHighlighter: {fileID: 0}
   playerOpacity: 0
   enemyOpacity: 0
---- !u!114 &6632030542424430794
+--- !u!114 &-7278971359705128008
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -171,4 +171,4 @@ MonoBehaviour:
     type: 3}
   LayersToCheck:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1
