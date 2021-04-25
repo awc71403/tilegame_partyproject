@@ -31,9 +31,22 @@ public class AllBlocksHandle : MonoBehaviour
     public int MinItems = 10;
     private int itemsToPlace;
 
-    public LayerMask ActorLayer; 
+    public int spawned = 0;
+    public static AllBlocksHandle singleton;
+
+    public LayerMask ActorLayer;
 
     // Start is called before the first frame update
+    private void Awake()
+    {
+        if (singleton != null)
+        {
+            DestroyImmediate(gameObject);
+            return;
+        }
+        singleton = this;
+    }
+
     void Start()
     {
         enemiesToPlace = Random.Range(MinEnemies, MaxEnemies);
@@ -82,7 +95,7 @@ public class AllBlocksHandle : MonoBehaviour
             //check if tile has no other player/enemy
             CheckBlock = Physics2D.OverlapCircle(Tle.transform.position, 0.1f, ActorLayer);
 
-            if (CheckBlock)
+            if (CheckBlock || Tle.GetComponent<TileBehavior>().HasUnit())
             {
                 //can't place here
                 Debug.Log("Other Character Already Placed");
@@ -120,6 +133,39 @@ public class AllBlocksHandle : MonoBehaviour
 
                 Debug.Log("Item Placed");
             }
+        }
+        GameManager.enemyCount = enemiesToPlace;
+        UIManager.singleton.UpdateUI();
+    }
+
+    public void SpawnEnemy() {
+        spawned++;
+        GameObject[] Tiles = GameObject.FindGameObjectsWithTag("FloorTile");
+
+        GameObject Tle = Tiles[Random.Range(0, Tiles.Length)];
+
+        if (Tle.GetComponent<TileBehavior>().HasUnit())
+        {
+            //can't place here
+            Debug.Log("Other Character Already Placed");
+
+        }
+        else
+        {
+            GameObject Enemy;
+            //Spawn oski
+            if (spawned % 10 == 0)
+            {
+                int randenemy = Random.Range(0, Enemies.Length);
+                Enemy = Instantiate(Enemies[randenemy], Tle.transform.position, Quaternion.identity);
+            }
+            //Spawn kiwi
+            else {
+                int randenemy = Random.Range(0, Enemies.Length);
+                Enemy = Instantiate(Enemies[randenemy], Tle.transform.position, Quaternion.identity);
+            }
+            Tle.GetComponent<TileBehavior>().PlaceUnit(Enemy.GetComponent<Character>());
+            Debug.Log("Enemy Placed");
         }
     }
 }

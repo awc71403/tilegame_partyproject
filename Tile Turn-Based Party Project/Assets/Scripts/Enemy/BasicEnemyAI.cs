@@ -32,6 +32,7 @@ public class BasicEnemyAI : MonoBehaviour
     //Return true if player is within line of sight
     bool DetectPlayer()
     {
+        player = PlayerManager.GetSingleton().gameObject;
         Vector2 direction = player.transform.position - transform.position;
         List<RaycastHit2D> results = new List<RaycastHit2D>();
         ContactFilter2D contactFilter2D = new ContactFilter2D();
@@ -62,6 +63,10 @@ public class BasicEnemyAI : MonoBehaviour
 
     public void Turn()
     {
+        if (myCharacter.currentHealth <= 0) {
+            return;
+        }
+
         //See if player is in line of sight
         if (DetectPlayer())
         {

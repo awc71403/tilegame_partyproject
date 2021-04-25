@@ -16,6 +16,10 @@ public class UIManager : MonoBehaviour
 
     public GameObject skillUI;
 
+    public TextMeshProUGUI floorText;
+    public TextMeshProUGUI difficultyText;
+    public TextMeshProUGUI enemiesText;
+
     public Image skill0;
     public Image skill1;
     public Image skill2;
@@ -47,6 +51,12 @@ public class UIManager : MonoBehaviour
             }
         }
         
+    }
+
+    public void UpdateUI() {
+        floorText.text = $"Floor: {GameManager.floor}/100";
+        difficultyText.text = $"Difficulty: {GameManager.difficulty}";
+        enemiesText.text = $"Enemies: {GameManager.enemyCount}";
     }
 
     public void UpdateCD() {
