@@ -85,10 +85,13 @@ public class PlayerManager : MonoBehaviour
 
     void Update() {
 
-        if (!GameManager.actionInProcess) {
+        if (!GameManager.actionInProcess) { 
             if (myCharacter.currentHealth <= 0) {
                 // Load a new scene the player dies
-                SceneManager.LoadScene(sceneName:"Camera-Following-Player");
+                GameManager.Reset();
+                myCharacter.ResetHealth();
+                UIManager.singleton.Loading();
+                SceneManager.LoadScene(sceneName:"Game");
             }
             
             if (inShop) {
@@ -305,7 +308,13 @@ public class PlayerManager : MonoBehaviour
         myCharacter.StartBounceAnimation();
         yield return new WaitForSeconds(stepDuration);
         myCharacter.occupiedTile.PlaceUnit(myCharacter);
-        myCharacter.MakeStepSound();
+        if (myCharacter.occupiedTile.tileType == "glass")
+        {
+            myCharacter.MakeGlassSound();
+        }
+        else {
+            myCharacter.MakeStepSound();
+        }
 
         // Action over!
 

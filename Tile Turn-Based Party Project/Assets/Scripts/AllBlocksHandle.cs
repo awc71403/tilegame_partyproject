@@ -17,6 +17,10 @@ public class AllBlocksHandle : MonoBehaviour
     public GameObject[] FloorTileBlocks;
     public GameObject[] WallTileBlocks;
 
+    public GameObject StairTile;
+    public GameObject GlassTile;
+    public GameObject BobaTile;
+
     public int RoomSize;
  
     public GameObject PlayerPrefab;
@@ -26,6 +30,9 @@ public class AllBlocksHandle : MonoBehaviour
     public int MaxEnemies = 10;
     public int MinEnemies = 6;
     private int enemiesToPlace;
+
+    public int MaxGlass = 5;
+    public int MinGlass = 2;
 
     public int MaxItems = 15;
     public int MinItems = 10;
@@ -52,7 +59,8 @@ public class AllBlocksHandle : MonoBehaviour
         enemiesToPlace = Random.Range(MinEnemies, MaxEnemies);
         itemsToPlace = Random.Range(MinItems, MaxItems);
         Invoke("Create", 2f);
-   
+        Invoke("Modify", 2.5f);
+        Invoke("ReChecker", 3f);
     }
 
     // Update is called once per frame
@@ -83,6 +91,9 @@ public class AllBlocksHandle : MonoBehaviour
             { 
                 GameObject Player = Instantiate(PlayerPrefab, Tle.transform.position, Quaternion.identity);
                 Tle.GetComponent<TileBehavior>().PlaceUnit(Player.GetComponent<Character>());
+                Vector3 pos = Player.transform.position;
+                pos.z = -10;
+                CameraManager.singleton.transform.position = pos;
             }
 
         }
@@ -136,6 +147,70 @@ public class AllBlocksHandle : MonoBehaviour
         }
         GameManager.enemyCount = enemiesToPlace;
         UIManager.singleton.UpdateUI();
+    }
+
+    private void Modify() {
+        GameObject[] Tiles = GameObject.FindGameObjectsWithTag("FloorTile");
+        GameObject Tle = Tiles[Random.Range(0, Tiles.Length)];
+        GameObject newTle;
+
+        int glassToPlace = Random.Range(MinGlass, MaxGlass * GameManager.difficulty);
+        for (int i = 0; i < glassToPlace; i++) {
+            Tle = Tiles[Random.Range(0, Tiles.Length)];
+            newTle = Instantiate(GlassTile);
+            newTle.transform.position = Tle.transform.position;
+            Destroy(Tle.gameObject);
+        }
+
+        Tle = Tiles[Random.Range(0, Tiles.Length)];
+        newTle = Instantiate(StairTile);
+        newTle.transform.position = Tle.transform.position;
+        Destroy(Tle.gameObject);
+    }
+
+    private void ReChecker() {
+        Debug.Log("ReChecker");
+        GameObject[] Tiles = GameObject.FindGameObjectsWithTag("FloorTile");
+
+        foreach (GameObject tileGameObject in Tiles)
+        {
+            TileBehavior tile = tileGameObject.GetComponent<TileBehavior>();
+
+            if (tile)
+            {
+                Vector2[] directions = { Vector2.right, Vector2.left, Vector2.up, Vector2.down };
+
+                foreach (Vector2 direction in directions)
+                {
+                    RaycastHit2D hit = Physics2D.Raycast(tile.gameObject.transform.position, direction, 1.0f);
+                    if (hit.collider != null)
+                    {
+                        TileBehavior otherTile = hit.transform.GetComponent<TileBehavior>();
+                        if (otherTile)
+                        {
+                            if (direction == Vector2.left)
+                            {
+                                tile.Left = otherTile;
+                            }
+                            else if (direction == Vector2.right)
+                            {
+                                tile.Right = otherTile;
+                            }
+                            else if (direction == Vector2.up)
+                            {
+                                tile.Up = otherTile;
+                            }
+                            else
+                            {
+                                tile.Down = otherTile;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        UIManager.singleton.FinishedLoading();
     }
 
     public void SpawnEnemy() {

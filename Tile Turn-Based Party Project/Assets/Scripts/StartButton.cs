@@ -39,6 +39,6 @@ public class StartButton : MonoBehaviour
         PlayerPrefs.SetString("profile", profile); // Rudimentary
         PlayerPrefs.SetInt("character", character); // Rudimentary
         PlayerPrefs.Save();
-        SceneManager.LoadScene("Save Load");
+        SceneManager.LoadScene("Game");
     }
 }

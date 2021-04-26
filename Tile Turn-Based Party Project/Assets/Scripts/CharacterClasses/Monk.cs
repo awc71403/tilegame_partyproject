@@ -6,11 +6,13 @@ using UnityEngine;
 public class Monk : Character
 {
 
+    public Sprite[] abilityImages;
+
     [SerializeField]
     private AudioClip[] abilitySounds; //index of abilitysounds corresponds to abililty # that makes the sound - 1
 
-    private int[] baseClassStats = { 3, 5, 5, 0}; // Attack, AP, CD, Damage Reduction
-    private int[] abilityCDs = { 2, 2, 2, 2 };
+    private int[] baseClassStats = { 3, 5, 5, 0, 0}; // Attack, AP, CD, Damage Reduction, Health
+    private int[] abilityCDs = { 8, 8, 12, 12 };
     private int[] currentCDs = { 0, 0, 0, 0 };
     private int[] abilityDur = { 0, 0, 0, 0 }; // Only for Ability 2, but may be used more in future
 
@@ -20,9 +22,11 @@ public class Monk : Character
         curStatArr = baseClassStats;
         baseStats = baseClassStats;
         characterName = "monk";
+        totalHealth = currentHealth = 100 + 10 * curStatArr[4];
         abilityCooldowns = abilityCDs;
         currentCooldowns = currentCDs;
         abilityDurations = abilityDur;
+        UIManager.singleton.SetAbilityImages(abilityImages);
     }
 
     void Start()
@@ -33,7 +37,7 @@ public class Monk : Character
     // Update is called once per frame
     void Update()
     {
-        
+        base.Update();
     }
 
     public override void TakeDamage(int damage)
@@ -61,6 +65,10 @@ public class Monk : Character
             return;
         }
         TileBehavior targetTile = GetTarget();
+        if (targetTile == null)
+        {
+            return;
+        }
         HitEnemy(targetTile, curStatArr[1]);
 
         //Make sound
@@ -86,7 +94,7 @@ public class Monk : Character
             return;
         }
         curStatArr[3] = 20;
-        abilityDurations[1] += 3;
+        abilityDurations[1] += 4;
 
         //Make sound
         MakeAbilitySound(abilitySounds[1]);
@@ -110,6 +118,9 @@ public class Monk : Character
         }
         //Need to fix
         TileBehavior targetTile = GetTarget();
+        if (targetTile == null) {
+            return;
+        }
         TileBehavior LeftTile = targetTile.Left;
         TileBehavior RightTile = targetTile.Right;
         HitEnemy(targetTile, curStatArr[1]);
@@ -138,7 +149,11 @@ public class Monk : Character
         }
 
         TileBehavior targetTile = GetTarget();
-        if (HitEnemy(targetTile, curStatArr[1] + 5))
+        if (targetTile == null)
+        {
+            return;
+        }
+        if (HitEnemy(targetTile, curStatArr[0] + curStatArr[1]))
         {
             TakeDamage(curStatArr[1] / 5);
             Debug.Log("Recoil: " + curStatArr[1] / 5);

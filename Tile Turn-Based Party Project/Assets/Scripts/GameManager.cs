@@ -38,6 +38,9 @@ public class GameManager : MonoBehaviour
     public static int enemyCount = 0;
     public static int floor = 1;
     private static int turn = 0;
+
+    public static int tries = 0;
+    public static int highscore;
     #endregion
 
     #region Initialization
@@ -48,6 +51,10 @@ public class GameManager : MonoBehaviour
             return;
         }
         m_Singleton = this;
+
+        if (PlayerPrefs.HasKey("Highscore")) {
+            highscore = PlayerPrefs.GetInt("Highschore");
+        }
 
         UpdateDifficulty();
     }
@@ -63,6 +70,14 @@ public class GameManager : MonoBehaviour
         
     }
     #endregion
+
+    public static void Reset() {
+
+        tries++;
+        floor = 1;
+        turn = 0;
+        UpdateDifficulty();
+    }
 
     public static void UpdateEnemies()
     {
@@ -98,6 +113,11 @@ public class GameManager : MonoBehaviour
 
     public static void UpdateDifficulty() {
         difficulty = (turn / 50) + floor;
+    }
+
+    public static void Win()
+    {
+        PlayerPrefs.SetInt("Highscore", Mathf.Max(tries, highscore));
     }
 
 }

@@ -10,7 +10,7 @@ public class Grunt : Character
 
     public override void Ability1()
     {
-        PlayerManager.singleton.GetCharacter().TakeDamage((int)(myDamage + myDamage * (GameManager.difficulty - 1) * 1.5));
+        PlayerManager.singleton.GetCharacter().TakeDamage((int)(myDamage + myDamage * (GameManager.difficulty - 1) * 1.25));
     }
 
     public override void Ability2()
@@ -41,8 +41,8 @@ public class Grunt : Character
 
     void Awake()
     {
-        totalHealth = (int)(myHealth + myHealth * (GameManager.difficulty - 1) * 1.5);
-        value = (int)(myValue + myValue * (GameManager.difficulty - 1) * 1.5);
+        totalHealth = (int)(myHealth + myHealth * (GameManager.difficulty - 1) * 1.25);
+        value = (int)(myValue + myValue * (GameManager.difficulty - 1) * 1.25);
     }
 
     // Start is called before the first frame update

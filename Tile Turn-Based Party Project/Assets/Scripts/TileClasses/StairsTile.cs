@@ -10,14 +10,26 @@ public class StairsTile : TileBehavior
     public ShopManager shop;
 
     public void Start() {
+        tileType = "stair";
         // get the shop somehow ?? 
-        shop = GameManager.GetSingleton().shop.GetComponent<ShopManager>();
+        //shop = GameManager.GetSingleton().shop.GetComponent<ShopManager>();
 
     }
     
     public override void Effect() {
-        PlayerManager.GetSingleton().inShop = true;
-        shop.OpenShop();
+        //PlayerManager.GetSingleton().inShop = true;
+        //shop.OpenShop();
+        if (GameManager.floor > 100)
+        {
+            Destroy(UIManager.singleton.gameObject);
+            Destroy(PlayerManager.singleton.gameObject);
+            SceneManager.LoadScene("Win");
+        }
+        else {
+            UIManager.singleton.Loading();
+            GameManager.IncreaseFloor();
+            SceneManager.LoadScene("Game");
+        }
     }
 
 }

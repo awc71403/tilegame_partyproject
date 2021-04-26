@@ -263,6 +263,8 @@ MonoBehaviour:
   currentHealth: 0
   level: 1
   experience: 0
+  experienceThreshold: 1
+  skillPoint: 0
   value: 0
   isPlayer: 0
   isCharacter: 0
@@ -277,11 +279,18 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 9f60269095fec4f39addf6b2b987021a, type: 3}
   - {fileID: 8300000, guid: f0a2743a7337f46abb84b6c1d217d839, type: 3}
   - {fileID: 8300000, guid: 6f26abe88be39479d9ddb4df7631170e, type: 3}
+  regularPunchSound: {fileID: 8300000, guid: dc9ec74eaac9d408ab8e073d51af2d91, type: 3}
+  glassStep: {fileID: 8300000, guid: de67a533d6ace4a96bb3db78b3ac6726, type: 3}
+  abilityImages:
+  - {fileID: 21300000, guid: c1c34624731657f41bb51f0a623749de, type: 3}
+  - {fileID: 21300000, guid: f8b9a257ac995334c919533bd158d5dc, type: 3}
+  - {fileID: 21300000, guid: 74aac30cd918f2f4989b28fbdf176ef8, type: 3}
+  - {fileID: 21300000, guid: d0bfb0fe168823d48aa57df2de84febe, type: 3}
   abilitySounds:
-  - {fileID: 8300000, guid: dc9ec74eaac9d408ab8e073d51af2d91, type: 3}
-  - {fileID: 8300000, guid: f0a2743a7337f46abb84b6c1d217d839, type: 3}
-  - {fileID: 8300000, guid: dc9ec74eaac9d408ab8e073d51af2d91, type: 3}
-  - {fileID: 8300000, guid: dc9ec74eaac9d408ab8e073d51af2d91, type: 3}
+  - {fileID: 8300000, guid: d7646c229d2f6094fa5048db9115b296, type: 3}
+  - {fileID: 8300000, guid: e1bff672c3fe5d94aa0fca755775ab22, type: 3}
+  - {fileID: 8300000, guid: 3da273ac73f77fb499c532ae9364bc88, type: 3}
+  - {fileID: 8300000, guid: 2e5cc81bc1f1aeb4b8b71a3eda249efb, type: 3}
 --- !u!1001 &4262787805950075008
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -21,6 +21,8 @@ public abstract class Character : MonoBehaviour {
     public int currentHealth;
     public int level = 1;
     public int experience = 0;
+    public int experienceThreshold = 1;
+    public int skillPoint = 0;
     public int value = 0; // exp value on death
 
     public bool isPlayer;
@@ -47,6 +49,10 @@ public abstract class Character : MonoBehaviour {
     [SerializeField]
     private AudioClip[] stepSounds;
     private AudioSource audioSource;
+    [SerializeField]
+    private AudioClip regularPunchSound;
+    [SerializeField]
+    private AudioClip glassStep;
 
     public abstract void TakeDamage(int damage);
     public abstract void Ability1();
@@ -72,6 +78,15 @@ public abstract class Character : MonoBehaviour {
         playerManager = GetComponent<PlayerManager>();
     }
     #endregion
+
+    public void Update()
+    {
+        if (experience > experienceThreshold) {
+            experience -= experienceThreshold;
+            experienceThreshold++;
+            skillPoint++;
+        }
+    }
 
     #region Getter and Setter
     public string Name {
@@ -116,6 +131,11 @@ public abstract class Character : MonoBehaviour {
 
     public int DamageReduction {
         get { return curStatArr[3]; }
+    }
+
+    public int Health
+    {
+        get { return curStatArr[4]; }
     }
 
     public int[] GetCurrentCD {
@@ -278,10 +298,12 @@ public abstract class Character : MonoBehaviour {
             occupiedTile.ClearUnit();
             return true;
         }
+
     }
 
     public bool HitEnemy(TileBehavior tile, int dmg)
     {
+        MakeAbilitySound(regularPunchSound);
         Debug.Log("attempted hit");
         Debug.Log("Tile coordinates : " + tile.xPosition + " " + tile.yPosition);
         if (validTarget(tile))
@@ -311,9 +333,16 @@ public abstract class Character : MonoBehaviour {
 
     public void levelUp(int stat) {
         ///Temp measure
+        skillPoint--;
+        if (stat == 4) {
+            currentHealth += 10;
+            totalHealth += 10;
+            UIManager.singleton.HealthUI();
+        }
         curStatArr[stat] += 1; // This will be a percentage later
-        baseStats[stat] += 1;
+        //baseStats[stat] += 1;
         curStatArr[stat] = baseStats[stat] > curStatArr[stat] ? baseStats[stat] : curStatArr[stat];
+        UIManager.singleton.UpdateLevelUI();
     }
     #endregion
 
@@ -369,12 +398,9 @@ public abstract class Character : MonoBehaviour {
 
     public void AttackEnemy() {
         GameManager.actionInProcess = true;
+        MakeAbilitySound(regularPunchSound);
         int damage = curStatArr[0];
-        Debug.Log("called attack function");
-        Debug.Log(myDirection);
-        Debug.Log(myDirection.Equals(Character.Direction.RIGHT));
         TileBehavior target = GetTarget();
-        Debug.Log(target.HasUnit());
         if (target != null && target.HasUnit() && target.GetUnit() != this) {
             Debug.Log("Attacked");
             Character enemy = target.GetUnit();
@@ -407,8 +433,16 @@ public abstract class Character : MonoBehaviour {
         int step = UnityEngine.Random.Range(0, stepSounds.Length);
 
         audioSource.pitch = UnityEngine.Random.Range(0.8f, 1.1f);
-        audioSource.volume = UnityEngine.Random.Range(0.8f, 1);
+        audioSource.volume = UnityEngine.Random.Range(0.1f, 0.2f);
         audioSource.PlayOneShot(stepSounds[step]);
+    }
+
+    public void MakeGlassSound()
+    {
+        //Play a random step sound from the given sounds
+        audioSource.pitch = UnityEngine.Random.Range(0.8f, 1.1f);
+        audioSource.volume = UnityEngine.Random.Range(0.1f, 0.2f);
+        audioSource.PlayOneShot(glassStep);
     }
 
     public void MakeAbilitySound(AudioClip sound)
