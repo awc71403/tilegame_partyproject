@@ -2,11 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Monk : Character
 {
 
-    private int[] baseClassStats = { 3, 5, 5, 0}; // Attack, AP, CD, Damage Reduction
-    private int[] abilityCDs = { 2, 2, 2, 2 };
+    public Sprite[] abilityImages;
+
+    [SerializeField]
+    private AudioClip[] abilitySounds; //index of abilitysounds corresponds to abililty # that makes the sound - 1
+
+    private int[] baseClassStats = { 3, 5, 5, 0, 0}; // Attack, AP, CD, Damage Reduction, Health
+    private int[] abilityCDs = { 8, 8, 12, 12 };
     private int[] currentCDs = { 0, 0, 0, 0 };
     private int[] abilityDur = { 0, 0, 0, 0 }; // Only for Ability 2, but may be used more in future
 
@@ -16,20 +22,22 @@ public class Monk : Character
         curStatArr = baseClassStats;
         baseStats = baseClassStats;
         characterName = "monk";
+        totalHealth = currentHealth = 100 + 10 * curStatArr[4];
         abilityCooldowns = abilityCDs;
         currentCooldowns = currentCDs;
         abilityDurations = abilityDur;
+        UIManager.singleton.SetAbilityImages(abilityImages);
     }
 
     void Start()
     {
-        
+        base.Start();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        base.Update();
     }
 
     public override void TakeDamage(int damage)
@@ -57,15 +65,15 @@ public class Monk : Character
             return;
         }
         TileBehavior targetTile = GetTarget();
-        if (validTarget(targetTile))
+        if (targetTile == null)
         {
-            Character enemy = targetTile.GetUnit();
-            if (enemy.HPDamage(curStatArr[1]))
-            {
-                experience += enemy.value;
-                Debug.Log("experience : " + (experience));
-            }
+            return;
         }
+        HitEnemy(targetTile, curStatArr[1]);
+
+        //Make sound
+        MakeAbilitySound(abilitySounds[0]);
+
         //activate cooldown
         updateCooldowns();
         currentCooldowns[0] += abilityCooldowns[0];
@@ -86,7 +94,12 @@ public class Monk : Character
             return;
         }
         curStatArr[3] = 20;
-        abilityDurations[1] += 3;
+        abilityDurations[1] += 4;
+
+        //Make sound
+        MakeAbilitySound(abilitySounds[1]);
+
+
         updateCooldowns();
         currentCooldowns[1] += abilityCooldowns[1];
         Debug.Log("Cooldown After: " + currentCooldowns[1]);
@@ -103,26 +116,20 @@ public class Monk : Character
             GameManager.actionInProcess = false;
             return;
         }
-        //find enemies in area
-        //TileBehavior[] targetTiles = GetTargets(new int[] { 1, 1, 1, 0 }); // left, up, right, down in direction facing
-        //foreach (TileBehavior tile in targetTiles)
-        //{
-        //    Character target = tile.GetUnit();
-        //    if (tile != null && target != null && target != this)
-        //    {
-        //        target.HPDamage(curStatArr[1]);
-        //    }
-        //}
+        //Need to fix
         TileBehavior targetTile = GetTarget();
-        if (validTarget(targetTile))
-        {
-            Character enemy = targetTile.GetUnit();
-            if (enemy.HPDamage(curStatArr[1]))
-            {
-                experience += enemy.value;
-                Debug.Log("experience : " + (experience));
-            }
+        if (targetTile == null) {
+            return;
         }
+        TileBehavior LeftTile = targetTile.Left;
+        TileBehavior RightTile = targetTile.Right;
+        HitEnemy(targetTile, curStatArr[1]);
+        HitEnemy(LeftTile, curStatArr[1]);
+        HitEnemy(RightTile, curStatArr[1]);
+
+        //Make sound
+        MakeAbilitySound(abilitySounds[2]);
+
         updateCooldowns();
         currentCooldowns[2] += abilityCooldowns[2];
         Debug.Log("Cooldown After: " + currentCooldowns[2]);
@@ -142,17 +149,19 @@ public class Monk : Character
         }
 
         TileBehavior targetTile = GetTarget();
-        if (validTarget(targetTile))
+        if (targetTile == null)
         {
-            Character enemy = targetTile.GetUnit();
-            if (enemy.HPDamage(curStatArr[1]))
-            {
-                experience += enemy.value;
-                Debug.Log("experience : " + (experience));
-            }
+            return;
+        }
+        if (HitEnemy(targetTile, curStatArr[0] + curStatArr[1]))
+        {
             TakeDamage(curStatArr[1] / 5);
             Debug.Log("Recoil: " + curStatArr[1] / 5);
         }
+
+        //Make sound
+        MakeAbilitySound(abilitySounds[3]);
+
         updateCooldowns();
         currentCooldowns[3] += abilityCooldowns[3];
         Debug.Log("Cooldown After: " + currentCooldowns[3]);
