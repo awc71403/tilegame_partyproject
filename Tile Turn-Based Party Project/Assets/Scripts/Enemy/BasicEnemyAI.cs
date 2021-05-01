@@ -194,8 +194,9 @@ public class BasicEnemyAI : MonoBehaviour
         myCharacter.updateCooldowns();
         myCharacter.RecalculateDepth();
         myCharacter.StartBounceAnimation();
-        yield return new WaitForSeconds(stepDuration);
+
         myCharacter.occupiedTile.PlaceUnit(myCharacter);
+        yield return new WaitForSeconds(stepDuration);
 
     }
 
