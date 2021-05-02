@@ -22,6 +22,10 @@ public class UIManager : MonoBehaviour
     public GameObject skillUI;
 
     public GameObject levelUI;
+<<<<<<< Updated upstream
+=======
+    public GameObject shopUI;
+>>>>>>> Stashed changes
 
     public TextMeshProUGUI floorText;
     public TextMeshProUGUI difficultyText;
@@ -220,6 +224,19 @@ public class UIManager : MonoBehaviour
         levelClose.gameObject.SetActive(false);
     }
 
+<<<<<<< Updated upstream
+=======
+    public void OpenShop() {
+        GameManager.actionInProcess = true;
+        shopUI.SetActive(true);
+        shopUI.GetComponent<ShopManager>().OpenShop();
+    }
+
+    public void CloseShop() {
+        shopUI.SetActive(false);
+    }
+
+>>>>>>> Stashed changes
     public void CloseLevelMenu() {
         GameManager.actionInProcess = false;
         levelUI.SetActive(false);

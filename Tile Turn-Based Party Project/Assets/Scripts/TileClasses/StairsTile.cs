@@ -19,6 +19,7 @@ public class StairsTile : TileBehavior
     public override void Effect() {
         //PlayerManager.GetSingleton().inShop = true;
         //shop.OpenShop();
+<<<<<<< Updated upstream
         if (GameManager.floor > 100)
         {
             Destroy(UIManager.singleton.gameObject);
@@ -30,6 +31,9 @@ public class StairsTile : TileBehavior
             GameManager.IncreaseFloor();
             SceneManager.LoadScene("Game");
         }
+=======
+        UIManager.singleton.OpenShop();
+>>>>>>> Stashed changes
     }
 
 }

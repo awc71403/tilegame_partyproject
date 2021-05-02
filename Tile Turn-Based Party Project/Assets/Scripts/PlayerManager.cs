@@ -19,8 +19,11 @@ public class PlayerManager : MonoBehaviour
     public bool inShop;
     private PlayerData saved_data;
 
+<<<<<<< Updated upstream
     public int money;
 
+=======
+>>>>>>> Stashed changes
     private string profile = "tester";
 
     private string FLOOR = "floor";

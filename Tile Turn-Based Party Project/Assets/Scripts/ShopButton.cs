@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class ShopButton : MonoBehaviour
 {
+<<<<<<< Updated upstream
     public PlayerManager player;
     public Item item; 
     public TextMeshProUGUI itemName;
@@ -43,10 +44,44 @@ public class ShopButton : MonoBehaviour
         ShopManager.GetSingleton().CheckButtons();
     }
 
+=======
+    public Character player;
+    public TextMeshProUGUI priceLabel;
+
+    void Awake() {
+        player = PlayerManager.singleton.GetCharacter();
+    }
+
+    public void Purchase() 
+    {
+        player = PlayerManager.singleton.GetCharacter();
+        int price = ShopManager.GetSingleton().price;
+        if (player.money - price >= 0) {
+            player.money = player.money - price;
+            // might want to change how much the boba heals
+            player.currentHealth += price;
+        }
+        DisableButton();
+        ShopManager.GetSingleton().CheckButtons();
+    }
+
+
+>>>>>>> Stashed changes
     public void DisableButton() 
     {
         gameObject.GetComponent<Button>().interactable = false; 
     }
+<<<<<<< Updated upstream
 
 
+=======
+    public void EnableButton() 
+    {
+        gameObject.GetComponent<Button>().interactable = true; 
+    }
+    public void SetPrices(int price) 
+    {
+        priceLabel.text = price.ToString();
+    }
+>>>>>>> Stashed changes
 } 
