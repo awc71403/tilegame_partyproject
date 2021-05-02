@@ -24,11 +24,7 @@ public abstract class Character : MonoBehaviour {
     public int experienceThreshold = 1;
     public int skillPoint = 0;
     public int value = 0; // exp value on death
-<<<<<<< Updated upstream
-
-=======
     public int money;
->>>>>>> Stashed changes
     public bool isPlayer;
     public bool isCharacter;
     public int charValue;
@@ -79,10 +75,7 @@ public abstract class Character : MonoBehaviour {
         audioSource = GetComponent<AudioSource>();
         SetHPFull();
         myDirection = Character.Direction.RIGHT;
-<<<<<<< Updated upstream
-=======
         money = 0;
->>>>>>> Stashed changes
         playerManager = GetComponent<PlayerManager>();
     }
     #endregion
@@ -107,17 +100,6 @@ public abstract class Character : MonoBehaviour {
 
     public void SetHPFull() {
         currentHealth = totalHealth;
-    }
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
-    public int[] GetCopyStats() {
-        int[] copy = new int[curStatArr.Length];
-        for (int i = 0; i < curStatArr.Length; i++) {
-            copy[i] = curStatArr[i];
-        }
-        return copy;
     }
 
     public void ModifyStats(int[] stats) {
@@ -324,11 +306,8 @@ public abstract class Character : MonoBehaviour {
             if (enemy.HPDamage(dmg))
             {
                 experience += enemy.value;
-<<<<<<< Updated upstream
-=======
                 money += UnityEngine.Random.Range(0, 5);
                 Debug.Log("money: " + money);
->>>>>>> Stashed changes
                 Debug.Log("experience : " + (experience));
             }
             return true;
@@ -423,12 +402,9 @@ public abstract class Character : MonoBehaviour {
             if (enemy.HPDamage(curStatArr[1]))
             {
                 experience += enemy.value;
-<<<<<<< Updated upstream
-=======
                 money += UnityEngine.Random.Range(0, enemy.value);
 
                 Debug.Log("money :" + money);
->>>>>>> Stashed changes
                 Debug.Log("experience : " + (experience));
             }
         }
