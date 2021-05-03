@@ -6,47 +6,37 @@ using UnityEngine.UI;
 
 public class ShopButton : MonoBehaviour
 {
-    public PlayerManager player;
-    public Item item; 
-    public TextMeshProUGUI itemName;
+    public Character player;
     public TextMeshProUGUI priceLabel;
-    public Image img; 
-    public int price; 
 
     void Awake() {
-        player = PlayerManager.singleton;
+        player = PlayerManager.singleton.GetCharacter();
     }
 
-        // set the item text label, img, and itemName. 
-    public void SetItem(Item i) 
-    {
-        this.item = i;
-        this.itemName.SetText(i.name);
-        this.priceLabel.SetText(i.price.ToString());
-        // this.img = i.image;
-        if (player.money - item.price <= 0) 
-        {
-            DisableButton(); 
-        }
-
-    }
     public void Purchase() 
     {
-        player = PlayerManager.singleton;
+        player = PlayerManager.singleton.GetCharacter();
+        int price = ShopManager.GetSingleton().price;
         if (player.money - price >= 0) {
             player.money = player.money - price;
-            DisableButton();
-            Debug.Log("bought");
+            // might want to change how much the boba heals
+            player.currentHealth += price;
         }
-        // add the item of the button to the inventory
-
+        DisableButton();
         ShopManager.GetSingleton().CheckButtons();
     }
+
 
     public void DisableButton() 
     {
         gameObject.GetComponent<Button>().interactable = false; 
     }
-
-
+    public void EnableButton() 
+    {
+        gameObject.GetComponent<Button>().interactable = true; 
+    }
+    public void SetPrices(int price) 
+    {
+        priceLabel.text = price.ToString();
+    }
 } 

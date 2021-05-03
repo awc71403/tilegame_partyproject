@@ -22,6 +22,7 @@ public class UIManager : MonoBehaviour
     public GameObject skillUI;
 
     public GameObject levelUI;
+    public GameObject shopUI;
 
     public TextMeshProUGUI floorText;
     public TextMeshProUGUI difficultyText;
@@ -218,6 +219,16 @@ public class UIManager : MonoBehaviour
             button.gameObject.SetActive(true);
         }
         levelClose.gameObject.SetActive(false);
+    }
+
+    public void OpenShop() {
+        GameManager.actionInProcess = true;
+        shopUI.SetActive(true);
+        shopUI.GetComponent<ShopManager>().OpenShop();
+    }
+
+    public void CloseShop() {
+        shopUI.SetActive(false);
     }
 
     public void CloseLevelMenu() {

@@ -19,8 +19,6 @@ public class PlayerManager : MonoBehaviour
     public bool inShop;
     private PlayerData saved_data;
 
-    public int money;
-
     private string profile = "tester";
 
     private string FLOOR = "floor";
