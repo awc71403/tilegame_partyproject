@@ -176,8 +176,7 @@ MonoBehaviour:
   - {fileID: 3689990538495695190, guid: cfc771265bd67394fba0e9c22d94bd9c, type: 3}
   - {fileID: 3689990538495695190, guid: 92d0b0a4564877f4eb75b354c07fada1, type: 3}
   FloorTileBlocks:
-  - {fileID: 7293470314682524224, guid: 8ff6c65abbdd35f4288109819487ba21, type: 3}
-  - {fileID: 8419108629745016369, guid: fe6f5446943590b43a73f3b6d9d807fc, type: 3}
+  - {fileID: 5339182682365044604, guid: fbd671d0ac41af140bff73c1e3b1a77b, type: 3}
   WallTileBlocks:
   - {fileID: 1759427329251576200, guid: 9781fe92fe72afd4a8470381cc57d92d, type: 3}
   - {fileID: 6059426047567185793, guid: aa7efb0d0e3e34e4d89bc7f98426eb77, type: 3}
@@ -188,6 +187,9 @@ MonoBehaviour:
   - {fileID: 9187181256362661838, guid: e07f6ce8ffaa9394a9da02cb0d0f7d4a, type: 3}
   - {fileID: 3111405940045582591, guid: 4c0edc94025046249934fa23f4983a1f, type: 3}
   - {fileID: 551057032532739392, guid: 72530c3dadaf82545a875d16c18ee5b2, type: 3}
+  StairTile: {fileID: 0}
+  GlassTile: {fileID: 0}
+  BobaTile: {fileID: 0}
   RoomSize: 35
   PlayerPrefab: {fileID: 8051671738830806328, guid: 1880f36cdf5656149ae7579788cb8bfa,
     type: 3}
@@ -196,8 +198,11 @@ MonoBehaviour:
   Items: []
   MaxEnemies: 3
   MinEnemies: 2
+  MaxGlass: 5
+  MinGlass: 2
   MaxItems: 0
   MinItems: 0
+  spawned: 0
   ActorLayer:
     serializedVersion: 2
     m_Bits: 2048
@@ -293,7 +298,6 @@ Transform:
   m_GameObject: {fileID: 502957897}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.36, y: -0.31, z: -10}
-  m_LocalPosition: {x: 4.36, y: -0.31, z: -12.65}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

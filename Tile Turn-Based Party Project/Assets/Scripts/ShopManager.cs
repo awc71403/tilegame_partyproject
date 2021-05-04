@@ -10,7 +10,7 @@ public class ShopManager : MonoBehaviour
     public ShopButton button2;
     public ShopButton button3;
     public Item[] items;
-    public Character player; 
+    public PlayerManager player; 
 
     public static ShopManager GetSingleton()
     {
@@ -25,7 +25,7 @@ public class ShopManager : MonoBehaviour
         }
         */
         m_Singleton = this;
-        player = PlayerManager.singleton.gameObject.GetComponent<Character>();
+        player = PlayerManager.singleton;
     }
 
     public void OpenShop()
@@ -57,7 +57,7 @@ public class ShopManager : MonoBehaviour
 
     public void CheckButtons()
     {
-        player = PlayerManager.singleton.gameObject.GetComponent<Character>();
+        player = PlayerManager.singleton;
         if (player.money - button1.item.price < 0) {
             button1.DisableButton();
         }

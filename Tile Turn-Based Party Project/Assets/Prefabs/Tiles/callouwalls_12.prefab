@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 5339182682365044604}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 10.504, y: -1.508, z: 0}
-  m_LocalScale: {x: 1.59, y: 1.59, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -100,7 +100,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.64, y: 0.64}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 0.64, y: 0.64}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -150,6 +150,7 @@ MonoBehaviour:
   FloorTiles: []
   TwoSidedFloor: []
   TwoSidedFloorCorner: []
+  GrayFloor: {fileID: 0}
   TopWall:
   - {fileID: 9212386162501517989, guid: f40951afe8911384c8f21373f3eaae0a, type: 3}
   - {fileID: 3891676968177124537, guid: 67c1d1369b8372940a3107200e9ae500, type: 3}

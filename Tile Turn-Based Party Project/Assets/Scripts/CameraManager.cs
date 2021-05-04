@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CameraManager : MonoBehaviour
 {
+    public static CameraManager singleton;
+
     [Header("Target")]
 	public PlayerManager player;
 
@@ -18,9 +20,19 @@ public class CameraManager : MonoBehaviour
     [Header("Camera Conditions (Do not modify these fields through Editor)")]
 	public Vector2 currentSpeed;
 
-	public void Start() {
-		maxFollowSpeed = 4.00f;
-		smoothTime = 0.95f;
+    public void Awake()
+    {
+        if (singleton != null)
+        {
+            DestroyImmediate(gameObject);
+            return;
+        }
+        singleton = this;
+    }
+
+    public void Start() {
+		maxFollowSpeed = 20.00f;
+		smoothTime = 0.1f;
 	}
 	/**
 	 * Update() function will be called (automatically) by Unity engine every frame. Normally, you should
@@ -37,4 +49,10 @@ public class CameraManager : MonoBehaviour
             transform.position = new Vector3(currentPosition.x, currentPosition.y, transform.position.z); // We should not modify the z axis of the camera.
         }
 	}
+
+    public void Immediate() {
+        Vector3 pos = player.gameObject.transform.position;
+        pos.z = -10;
+        transform.position = pos;
+    }
 }

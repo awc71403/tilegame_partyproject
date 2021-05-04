@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class ShopButton : MonoBehaviour
 {
-    public Character player;
+    public PlayerManager player;
     public Item item; 
     public TextMeshProUGUI itemName;
     public TextMeshProUGUI priceLabel;
@@ -14,7 +14,7 @@ public class ShopButton : MonoBehaviour
     public int price; 
 
     void Awake() {
-        player = PlayerManager.singleton.gameObject.GetComponent<Character>();
+        player = PlayerManager.singleton;
     }
 
         // set the item text label, img, and itemName. 
@@ -32,7 +32,7 @@ public class ShopButton : MonoBehaviour
     }
     public void Purchase() 
     {
-        player = PlayerManager.singleton.gameObject.GetComponent<Character>();
+        player = PlayerManager.singleton;
         if (player.money - price >= 0) {
             player.money = player.money - price;
             DisableButton();

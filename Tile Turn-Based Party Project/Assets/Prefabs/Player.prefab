@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 5985901255691865136}
   - component: {fileID: 6495096053908020849}
   - component: {fileID: 557175162552941605}
-  - component: {fileID: 8694263695883867407}
   - component: {fileID: 7640694810520806505}
   - component: {fileID: 976971159871380954}
   - component: {fileID: -3893626825204017903}
+  - component: {fileID: -3428597326910191316}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -29,14 +29,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8051671738830806328}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: -1.7644236, y: -1.5904447, z: -9.44}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4330783817091043030}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!212 &6495096053908020849
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -74,12 +74,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: a43c57a622fc5a2408388f21ec9c4a80, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fdccfc9b0acbea24596dee86e298d4ba, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.2, y: 0.2}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -99,40 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   directionUI: {fileID: 4330783817091043025}
   inShop: 0
---- !u!114 &8694263695883867407
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8051671738830806328}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 809ba754f47889141b751867206f7ecb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  curStatArr: 
-  baseStats: 
-  abilityCooldowns: 
-  currentCooldowns: 
-  abilityDurations: 
-  characterName: 
-  totalHealth: 0
-  currentHealth: 0
-  level: 1
-  experience: 0
-  value: 0
   money: 0
-  isPlayer: 1
-  isCharacter: 0
-  charValue: 0
-  occupiedTile: {fileID: 0}
-  myDirection: 0
-  playerManager: {fileID: 0}
-  DamageTextPrefab: {fileID: 0}
-  damageText: {fileID: 0}
-  anim: {fileID: 0}
-  stepSounds: []
 --- !u!95 &7640694810520806505
 Animator:
   serializedVersion: 3
@@ -266,7 +233,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1, y: 1}
-    newSize: {x: 0.2, y: 0.2}
+    newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -274,6 +241,56 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.2, y: 0.2}
   m_EdgeRadius: 0
+--- !u!114 &-3428597326910191316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8051671738830806328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eddf9c9da4ebb464bb7204f746b84d1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curStatArr: 
+  baseStats: 
+  abilityCooldowns: 
+  currentCooldowns: 
+  abilityDurations: 
+  characterName: 
+  totalHealth: 0
+  currentHealth: 0
+  level: 1
+  experience: 0
+  experienceThreshold: 1
+  skillPoint: 0
+  value: 0
+  isPlayer: 0
+  isCharacter: 0
+  charValue: 0
+  occupiedTile: {fileID: 0}
+  myDirection: 0
+  playerManager: {fileID: 0}
+  DamageTextPrefab: {fileID: 0}
+  damageText: {fileID: 0}
+  anim: {fileID: 0}
+  stepSounds:
+  - {fileID: 8300000, guid: 9f60269095fec4f39addf6b2b987021a, type: 3}
+  - {fileID: 8300000, guid: f0a2743a7337f46abb84b6c1d217d839, type: 3}
+  - {fileID: 8300000, guid: 6f26abe88be39479d9ddb4df7631170e, type: 3}
+  regularPunchSound: {fileID: 8300000, guid: dc9ec74eaac9d408ab8e073d51af2d91, type: 3}
+  glassStep: {fileID: 8300000, guid: de67a533d6ace4a96bb3db78b3ac6726, type: 3}
+  abilityImages:
+  - {fileID: 21300000, guid: c1c34624731657f41bb51f0a623749de, type: 3}
+  - {fileID: 21300000, guid: f8b9a257ac995334c919533bd158d5dc, type: 3}
+  - {fileID: 21300000, guid: 74aac30cd918f2f4989b28fbdf176ef8, type: 3}
+  - {fileID: 21300000, guid: d0bfb0fe168823d48aa57df2de84febe, type: 3}
+  abilitySounds:
+  - {fileID: 8300000, guid: d7646c229d2f6094fa5048db9115b296, type: 3}
+  - {fileID: 8300000, guid: e1bff672c3fe5d94aa0fca755775ab22, type: 3}
+  - {fileID: 8300000, guid: 3da273ac73f77fb499c532ae9364bc88, type: 3}
+  - {fileID: 8300000, guid: 2e5cc81bc1f1aeb4b8b71a3eda249efb, type: 3}
 --- !u!1001 &4262787805950075008
 PrefabInstance:
   m_ObjectHideFlags: 0
